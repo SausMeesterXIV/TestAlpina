@@ -1,0 +1,19 @@
+{
+  "extends": "stylelint-config-standard",
+  "plugins": [
+    "stylelint-scss"
+  ],
+  "ignoreFiles": ["../**/reset.css"],
+  "rules": {
+    "declaration-no-important": true,
+    "unit-disallowed-list": ["px","pt","cm","mm","in","pc"],
+    "selector-disallowed-list": ["*"],
+    "no-descending-specificity": null,
+    "value-keyword-case": [
+      "lower",
+      {
+        "ignoreProperties": ["/^--/"]
+      }
+    ]
+  }
+}

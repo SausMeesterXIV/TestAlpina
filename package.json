@@ -1,0 +1,39 @@
+{
+  "name": "sonar-test-node",
+  "version": "1.0.0",
+  "description": "sonar testing for programming project",
+  "main": "core/index.js",
+  "scripts": {
+    "test": "jest --coverage --watchAll --env=jsdom",
+    "lint:html": "htmlhint \"src/**/*.html\" --config linter-configs/.htmlhintrc --format json > reports/htmlhint-report.json || cd .",
+    "lint:css": "stylelint \"**/*.css\" --config linter-configs/.stylelintrc.json --ignore-path ./linter-configs/.stylelintignore --formatter json --output-file reports/stylelint-report.json || cd .",
+    "lint:js": "eslint \"src/**/*.js\" --config linter-configs/eslint.config.js -f json -o reports/eslint-report.json || cd .",
+    "validate-html": "java -jar node_modules/vnu-jar/build/dist/vnu.jar --Werror --filterfile .vnuignore --skip-non-html ./src",
+    "validate-sonar-ci": "node_modules/sonar-scanner/bin/sonar-scanner",
+    "validate-sonar-local-mac": "node_modules/sonar-scanner/bin/sonar-scanner -Dsonar.host.url=https://sonarqube.ti.howest.be",
+    "validate-sonar-local-win": ".\\node_modules\\sonar-scanner\\bin\\sonar-scanner -Dsonar.host.url=https://sonarqube.ti.howest.be",
+    "validate-ci": "npm run validate-html && npm run validate-sonar-ci",
+    "validate-local-mac": "npm run validate-html && npm run validate-sonar-local-mac",
+    "validate-local-win": "npm run validate-html && npm run validate-sonar-local-win",
+    "validate-local-step1": "npm run lint:css && npm run lint:html && npm run lint:js",
+    "validate-local-step2": "node linter-configs/sonar-html-converter.mjs",
+    "validate-local-full-mac": "npm run validate-local-step1 && npm run validate-local-step2 && npm run validate-sonar-local-mac",
+    "validate-local-full-win": "npm run validate-local-step1 && npm run validate-local-step2 && npm run validate-sonar-local-win"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "eslint": "^9.9.1",
+    "htmlhint": "^1.1.4",
+    "sonar-scanner": "^3.1.0",
+    "stylelint": "^16.9.0",
+    "stylelint-config-standard": "^36.0.1",
+    "stylelint-scss": "^6.5.1",
+    "vnu-jar": "^23.4.11"
+  },
+  "dependencies": {
+    "@eslint/js": "^9.35.0",
+    "@stylistic/eslint-plugin": "^5.3.1"
+  }
+}
