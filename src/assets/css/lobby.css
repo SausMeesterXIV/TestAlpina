@@ -1,0 +1,19 @@
+#navbar li {
+    display: inline-block;
+}
+
+body{
+    display: flex;
+
+}
+form{
+    width: 200px;
+}
+
+form div{
+    display: inline;
+}
+
+#time label, #time input{
+    display: inline-block;
+}
