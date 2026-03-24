@@ -1,3 +1,54 @@
+/*TODO: een kleuren schema maken voor alles.*/
+
 body {
- background-color: hotpink;
+    background-color: hotpink;
 }
+
+
+/*NAVBAR*/
+
+nav{
+    background: black;
+    color: white;
+}
+#navbar{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+ul li{
+    font-size: 1.25rem;
+    padding: 0.5rem;
+}
+
+li a{
+    display: block;
+    text-decoration: none;
+    color: white;
+    padding: 0.5rem;
+}
+
+li a{
+    display: block;
+    text-decoration: none;
+    color: white;
+}
+
+#settings{
+    margin-right: auto;
+}
+
+#alpina{
+    font-size: 3rem;
+    margin: auto;
+}
+
+li a:hover{
+    background-color: white;
+    color: black;
+}
+
+
+
+
