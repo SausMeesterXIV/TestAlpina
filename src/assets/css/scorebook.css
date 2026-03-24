@@ -12,7 +12,15 @@ h1 {
     font-size: 4rem;
     justify-self: center;
     margin-bottom: 4rem;
+    padding-top: 2rem;
 }
-header {
-
+.exitButton {
+    position: absolute;
+    top: 3rem;
+    right: 5rem;
+    background-image: url(../media/exitButton.svg);
+    background-repeat: no-repeat;
+    background-size: 3rem;
+    width: 5rem;
+    height: 5rem;
 }
