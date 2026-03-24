@@ -28,7 +28,9 @@ nav{
 #navbar{
     display: flex;
     align-items: center;
-    width: 100%;
+    position: relative;
+    padding: 0;
+    margin: 0;
 }
 
 ul li{
@@ -49,13 +51,21 @@ li a{
     color: white;
 }
 
-#settings{
-    margin-right: auto;
+#alpina {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 3rem;
 }
 
-#alpina{
-    font-size: 3rem;
-    margin: auto;
+
+#settings{
+    margin-left: auto;
+    display: flex;
+}
+
+#rules{
+    margin-right: auto;
 }
 
 li a:hover{
