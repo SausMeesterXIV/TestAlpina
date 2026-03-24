@@ -1,0 +1,33 @@
+
+body{
+    background-image: url("../../images/alpina_starting_page_image.png") ;
+}
+div {
+    color: white;
+    font-family: bold;
+    width: 250px;
+    height: 125px;
+    text-align: center;
+    align-content: center;
+    border-radius: 20px;
+    font-size: 50px;
+    font-weight: bold;
+}
+h1 {
+    visibility: hidden;
+    padding-bottom: 19rem;
+}
+a {
+    text-decoration: none;
+}
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    margin: auto;
+}
+
+#play_button, #settings_button, #rules_button {
+    background-color: rgba(0, 0, 0, 0.5);
+}
