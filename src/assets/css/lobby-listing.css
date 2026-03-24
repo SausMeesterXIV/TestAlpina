@@ -19,7 +19,6 @@ article{
     display: flex;
 
     padding: 1rem;
-    margin-left: 1rem;
     background: lightgrey;
     border-radius: 1rem;
 }
@@ -27,13 +26,12 @@ article{
 .expedition input{
     background-color: black;
     color: white;
+    /*sizing*/
     height: 2.5rem;
     width: 7rem;
-
     font-size: 1.5rem;
 
     border-radius: 0.75rem;
-
     align-self: center;
 }
 
