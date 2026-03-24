@@ -1,16 +1,30 @@
 /*TODO: een kleuren schema maken voor alles.*/
 
-body {
-    background-color: hotpink;
+/*shared css*/
+
+/*command*/
+.command{
+    color: grey;
 }
 
+/*headers*/
+h1{
+    font-size: 3rem;
+    margin-bottom: 0.25rem;
+}
+
+h2{
+    font-size: 2rem;
+}
 
 /*NAVBAR*/
 
 nav{
     background: black;
     color: white;
+    margin-bottom: 1rem;
 }
+
 #navbar{
     display: flex;
     align-items: center;
@@ -48,6 +62,8 @@ li a:hover{
     background-color: white;
     color: black;
 }
+
+/*game listing*/
 
 
 

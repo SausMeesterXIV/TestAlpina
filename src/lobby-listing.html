@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>join expedition</title>
+
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/screen.css">
+    <link rel="stylesheet" href="assets/css/lobby-listing.css">
+</head>
+<body>
+    <nav>
+        <ul id="navbar">
+            <li><a href="#">back</a></li>
+            <li id="alpina">ALPINA</li>
+            <li><a href="#">rules</a></li>
+            <li><a href="#" id="settings">settings</a></li>
+        </ul>
+    </nav>
+
+    <article>
+        <section id="active-expeditions">
+            <h1>active expeditions</h1>
+            <p  class="command">join an existing party or scout a new trail</p>
+
+            <div id="expeditions">
+                <div class="expedition">
+                    <div class="expedition-info">
+                        <p class="command">ID:37183hgf2</p>
+                        <h2>expedition</h2>
+                        <p>3/4 players</p>
+                    </div>
+
+                    <input type="button" value="spectate" id="spectate-button">
+                    <input type="button" value="join" id="join-button">
+                </div>
+            </div>
+        </section>
+
+        <section id="private-expedition">
+            <h1>join private game</h1>
+            <label for="secret-code-input">secret code</label>
+            <input type="text" name="secret-code" id="secret-code-input">
+        </section>
+
+    </article>
+</body>
+</html>

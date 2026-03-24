@@ -1,0 +1,46 @@
+article{
+    display: flex;
+    margin: 1rem 0 0 1rem;
+}
+
+#active-expeditions{
+    width: 60%;
+    margin-right: 2rem;
+}
+
+#expeditions {
+    height: 30rem;
+    overflow-y: scroll;/*makes the div scrollable*/
+    margin-top: 2rem;
+    padding-right: 1rem;
+}
+
+.expedition{
+    display: flex;
+
+    padding: 1rem;
+    margin-left: 1rem;
+    background: lightgrey;
+    border-radius: 1rem;
+}
+
+.expedition input{
+    background-color: black;
+    color: white;
+    height: 2.5rem;
+    width: 7rem;
+
+    font-size: 1.5rem;
+
+    border-radius: 0.75rem;
+
+    align-self: center;
+}
+
+.expedition div{
+    width: 70%;
+}
+
+#join-button{
+    margin-left: 1rem;
+}
