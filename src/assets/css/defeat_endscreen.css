@@ -1,0 +1,54 @@
+body {
+    background-image: url(../../images/alpina_defeat_page_background.png);
+}
+
+h1 {
+    visibility: hidden;
+    padding-bottom: 19rem;
+}
+
+table {
+   background-color: rgba(220, 220, 220, 0.7);
+    border-radius: 2rem;
+    margin: auto;
+    width: 50rem;
+    height: 21rem;
+    font-size: 3rem;
+    font-weight: bold;
+    color: black;
+    padding: 2rem;
+    table-layout: fixed; 
+    gap: 4rem;
+}
+
+td {
+    width: 33.33%;      
+    text-align: center;  
+}
+
+a{
+    text-decoration: none;
+    color: white;
+    align-content: center;
+}
+
+.lobbyButton {
+    padding-top: 2rem;
+}
+#returnLobby {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 30rem;
+    height: 2.5rem;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bolder;
+    font-size: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    margin: auto;;
+}
+
+
+ 
