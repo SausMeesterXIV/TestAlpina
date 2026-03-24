@@ -1,5 +1,5 @@
 body {
-    background-image: url(../../images/alpina_defeat_page_background.png);
+    background-image: url(../../images/alpina_victory_page_background.png);
 }
 
 h1 {
@@ -32,32 +32,29 @@ a{
     align-content: center;
 }
 
-.endscreenButtons {
+.endscreen-buttons {
     display: flex;            
     justify-content: center;   
     gap: 1rem;               
     margin-top: 1.25rem;
 }
-#returnMainPage, #Rematch {
+#return-to-main-page, #rematch {
     background-color: rgba(0, 0, 0, 0.5);
     width: 24rem;
     height: 2.5rem;
-    border-radius: 0.33rem;
+    border-radius: 0.5rem;
     text-align: center;
     font-weight: bolder;
     font-size: 2rem;
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1.3rem;
     align-items: center;
     margin: auto;;
 }
 
-#returnMainPage:hover, #Rematch:hover {
+#return-to-main-page:hover, #rematch:hover {
     background-color: rgba(0, 0, 0, 0.7);
     cursor: pointer;
     transform: scale(1.05);
 }
-
-
- 
