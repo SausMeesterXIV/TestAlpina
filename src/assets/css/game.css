@@ -1,0 +1,15 @@
+div {
+    display: flex;
+}
+
+#player-controls {
+    margin: auto;
+}
+
+#game-board {
+    display: grid;
+    grid-template: repeat(5, 1fr) / repeat(5, 1fr);
+    width: 50%;
+    aspect-ratio: 1;
+    margin: auto;
+}
