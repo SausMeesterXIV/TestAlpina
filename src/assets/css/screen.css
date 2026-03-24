@@ -54,12 +54,12 @@ li a{
 #alpina {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%); /*Move the element left by half of its own width*/
     font-size: 3rem;
 }
 
 
-#settings{
+#right-side{
     margin-left: auto;
     display: flex;
 }
@@ -72,9 +72,3 @@ li a:hover{
     background-color: white;
     color: black;
 }
-
-/*game listing*/
-
-
-
-

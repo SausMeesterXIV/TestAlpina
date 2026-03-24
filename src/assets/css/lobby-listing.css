@@ -10,17 +10,21 @@ article{
 
 #expeditions {
     height: 30rem;
-    overflow-y: scroll;/*makes the div scrollable*/
+    overflow-y: scroll; /*makes the div scrollable*/
+
     margin-top: 2rem;
+    margin-bottom: 1rem;
     padding-right: 1rem;
 }
 
 .expedition{
     display: flex;
 
-    padding: 1rem;
     background: lightgrey;
     border-radius: 1rem;
+
+    padding: 1rem;
+    margin-bottom: 1rem;
 }
 
 .expedition input{
@@ -33,12 +37,27 @@ article{
 
     border-radius: 0.75rem;
     align-self: center;
+    margin-left: 1rem;
 }
 
 .expedition div{
     width: 70%;
 }
 
-#join-button{
-    margin-left: 1rem;
+#new-expedition-button, #join-game{
+    background: black;
+    color: white;
+
+    width: 50%;
+    height: 4rem;
+    border-radius: 1rem;
+    font-size: 2rem;
+
+    display: block;
+
+    margin: auto;
+}
+
+#private-expedition{
+    margin: auto;
 }
