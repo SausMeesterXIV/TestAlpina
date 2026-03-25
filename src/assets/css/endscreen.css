@@ -12,7 +12,7 @@ article {
     padding: 2rem;
     border-radius: 2rem;
     margin: auto;
-    background-color: rgba(220, 220, 220, 0.7);
+    backdrop-filter: blur(1.5rem);
 }
 
 h1 {
