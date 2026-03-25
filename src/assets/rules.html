@@ -11,56 +11,45 @@
 </head>
 <body>
     <main>
-        <button id="openSettingsBtn">Spelregels bekijken</button>
+        <button id="open-settings-btn">Spelregels bekijken</button>
 
-        <dialog id="settingsPopup">
+        <dialog id="settings-popup">
             <div class="dialog-header">
-                <button id="closeSettingsBtn" class="exitButton">✖</button>
+                <button id="close-settings-btn" class="exit-button">✖</button>
                 <h1>Alpina Spelregels</h1>
             </div>
 
             <section>
                 <h2>Doel van het spel</h2>
-                <p id="1">Behaal de meeste overwinningspunten door je hikers strategisch op de kaarten te plaatsen.</p>
+                <p>Behaal de meeste overwinningspunten door je hikers strategisch op de kaarten te plaatsen.</p>
             </section>
 
             <section>
-                <h2 id="startSpel">Start van het spel</h2>
+                <h2>Start van het spel</h2>
                 <ul>
-                    <li class="introSpelStart">Iedere speler krijgt 6 kaarten.</li>
-                    <li class="introSpelStart">Aantal hikers: 2 spelers (8), 3 spelers (5), 4 spelers (4).</li>
-                    <li class="introSpelStart">Grid: 5x5 met een 'chamois' kaart in het midden.</li>
+                    <li class="intro-spel-start">Iedere speler krijgt 6 kaarten.</li>
+                    <li class="intro-spel-start">Aantal hikers: 2 spelers (8), 3 spelers (5), 4 spelers (4).</li>
+                    <li class="intro-spel-start">Grid: 5x5 met een 'chamois' kaart in het midden.</li>
                 </ul>
             </section>
 
             <section>
                 <h2>Verloop van je beurt</h2>
-                <p>Kaart spelen (VERPLICHT):</p>
+                <p><strong>Kaart spelen (VERPLICHT):</strong></p>
                 <ul>
                     <li class="voorwaarden">Plaats horizontaal of verticaal aan een bestaande kaart.</li>
                     <li class="voorwaarden">Mag geen 6de rij of kolom vormen.</li>
                 </ul>
-                <p>Hiker plaatsen (OPTIONEEL):</p>
+                <p><strong>Hiker plaatsen (OPTIONEEL):</strong></p>
                 <ul>
                     <li class="voorwaarden">Kaart moet leeg zijn.</li>
-                    <li class="voorwaarden">Moet aangrenzend zijn aan je zojuist geplaatste kaart.</li>
-                    <li class="voorwaarden">Maximaal 1 per beurt.</li>
+                    <li class="voorwaarden">Aangrenzend aan je zojuist geplaatste kaart.</li>
                 </ul>
-                <p>Je krijgt een nieuwe kaart.</p>
             </section>
 
             <div class="dialog-footer">
-                <button id="openScoringBtn">Bekijk Scoring Details</button>
+                <button id="open-scoring-btn">Bekijk Scoring Details</button>
             </div>
-
-        </dialog>
-
-        <dialog id="scoringPopup">
-            <button id="closeScoringBtn" class="exitButton">✖</button>
-            <h1>Scoring Guide</h1>
-            <img src="../../../Media/Screenshot scoring (later verfijnen).png" alt="Scoring Guide" style="max-width: 100%;">
-            <p>Hier komen de specifieke puntentellingen...</p>
-            <button id="backToRulesBtn">Terug naar regels</button>
         </dialog>
     </main>
 </body>
