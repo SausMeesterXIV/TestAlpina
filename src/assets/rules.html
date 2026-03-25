@@ -1,68 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alpina-rules</title>
-    <script src="../assets/js/rules.js" defer></script>
+    <title>Alpina - Spelregels</title>
+    <link rel="stylesheet" href="../assets/css/style.css"> <script src="../assets/js/rules.js" defer></script>
 </head>
 <body>
-    <main> <!-- Eventlisterener plaatsen!!!-->
+    <main>
         <button id="openSettingsBtn">Spelregels bekijken</button>
-        <!--Placeholder button
-        Button nog op schermen plaatsen-->
 
         <dialog id="settingsPopup">
-        <button id="closeSettingsBtn">&times;</button>
-                    <!--icoon gebruiken scorebook.html-->
-        <button id="openScoringBtn" onclick="openScoringPopup()">Scoring</button>
-        
+            <div class="dialog-header">
+                <button id="closeSettingsBtn" class="exitButton">✖</button>
+                <h1>Alpina Spelregels</h1>
+            </div>
 
+            <section>
+                <h2>Doel van het spel</h2>
+                <p>Behaal de meeste overwinningspunten door je hikers strategisch op de kaarten te plaatsen.</p>
+            </section>
 
-            
-        <h1>Alpina Spelregels</h1>
-       
-            <h2>Doel van het spel</h2>
-            <p>Behaal de meeste overwinningspunten door je hikers strategisch op de kaarten te plaatsen.</p>
-
-       
-            <h2>Start van het spel</h2>
-            <p>Iedere speler krijgt 6 kaarten</p>
-            <p>Iedere speler krijgt een aantal hikers (2 spelers = 8 hikers | 3 spelers = 5 hikers | 4 spelers = 4 hikers).</p>
-            <p>Er wordt een 5x5 grid gebouwd met een random 'chamois' kaart in het midden. Dit is de startkaart.</p>
-
-                <!-- deze lijn moet aangepast worden als er een dynamisch grid wordt gebouwd 
-                 Er wordt een nieuw grid gemaakt met een chamois kaart als startkaart. -->
-
-            <h2>Verloop van je beurt</h2>
-            <p>Je speelt een kaart. VERPLICHT!
-               <ul>
-                    <li>Je plaats je kaart horizontaal of verticaal van een besaande kaart.</li>
-                    <li>Je kaart mag geen 6de rij of kolom maken.</li>
-                </ul>
-            </p>
-
-            <p>Je plaats een hiker. OPTIONEEL!</p>
+            <section>
+                <h2>Start van het spel</h2>
                 <ul>
-                    <li>Er mag nog geen hiker staan op de kaart.</li>
-                    <li>Je mag een hiker zetten op een aangrenzende kaart van jouw geplaatste kaart.</li>
-                    <li>Je mag 1 hiker per beurt plaatsen.</li>
+                    <li>Iedere speler krijgt 6 kaarten.</li>
+                    <li>Aantal hikers: 2 spelers (8), 3 spelers (5), 4 spelers (4).</li>
+                    <li>Grid: 5x5 met een 'chamois' kaart in het midden.</li>
                 </ul>
-            </p>
+            </section>
 
-            <p>Je krijgt een nieuwe kaart.</p>
+            <section>
+                <h2>Verloop van je beurt</h2>
+                <p><strong>1. Kaart spelen (VERPLICHT):</strong></p>
+                <ul>
+                    <li>Plaats horizontaal of verticaal aan een bestaande kaart.</li>
+                    <li>Mag geen 6de rij of kolom vormen.</li>
+                </ul>
+                <p><strong>2. Hiker plaatsen (OPTIONEEL):</strong></p>
+                <ul>
+                    <li>Kaart moet leeg zijn.</li>
+                    <li>Moet aangrenzend zijn aan je zojuist geplaatste kaart.</li>
+                    <li>Maximaal 1 per beurt.</li>
+                </ul>
+            </section>
 
-            <h2>Einde van het spel</h2>
-            <p>Als het 5x5 grid vol is stopt het spel.</p>
+            <div class="dialog-footer">
+                <button id="openScoringBtn">Bekijk Scoring Details</button>
+            </div>
+        </dialog>
 
-            <h2>Puntentelling</h2>
-            <p>Als jouw een hiker op een kaart staat rkijg je de punten die de kaart heeft verzameld.</p>
-            <ul>
-                <li>Gegarandeerde punten: staat als eerste onderaan de kaart. Dit punt krijg je sowieso.</li>
-                <li>Conditionele punten: punt voorafgegaan door '/' gevolgd door conditie. Als je deze conditie behaalt krijg je de punten.</li>
-            </ul>
-            <p>Bij gelijkspel wint de persoon die het laatst aan de beurt is.</p>
-            </dialog>
+        <dialog id="scoringPopup">
+            <button id="closeScoringBtn" class="exitButton">✖</button>
+            <h1>Scoring Guide</h1>
+            <img src="../../../Media/Screenshot scoring (later verfijnen).png" alt="Scoring Guide" style="max-width: 100%;">
+            <p>Hier komen de specifieke puntentellingen...</p>
+            <button id="backToRulesBtn">Terug naar regels</button>
+        </dialog>
     </main>
 </body>
 </html>
