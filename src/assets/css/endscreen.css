@@ -30,7 +30,6 @@ table {
     color: black;
     padding: 2rem;
     table-layout: fixed; 
-    gap: 4rem;
 }
 
 td {
