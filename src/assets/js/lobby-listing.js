@@ -1,4 +1,5 @@
 import { fetchUnstartedGames } from "./api/game-info.js";
+import {saveToStorage} from "./data-connector/local-storage-abstractor.js";
 
 function init () {
     renderGameList();
@@ -35,11 +36,13 @@ function renderGameList() {
 function joinOrSpectateGame(e){
   e.preventDefault();
 
+  const gameId = e.target.dataset.id;
+
   if (isJoinOrSpectate(e.target)){
     if (e.target.value === "spectate"){
       return null;
     }else if (e.target.value === "join"){
-      joinGame();
+      joinGame(gameId);
     }
   }
 }
@@ -48,5 +51,11 @@ function isJoinOrSpectate(e){
   return e.value === "join" || e.value === "spectate";
 }
 
+function joinGame(gameId){
+  // set group into localstorage.
+  saveToStorage("gameId", gameId);
+  // redirect page to lobby.
+  window.location.replace("http://localhost:63342/client/src/lobby.html");
+}
 
 init();
