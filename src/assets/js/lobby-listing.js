@@ -1,12 +1,7 @@
-import { fetchFromServer } from "./data-connector/api-communication-abstractor.js";
+import { fetchUnstartedGames } from "./api/game-info.js";
 
 function init () {
     renderGameList();
-}
-
-function fetchUnstartedGames() {
-    return fetchFromServer("/games?started=false")
-        .then(resp => resp.games);
 }
 
 function createGameElement(game) {
@@ -28,7 +23,7 @@ function renderGames(games) {
 }
 
 function renderGameList() {
-    fetchUnstartedGames().then(renderGames)
+    fetchUnstartedGames().then(renderGames);
 }
 
 init();

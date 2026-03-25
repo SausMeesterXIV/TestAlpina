@@ -11,6 +11,11 @@ function fetchSpecificGame(gameId) {
   });
 }
 
+function fetchUnstartedGames() {
+    return fetchFromServer("/games?started=false")
+        .then(resp => resp.games);
+}
+
 export{
   fetchSpecificGame
 }
