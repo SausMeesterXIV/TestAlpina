@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Alpina | Game Session</title>
+
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/screen.css">
+        <link rel="stylesheet" href="assets/css/game.css">
+    </head>
+    <body>
+        <nav>
+            <ul id="navbar">
+                <li><a href="#">back</a></li>
+                <li id="alpina">ALPINA</li>
+                <li><a href="#">rules</a></li>
+                <li><a href="#" id="settings">settings</a></li>
+            </ul>
+        </nav>
+        <main>
+            <section id="status-panel">
+                <article id="leaderboard">
+                    <h2>Leaderboard</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Pos.</th>
+                                <th>Name</th>
+                                <th>Hikers</th>
+                                <th>Points</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr> <!--Example data, remove later-->
+                                <td>#1</td>
+                                <td>Tibo</td>
+                                <td>0</td>
+                                <td>50</td>
+                            </tr>
+                            <tr> <!--Example data, remove later-->
+                                <td>#2</td>
+                                <td>Dayvid</td>
+                                <td>0</td>
+                                <td>50</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </article>
+                <aside id="turn-info">
+                    <h2><em>Rhune's turn</em></h2>
+                    <progress value="" max=""></progress> <!--This indicates how much time a player has left. Extra info: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/progress-->
+                </aside>
+            </section>
+
+            <section id="game-board"> <!--divs are temporary for styling purposes, remove it later-->
+                <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+            </section>
+
+            <section id="player-controls">
+                <button id="select-hiker-button">Select hiker</button>
+                <button id="end-turn-button">End Turn</button>
+            </section>
+
+            <section id="bottom-area">
+                <div id="hand">
+                    <!--here the cards which the user possesses will be added-->
+                </div>
+            </section>
+        </main>
+        <footer>
+            <button id="leave-button">Leave game</button>
+        </footer>
+    </body>
+</html>

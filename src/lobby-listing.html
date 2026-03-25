@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>join expedition</title>
+
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/screen.css">
+    <link rel="stylesheet" href="assets/css/lobby-listing.css">
+
+    <script src="./assets/js/lobby-listing.js" type="module"></script>
+</head>
+<body>
+    <nav>
+        <ul id="navbar">
+            <li><a href="#">back</a></li>
+            <li id="alpina">ALPINA</li>
+            <li id="right-side">
+                <a href="#">rules</a>
+                <a href="#">sound</a>
+            </li> 
+        </ul>
+    </nav>
+
+    <article>
+        <section id="active-expeditions">
+            <h1>active expeditions</h1>
+            <p  class="comment">join an existing party or scout a new trail</p>
+
+            <div id="expeditions">
+                <!--Game list comes here-->
+            </div>
+            <input type="button" value="new expedition" id="new-expedition-button">
+        </section>
+
+        <section id="private-expedition">
+            <h1>join private game</h1>
+            <label for="secret-code-input">secret code:</label>
+            <input type="text" name="secret-code" id="secret-code-input" placeholder="984327429">
+
+            <input type="button" value="join game" id="join-game">
+        </section>
+
+    </article>
+    <template id="expedition-template">
+        <div class="expedition">
+            <div class="expedition-info">
+                <p class="comment">ID: gameId</p>
+                <h2>Expedition name</h2>
+                <p>x/x players</p>
+            </div>
+            
+            <input type="button" value="spectate">
+            <input type="button" value="join">
+        </div>
+    </template>
+</body>
+</html>

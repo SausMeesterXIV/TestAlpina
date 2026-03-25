@@ -9,16 +9,40 @@
 
     --comment-text-color: grey;
 }
-body {
- background-color: white;
+
+input[type=button]{
+    background-color: var(--primary-button-bg-color);
+    color: var(--primary-button-text-color);
+
+    border-radius: 1rem;
+    font-size: 2rem;
 }
 
-nav{
-     background: var(--primary-nav-bg-color);
-     color: var(--primary-nav-text-color);
+/*shared css*/
 
-     margin-bottom: 1rem;
- }
+/*command*/
+.comment{
+    color: var(--comment-text-color);
+}
+
+/*headers*/
+h1{
+    font-size: 3rem;
+    margin-bottom: 0.25rem;
+}
+
+h2{
+    font-size: 2rem;
+}
+
+/*NAVBAR*/
+
+nav{
+    background: var(--primary-nav-bg-color);
+    color: var(--primary-nav-text-color);
+
+    margin-bottom: 1rem;
+}
 
 #navbar{
     display: flex;
