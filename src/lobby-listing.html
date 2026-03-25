@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/screen.css">
     <link rel="stylesheet" href="assets/css/lobby-listing.css">
+
+    <script src="lobby-listing.js" type="module"></script>
 </head>
 <body>
     <nav>
@@ -26,68 +28,7 @@
             <p  class="comment">join an existing party or scout a new trail</p>
 
             <div id="expeditions">
-                <div class="expedition">
-                    <div class="expedition-info">
-                        <p class="comment">ID:37183hgf2</p>
-                        <h2>expedition</h2>
-                        <p>3/4 players</p>
-                    </div>
-
-                    <input type="button" value="spectate">
-                    <input type="button" value="join">
-                </div>
-
-                <div class="expedition">
-                    <div class="expedition-info">
-                        <p class="comment">ID:37183hgf2</p>
-                        <h2>expedition</h2>
-                        <p>3/4 players</p>
-                    </div>
-
-                    <input type="button" value="spectate">
-                    <input type="button" value="join">
-                </div>
-                <div class="expedition">
-                    <div class="expedition-info">
-                        <p class="comment">ID:37183hgf2</p>
-                        <h2>expedition</h2>
-                        <p>3/4 players</p>
-                    </div>
-
-                    <input type="button" value="spectate">
-                    <input type="button" value="join">
-                </div>
-                <div class="expedition">
-                    <div class="expedition-info">
-                        <p class="comment">ID:37183hgf2</p>
-                        <h2>expedition</h2>
-                        <p>3/4 players</p>
-                    </div>
-
-                    <input type="button" value="spectate">
-                    <input type="button" value="join">
-                </div>
-                <div class="expedition">
-                    <div class="expedition-info">
-                        <p class="comment">ID:37183hgf2</p>
-                        <h2>expedition</h2>
-                        <p>3/4 players</p>
-                    </div>
-
-                    <input type="button" value="spectate">
-                    <input type="button" value="join">
-                </div>
-                <div class="expedition">
-                    <div class="expedition-info">
-                        <p class="comment">ID:37183hgf2</p>
-                        <h2>expedition</h2>
-                        <p>3/4 players</p>
-                    </div>
-
-                    <input type="button" value="spectate">
-                    <input type="button" value="join">
-                </div>
-
+                <!--Game list comes here-->
             </div>
             <input type="button" value="new expedition" id="new-expedition-button">
         </section>
@@ -101,5 +42,27 @@
         </section>
 
     </article>
+    <template>
+        <div class="expedition">
+            <div class="expedition-info">
+                <p class="comment"></p>
+                <h2></h2>
+                <p></p>
+            </div>
+            
+            <input type="button" value="spectate">
+            <input type="button" value="join">
+        </div>
+    </template>
+    <!--<div class="expedition">
+                    <div class="expedition-info">
+                        <p class="comment">ID:37183hgf2</p>
+                        <h2>expedition</h2>
+                        <p>3/4 players</p>
+                    </div>
+
+                    <input type="button" value="spectate">
+                    <input type="button" value="join">
+                </div>-->
 </body>
 </html>
