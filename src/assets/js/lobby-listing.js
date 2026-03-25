@@ -2,6 +2,10 @@ import { fetchUnstartedGames } from "./api/game-info.js";
 
 function init () {
     renderGameList();
+
+    const $expeditions = document.querySelector('#expeditions');
+    $expeditions.addEventListener('click', joinOrSpectateGame, true);
+    //$expeditions.addEventListener('click', spectate);
 }
 
 function createGameElement(game) {
@@ -11,6 +15,8 @@ function createGameElement(game) {
     $clone.querySelector(".comment").textContent = `ID: ${game.gameId}`;
     $clone.querySelector("h2").textContent = game.gameName;
     $clone.querySelector("h2+p").textContent = `${game.players.length}/${game.numberOfPlayers} players`;
+    $clone.querySelector('input[value="spectate"]').dataset.id = `${game.gameId}`;
+    $clone.querySelector('input[value="join"]').dataset.id = `${game.gameId}`;
 
     return $clone;
 }
@@ -25,5 +31,22 @@ function renderGames(games) {
 function renderGameList() {
     fetchUnstartedGames().then(renderGames);
 }
+
+function joinOrSpectateGame(e){
+  e.preventDefault();
+
+  if (isJoinOrSpectate(e.target)){
+    if (e.target.value === "spectate"){
+      return null;
+    }else if (e.target.value === "join"){
+      joinGame();
+    }
+  }
+}
+
+function isJoinOrSpectate(e){
+  return e.value === "join" || e.value === "spectate";
+}
+
 
 init();
