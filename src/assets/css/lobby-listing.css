@@ -28,8 +28,7 @@ article{
 }
 
 .expedition input{
-    background-color: black;
-    color: white;
+
     /*sizing*/
     height: 2.5rem;
     width: 7rem;
@@ -44,20 +43,46 @@ article{
     width: 70%;
 }
 
+#new-expedition-button{
+    width: 50%;
+    height: 4rem;
+}
+
+/*SHARED BUTTON CSS*/
+
 #new-expedition-button, #join-game{
     background: black;
     color: white;
 
-    width: 50%;
-    height: 4rem;
-    border-radius: 1rem;
-    font-size: 2rem;
-
     display: block;
-
     margin: auto;
+}
+
+#join-game{
+    margin-top: 1rem;
+    width: 100%;
+    height: 4rem;
 }
 
 #private-expedition{
     margin: auto;
+}
+
+#private-expedition label{
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+#private-expedition input[type="text"]{
+    color: black;
+    background-color: lightgrey;
+
+    border: 0.1rem grey solid;
+    border-radius: 0.75rem;
+
+    width: 100%;
+    height: 2rem;
+
+    padding-left: 0.5rem;
 }
