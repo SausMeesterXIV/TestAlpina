@@ -1,0 +1,40 @@
+h1{
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+}
+    
+h2{
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+p{
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+}
+
+ul{
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+
+}
+
+.introSpelStart{
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+    margin-left: -0.5rem;
+}
+
+.voorwaarden{
+    font-size: 1rem;
+    margin-bottom: 0rem;
+    margin-left: 1.5rem;
+}
+
+
+.scoring{
+    display: flex;
+    flex-direction: column;    
+    gap: 0.75rem;
+}
+

@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alpina - Spelregels</title>
-    <link rel="stylesheet" href="../assets/css/style.css"> <script src="../assets/js/rules.js" defer></script>
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/screen.css">
+    <link rel="stylesheet" href="../assets/css/rules.css">
+    <script src="../assets/js/rules.js" defer></script>
 </head>
 <body>
     <main>
@@ -18,36 +21,38 @@
 
             <section>
                 <h2>Doel van het spel</h2>
-                <p>Behaal de meeste overwinningspunten door je hikers strategisch op de kaarten te plaatsen.</p>
+                <p id="1">Behaal de meeste overwinningspunten door je hikers strategisch op de kaarten te plaatsen.</p>
             </section>
 
             <section>
                 <h2>Start van het spel</h2>
                 <ul>
-                    <li>Iedere speler krijgt 6 kaarten.</li>
-                    <li>Aantal hikers: 2 spelers (8), 3 spelers (5), 4 spelers (4).</li>
-                    <li>Grid: 5x5 met een 'chamois' kaart in het midden.</li>
+                    <li class="introSpelStart">Iedere speler krijgt 6 kaarten.</li>
+                    <li class="introSpelStart">Aantal hikers: 2 spelers (8), 3 spelers (5), 4 spelers (4).</li>
+                    <li class="introSpelStart">Grid: 5x5 met een 'chamois' kaart in het midden.</li>
                 </ul>
             </section>
 
             <section>
                 <h2>Verloop van je beurt</h2>
-                <p><strong>1. Kaart spelen (VERPLICHT):</strong></p>
+                <p>Kaart spelen (VERPLICHT):</p>
                 <ul>
-                    <li>Plaats horizontaal of verticaal aan een bestaande kaart.</li>
-                    <li>Mag geen 6de rij of kolom vormen.</li>
+                    <li class="voorwaarden">Plaats horizontaal of verticaal aan een bestaande kaart.</li>
+                    <li class="voorwaarden">Mag geen 6de rij of kolom vormen.</li>
                 </ul>
-                <p><strong>2. Hiker plaatsen (OPTIONEEL):</strong></p>
+                <p>Hiker plaatsen (OPTIONEEL):</p>
                 <ul>
-                    <li>Kaart moet leeg zijn.</li>
-                    <li>Moet aangrenzend zijn aan je zojuist geplaatste kaart.</li>
-                    <li>Maximaal 1 per beurt.</li>
+                    <li class="voorwaarden">Kaart moet leeg zijn.</li>
+                    <li class="voorwaarden">Moet aangrenzend zijn aan je zojuist geplaatste kaart.</li>
+                    <li class="voorwaarden">Maximaal 1 per beurt.</li>
                 </ul>
+                <p>Je krijgt een nieuwe kaart.</p>
             </section>
 
             <div class="dialog-footer">
                 <button id="openScoringBtn">Bekijk Scoring Details</button>
             </div>
+
         </dialog>
 
         <dialog id="scoringPopup">
