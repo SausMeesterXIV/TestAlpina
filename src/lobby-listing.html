@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="assets/css/screen.css">
     <link rel="stylesheet" href="assets/css/lobby-listing.css">
 
-    <script src="lobby-listing.js" type="module"></script>
+    <script src="./assets/js/lobby-listing.js" type="module"></script>
 </head>
 <body>
     <nav>
@@ -42,27 +42,17 @@
         </section>
 
     </article>
-    <template>
+    <template id="expedition-template">
         <div class="expedition">
             <div class="expedition-info">
-                <p class="comment"></p>
-                <h2></h2>
-                <p></p>
+                <p class="comment">ID: gameId</p>
+                <h2>Expedition name</h2>
+                <p>x/x players</p>
             </div>
             
             <input type="button" value="spectate">
             <input type="button" value="join">
         </div>
     </template>
-    <!--<div class="expedition">
-                    <div class="expedition-info">
-                        <p class="comment">ID:37183hgf2</p>
-                        <h2>expedition</h2>
-                        <p>3/4 players</p>
-                    </div>
-
-                    <input type="button" value="spectate">
-                    <input type="button" value="join">
-                </div>-->
 </body>
 </html>
