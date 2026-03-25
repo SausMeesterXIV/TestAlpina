@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="../assets/js/rules.js"></script>
+    <title>Alpina-rules</title>
+    <script src="../assets/js/rules.js" defer></script>
 </head>
 <body>
-    <main>
-        <button id="openSettingsBtn" onclick="openSettingsPopup()">Spelregels bekijken</button>
+    <main> <!-- Eventlisterener plaatsen!!!-->
+        <button id="openSettingsBtn">Spelregels bekijken</button>
         <!--Placeholder button
         Button nog op schermen plaatsen-->
 
         <dialog id="settingsPopup">
-        <button id="closeSettingsBtn" onclick="closeSettingsPopup()">Sluiten</button>
-                    <!--Nog icootnjes maken ipv tekst-->
+        <button id="closeSettingsBtn">&times;</button>
+                    <!--icoon gebruiken scorebook.html-->
         <button id="openScoringBtn" onclick="openScoringPopup()">Scoring</button>
         
 
@@ -27,28 +27,26 @@
 
        
             <h2>Start van het spel</h2>
-            <ul>
-                <li>Iedere speler krijgt 6 kaarten</li>
-                <li>iedere speler krijgt een aantal hikers (2 spelers = 8 hikers | 3 spelers = 5 hikers | 4 spelers = 4 hikers).</li>
-                <li>Er wordt een 5x5 grid gebouwd met een random 'chamois' kaart in het midden. Dit is de startkaart </li>
+            <p>Iedere speler krijgt 6 kaarten</p>
+            <p>Iedere speler krijgt een aantal hikers (2 spelers = 8 hikers | 3 spelers = 5 hikers | 4 spelers = 4 hikers).</p>
+            <p>Er wordt een 5x5 grid gebouwd met een random 'chamois' kaart in het midden. Dit is de startkaart.</p>
+
                 <!-- deze lijn moet aangepast worden als er een dynamisch grid wordt gebouwd 
                  Er wordt een nieuw grid gemaakt met een chamois kaart als startkaart. -->
-            </ul>
-           
 
             <h2>Verloop van je beurt</h2>
             <p>Je speelt een kaart. VERPLICHT!
                <ul>
-                    <li>Je plaats je kaart horizontaal of verticaal van een besaande kaart</li>
-                    <li>Je kaart mag geen 6de rij of kolom maken</li>
+                    <li>Je plaats je kaart horizontaal of verticaal van een besaande kaart.</li>
+                    <li>Je kaart mag geen 6de rij of kolom maken.</li>
                 </ul>
             </p>
 
             <p>Je plaats een hiker. OPTIONEEL!</p>
                 <ul>
-                    <li>Er mag nog geen hiker staan op de kaart</li>
-                    <li>Je mag een hiker zetten op een aangrenzende kaart van jouw geplaatste kaart</li>
-                    <li>Je mag 1 hiker per beurt plaatsen</li>
+                    <li>Er mag nog geen hiker staan op de kaart.</li>
+                    <li>Je mag een hiker zetten op een aangrenzende kaart van jouw geplaatste kaart.</li>
+                    <li>Je mag 1 hiker per beurt plaatsen.</li>
                 </ul>
             </p>
 

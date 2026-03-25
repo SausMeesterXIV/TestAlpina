@@ -1,5 +1,6 @@
+//Omvat rules.html en scoring.html
 function openSettingsPopup() {
-    document.getElementById("settingsPopup").showModal();
+    addEventListenerdocument.getElementById("settingsPopup").showModal();
 }
 
 function closeSettingsPopup() {
