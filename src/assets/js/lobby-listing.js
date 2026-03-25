@@ -4,7 +4,7 @@ function init () {
     renderGameList();
 }
 
-function fetchGames() {
+function fetchUnstartedGames() {
     return fetchFromServer("/games?started=false")
         .then(resp => resp.games);
 }
@@ -28,7 +28,7 @@ function renderGames(games) {
 }
 
 function renderGameList() {
-    fetchGames().then(renderGames)
+    fetchUnstartedGames().then(renderGames)
 }
 
 init();
