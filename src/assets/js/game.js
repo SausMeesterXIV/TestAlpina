@@ -2,12 +2,12 @@ import {fetchAllCards} from "./api/card-info.js";
 import {fetchFromServer} from "./data-connector/api-communication-abstractor.js";
 
 const arrayOfCards =
-  [{id: 50, animal: "chamois", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 2, selector: "DW", filter: "HI"}},
-  {id: 50, animal: "frog", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 2, selector: "DW", filter: "HI"}},
-  {id: 50, animal: "chamois", landscape: "forest", victoryPointCondition: {basescore: 0, score: 2, selector: "DW", filter: "HI"}},
-  {id: 50, animal: "chamois", landscape: "lake", victoryPointCondition: {basescore: 0, score: 2, selector: "DW", filter: "HI"}},
-  {id: 50, animal: "nutcracker", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 2, selector: "DW", filter: "HI"}},
-  {id: 50, animal: "frog", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 2, selector: "DW", filter: "HI"}}]
+  [{id: 50, animal: "chamois", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 1, selector: "DW", filter: "HI"}},
+  {id: 49, animal: "frog", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 2, selector: "DW", filter: "HI"}},
+  {id: 48, animal: "chamois", landscape: "forest", victoryPointCondition: {basescore: 1, score: 2, selector: "DW", filter: "HI"}},
+  {id: 1, animal: "chamois", landscape: "lake", victoryPointCondition: {basescore: 2, score: 1, selector: "DW", filter: "HI"}},
+  {id: 22, animal: "nutcracker", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 2, selector: "DW", filter: "HI"}},
+  {id: 12, animal: "frog", landscape: "mountain", victoryPointCondition: {basescore: 1, score: 2, selector: "DW", filter: "HI"}}]
 //for testing purposes
 
 
