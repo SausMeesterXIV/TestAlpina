@@ -9,7 +9,7 @@ function fetchAllGames() {
 
 function fetchSpecificGame(gameId) {
   return fetchAllGames().then(games => {
-    if (games !== []){
+    if (games.length > 0){
       return games.find(game => game.gameId === gameId);
     }
     // return object because in games there are object (game)
