@@ -105,3 +105,31 @@ footer {
     margin: auto;
     gap: 0.5rem;
 }
+
+#bottom-area {
+    grid-area: 2 / 2;
+}
+
+#hand {
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
+}
+
+.card-image {
+    height: 6rem;
+    width: 6rem;
+    padding-left: 0.5rem;
+    padding-top: 0.5rem;
+}
+
+.win-conditions {
+    justify-self: center;
+}
+
+.card {
+    margin: 0.2rem;
+    border: 0.2rem black double;
+    height: 9rem;
+    width: 7rem
+}
