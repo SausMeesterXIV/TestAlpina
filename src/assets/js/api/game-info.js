@@ -28,5 +28,6 @@ function fetchGameDetails(gameId) {
 
 export{
   fetchSpecificGame,
-  fetchUnstartedGames
+  fetchUnstartedGames,
+  fetchGameDetails
 };
