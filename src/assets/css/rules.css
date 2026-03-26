@@ -28,7 +28,7 @@ dialog, .mock-dialog {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 100vh; /* Zorgt ervoor dat de overlay altijd het hele scherm bedekt 100vh = 100% van de viewport hoogte */
     margin: 0;
 }
 
