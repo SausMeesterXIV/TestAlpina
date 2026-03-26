@@ -23,7 +23,7 @@ function fetchUnstartedGames() {
 }
 
 function fetchGameDetails(gameId) {
-  return fetchFromServer(`/games/${getGameId()}`);
+  return fetchFromServer(`/games/${gameId()}`);
 } 
 
 export{
