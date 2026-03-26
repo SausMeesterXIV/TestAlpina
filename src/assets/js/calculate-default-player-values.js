@@ -1,9 +1,24 @@
 import {fetchPlayerInfo} from "./api/player-info.js"
+import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
 
 function defaultPlayerName(gameId){
-  let playername = `player`;
+  let playerName = `player`;
 
   fetchPlayerInfo(gameId).then(players => {
-    return playername + players.length;
+    return playerName + players.length;
   });
+}
+
+function defaultPlayerColor(gameId) {
+  const hikerColors = ["purple", "yellow", "red", "lightblue"];
+
+  return fetchPlayerInfo(gameId)
+    .then(players => {
+      const usedHikers = players.map(player => player.hiker);
+      return hikerColors.filter(color => !usedHikers.includes(color));
+    })
+    .then(hikers => {
+      // selects the first hiker that is available.
+      return hikers[0];
+    });
 }
