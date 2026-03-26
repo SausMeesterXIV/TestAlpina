@@ -21,3 +21,8 @@ function defaultPlayerColor(gameId) {
       return hikers[0];
     });
 }
+
+export{
+  defaultPlayerName,
+  defaultPlayerColor
+}
