@@ -4,26 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alpina - Scorebook</title>
-    <link rel="stylesheet" href="assets/css/reset.css">
-    <link rel="stylesheet" href="assets/css/screen.css">
-    <link rel="stylesheet" href="assets/css/rules.css">
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/screen.css">
+    <link rel="stylesheet" href="../assets/css/rules.css">
 </head>
-<body>
-<header>
-    <h1 class="header">Scores</h1>
-    <a href="rules.html" class="exitButton" title="Sluiten">✖</a>
-</header>
-<main>
-    <ul class="scoring-list">
-        <li class="scoring">
-            <img src="../images/rules placeholder.png" alt="scoring1">
-            <p>Scoring 1: Uitleg puntentelling</p>
-        </li>
+<body class="scoring-body">
+    
+    <main class="mock-dialog">
+        <header class="dialog-header">
+            <h1>Scores</h1>
+            <a href="rules.html" class="exit-button" title="Sluiten">✖</a>
+        </header>
+        
+        <ul class="scoring-list">
+            <li class="scoring">
+                <img src="../assets/images/rules_placeholder.png" alt="scoring1">
+                <p>Scoring 1: Uitleg puntentelling</p>
+            </li>
+            <li class="scoring">
+                <img src="../assets/images/rules_placeholder.png" alt="scoring2">
+                <p>Scoring 2: Bergtoppen</p>
+            </li>
         </ul>
 
-    <div class="navigation-footer">
-        <a href="rules.html" class="btn-back">Terug naar regels</a>
-    </div>
-</main>
+        <div class="dialog-footer-center">
+            <a href="rules.html?popup=open" class="btn-back">Terug naar regels</a>
+        </div>
+    </main>
+
 </body>
 </html>

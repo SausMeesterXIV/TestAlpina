@@ -1,27 +1,58 @@
-// Selecteer de dialoogvensters (Let op: CamelCase gebruiken voor variabelen!)
-const rulesPopup = document.getElementById('settings-popup');
+class SettingsController {
+    constructor() {
+        // Domelementen ophalen via querySelector
+        this.rulesPopup = document.querySelector('#settings-popup');
+        this.openBtn = document.querySelector('#open-settings-btn');
+        this.closeBtn = document.querySelector('#close-settings-btn');
+        this.scoringBtn = document.querySelector('#open-scoring-btn');
 
-// 1. Open de spelregels (Modal)
-const openBtn = document.getElementById('open-settings-btn');
-if (openBtn) {
-    openBtn.onclick = () => {
-        rulesPopup.showModal();
-    };
-}
+        this.initUI();
+    }
 
-// 2. Sluit de spelregels popup
-const closeBtn = document.getElementById('close-settings-btn');
-if (closeBtn) {
-    closeBtn.onclick = () => {
-        rulesPopup.close();
-    };
-}
+    initUI() {
+        this.checkUrlParams();
+        this.setupEventListeners();
+    }
 
-// 3. Ga van de regels-popup naar de aparte scoring pagina
-const scoringBtn = document.getElementById('open-scoring-btn');
-if (scoringBtn) {
-    scoringBtn.onclick = () => {
-        // Navigeer direct naar de andere HTML pagina
+    checkUrlParams() {
+        // 1. Controleer of de pop-up direct open moet via de URL-parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('popup') === 'open' && this.rulesPopup) {
+            this.rulesPopup.showModal();
+        }
+    }
+
+    setupEventListeners() {
+        // 2. Open pop-up
+        if (this.openBtn && this.rulesPopup) {
+            this.openBtn.addEventListener('click', () => this.handleOpenClick());
+        }
+
+        // 3. Sluit pop-up
+        if (this.closeBtn && this.rulesPopup) {
+            this.closeBtn.addEventListener('click', () => this.handleCloseClick());
+        }
+
+        // 4. Navigeer naar aparte scoring.html
+        if (this.scoringBtn) {
+            this.scoringBtn.addEventListener('click', () => this.handleScoringClick());
+        }
+    }
+
+    handleOpenClick() {
+        this.rulesPopup.showModal();
+    }
+
+    handleCloseClick() {
+        this.rulesPopup.close();
+    }
+
+    handleScoringClick() {
         window.location.href = 'scoring.html';
-    };
+    }
 }
+
+// Initialize on DOM load
+document.addEventListener('DOMContentLoaded', () => {
+    window.settingsController = new SettingsController();
+});
