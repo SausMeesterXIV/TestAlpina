@@ -2,7 +2,7 @@ import {defaultPlayerName, defaultPlayerColor} from "../calculate-default-player
 import {fetchFromServer} from "../data-connector/api-communication-abstractor.js";
 
 function joinGame(gameId){
-  defaultPlayerName(gameId)
+  return defaultPlayerName(gameId)
     .then(name =>{
       return name;
     })
@@ -16,3 +16,5 @@ function joinGame(gameId){
       return fetchFromServer(url,"POST", { playerName: data.name })
     });
 }
+
+export {joinGame};
