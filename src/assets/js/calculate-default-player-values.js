@@ -3,11 +3,11 @@ import {fetchPlayerInfo} from "./api/player-info.js"
 function defaultPlayerName(gameId){
   let playername = `player`;
 
-  fetchPlayerInfo(gameId).then(players => playername += players.length).then(name => {console.log(name)});
+  fetchPlayerInfo(gameId).then(players => {
+    return playername + players.length;
+  });
 }
 
 function defaulfPlayerHiker(gamId){
-
+  return null;
 }
-
-defaultPlayerName(1);
