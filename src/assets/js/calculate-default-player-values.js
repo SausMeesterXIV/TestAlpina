@@ -3,7 +3,7 @@ import {fetchPlayerInfo} from "./api/player-info.js";
 function defaultPlayerName(gameId){
   let playerName = `player`;
 
-  fetchPlayerInfo(gameId).then(players => {
+  return fetchPlayerInfo(gameId).then(players => {
     return playerName + players.length;
   });
 }
