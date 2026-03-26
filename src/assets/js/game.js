@@ -1,5 +1,8 @@
 import {fetchAllCards} from "./api/card-info.js";
 import {fetchFromServer} from "./data-connector/api-communication-abstractor.js";
+import {fetchPlayerInfo} from "./api/player-info.js";
+import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
+
 
 const arrayOfCards =
   [{id: 50, animal: "chamois", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 1, selector: "HI", filter: "Pa"}},
@@ -13,6 +16,9 @@ const arrayOfCards =
 
 function init() {
   renderHand(arrayOfCards);
+  establishPlayingOrder();
+  updateProgressBar();
+  updateCurrentPlayer();
 }
 
 function renderHand(cardArray) {
@@ -29,6 +35,18 @@ function renderHand(cardArray) {
   })
 
   document.querySelector("#hand").appendChild($fragment);
+}
+
+function updateProgressBar() {
+
+}
+
+function updateCurrentPlayer() {
+  document.querySelector("aside em").textContent = $currentPlayer;
+}
+
+function establishPlayingOrder() {
+  fetchPlayerInfo(Number(loadFromStorage("gameId")))
 }
 
 init();
