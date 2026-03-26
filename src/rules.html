@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpina - Rules</title>
+    <link rel="stylesheet" href="assets/css/rules.css">
+    <script src="assets/js/rules.js" defer></script>
+</head>
+<body>
+    <main>
+        <button id="open-settings-btn">View Rules</button>
+
+        <dialog id="settings-popup">
+            <div class="dialog-header">
+                <h1>Alpina Rules</h1>
+                <button id="close-settings-btn" class="exit-button">✖</button>
+            </div>
+
+            <section>
+                <h2>Goal of the game</h2>
+                <p>Score the most victory points by strategically placing your Hikers on the cards.</p>
+            </section>
+
+            <section>
+                <h2>Game setup</h2>
+                <ul>
+                    <li class="intro-spel-start">Each player receives 6 cards.</li>
+                    <li class="intro-spel-start">Number of Hikers: 2 players (8), 3 players (5), 4 players (4).</li>
+                    <li class="intro-spel-start">Grid: 5x5 with a 'Chamois' card in the center.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Turn overview</h2>
+                <p>Play a card (MANDATORY):</p>
+                <ul>
+                    <li class="voorwaarden">Place horizontally or vertically adjacent to an existing card.</li>
+                    <li class="voorwaarden">Must not form a 6th row or column.</li>
+                </ul>
+                <p>Place a Hiker (OPTIONAL):</p>
+                <ul>
+                    <li class="voorwaarden">Card must be empty.</li>
+                    <li class="voorwaarden">Adjacent to the card you just placed.</li>
+                </ul>
+                <p>Draw a card</p>
+            </section>
+
+            <div class="dialog-footer-center">
+                <button id="open-scoring-btn">View Scoring Details</button>
+            </div>
+        </dialog>
+    </main>
+</body>
+</html>
