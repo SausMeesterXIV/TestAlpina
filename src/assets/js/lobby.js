@@ -3,6 +3,7 @@ import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
 
 function init() {
    renderPlayers();
+   renderPlayerInfo();
 }
 
 function getGameId() {
@@ -15,6 +16,34 @@ function renderPlayers() {
         .then(players => players.forEach(player => {
             $container.insertAdjacentHTML("beforeend", `<h2>${player.name}</h2>`)
         }));
+}
+
+function getPlayerName(){
+  return loadFromStorage("playerName");
+}
+
+function renderPlayerInfo(){
+  const gameId = Number(loadFromStorage("gameId"));
+  const playername = getPlayerName();
+  console.log(playername)
+
+  fetchPlayerInfo(gameId)
+    .then(players => players.find(player => player.name === playername))
+    .then(player => {
+      loadPlayerName(player.name);
+      selectPlayerColor(player.hiker);
+    });
+}
+
+function loadPlayerName(name){
+  const $playerNameInput = document.querySelector("#nickname-input");
+  $playerNameInput.value = name;
+}
+
+function selectPlayerColor(hiker){
+  const selectedColor = `#${hiker}-radio`
+  const $selectedRadioButton = document.querySelector(`${selectedColor}`);
+  $selectedRadioButton.checked = true;
 }
 
 init();
