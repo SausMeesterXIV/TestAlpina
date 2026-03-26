@@ -7,7 +7,3 @@ function defaultPlayerName(gameId){
     return playername + players.length;
   });
 }
-
-function defaulfPlayerHiker(gamId){
-  return null;
-}
