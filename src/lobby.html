@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpina | Lobby</title>
+
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/screen.css">
+    <link rel="stylesheet" href="assets/css/lobby.css">
+</head>
+<body>
+    <nav>
+        <ul id="navbar">
+            <li><a href="#">back</a></li>
+            <li id="alpina">ALPINA</li>
+            <li id="right-side">
+                <a href="#">rules</a>
+                <a href="#">sound</a>
+            </li> 
+        </ul>
+    </nav>
+
+    <article>
+        <section id="players-list">
+            <h1>players</h1>
+            <div id="player-names">
+                <h2>Rhune (host)</h2>
+                <h2>Rhune</h2>
+                <h2>Rhune</h2>
+                <h2>Rhune (you)</h2>
+            </div>
+        </section>
+
+        <section id="game-setup">
+            <h1>Game setup</h1>
+            <div>
+                <p class="comment">Configure your identity for the upcoming game.</p>
+                <label for="nickname-input">Hiker nickname:</label>
+                <input type="text" name="nickname" id="nickname-input" placeholder="e.g. Dayvid">
+            </div>
+            <div>
+                <input type="radio" id="purple-radio" name="color" value="Purple">
+                <label for="purple-radio" class="color-label">Purple</label>
+                <input type="radio" id="yellow-radio" name="color" value="Yellow">
+                <label for="yellow-radio" class="color-label">Yellow</label>
+                <input type="radio" id="red-radio" name="color" value="Red">
+                <label for="red-radio" class="color-label">Red</label>
+                <input type="radio" id="lightblue-radio" name="color" value="Lightblue">
+                <label for="lightblue-radio" class="color-label">Lightblue</label>
+            </div>
+        </section>
+    </article>
+</body>
+</html>
