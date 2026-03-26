@@ -23,5 +23,6 @@ function fetchUnstartedGames() {
 }
 
 export{
-  fetchSpecificGame, fetchUnstartedGames
-}
+  fetchSpecificGame,
+  fetchUnstartedGames
+};
