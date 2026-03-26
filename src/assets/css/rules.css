@@ -11,24 +11,18 @@ ul { font-size: 1.25rem; margin-bottom: 0.75rem; list-style: none; padding: 0; }
 .voorwaarden::before { content: "○ "; }
 
 /* --- Pop-up Dialog & Mock Dialog --- */
-/* We delen deze styling zodat de pop-up en de losse scoring-pagina identiek zijn */
 dialog, .mock-dialog {
     background-color: #fff;
     border: none;
     border-radius: 8px;
     padding: 2rem;
     width: 100%;
-    max-width: 600px; /* Zorgt voor exact dezelfde breedte */
+    max-width: 700px; /* Iets breder voor de tekstjes naast elkaar */
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     box-sizing: border-box;
     color: #000;
 }
 
-dialog::backdrop {
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-/* Specifiek voor de body van scoring.html om de backdrop na te bootsen */
 .scoring-body {
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
@@ -38,16 +32,12 @@ dialog::backdrop {
     margin: 0;
 }
 
-/* --- Headers & Knoppen binnen de Dialogs --- */
+/* --- Headers & Knoppen --- */
 .dialog-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1.5rem;
-}
-
-.dialog-header h1 {
-    margin: 0; /* Override voor perfecte uitlijning met kruisje */
 }
 
 .exit-button {
@@ -57,35 +47,15 @@ dialog::backdrop {
     cursor: pointer;
     text-decoration: none;
     color: #000;
-    line-height: 1;
 }
 
-.dialog-footer {
-    margin-top: 2rem;
-    text-align: right; /* Regels knop rechts */
-}
-
-.dialog-footer-center {
-    margin-top: 3rem;
-    text-align: center; /* Scoring knop in het midden */
-}
-
-.btn-back, #open-scoring-btn {
-    padding: 0.5rem 1rem;
-    background-color: #eee;
-    text-decoration: none;
-    color: #000;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
-/* --- Scoring Lijst --- */
+/* --- Scoring Grid --- */
 .scoring-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
+    padding: 0;
+    margin: 0;
 }
 
 .scoring {
@@ -99,5 +69,48 @@ dialog::backdrop {
 .scoring img {
     max-width: 100%;
     height: auto;
-    border: 1px solid #ddd; /* Optioneel: helpt bij het zien van placeholders */
+    border: 1px solid #ddd;
+}
+
+/* --- De 11e Kaart Centreren --- */
+/* We laten deze kaart over beide kolommen spannen */
+.scoring:nth-child(11) {
+    grid-column: 1 / span 2; 
+    margin-top: 1rem;
+}
+
+/* --- De Voetnoten Sectie --- */
+/* We maken een container voor de voetnoten zodat ze naast elkaar staan */
+.footnote-container {
+    grid-column: 1 / span 2;
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
+}
+
+.footnote {
+    flex: 1; /* Beide teksten nemen evenveel ruimte in */
+    font-size: 0.875rem;
+    text-align: left;
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* --- Footer --- */
+.dialog-footer-center {
+    margin-top: 2rem;
+    text-align: center;
+    grid-column: 1 / span 2;
+}
+
+.back-to-rules {
+    padding: 0.5rem 1rem;
+    background-color: #eee;
+    text-decoration: none;
+    color: #000;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
 }
