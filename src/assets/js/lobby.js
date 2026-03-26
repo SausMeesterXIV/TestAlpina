@@ -18,6 +18,7 @@ function renderPlayers() {
         }));
 }
 
+// olivier delete when you are ready
 function getPlayerName(){
   return loadFromStorage("playerName");
 }
