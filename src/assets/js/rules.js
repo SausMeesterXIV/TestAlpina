@@ -1,58 +1,61 @@
-class SettingsController {
-    constructor() {
-        // Domelementen ophalen via querySelector
-        this.rulesPopup = document.querySelector('#settings-popup');
-        this.openBtn = document.querySelector('#open-settings-btn');
-        this.closeBtn = document.querySelector('#close-settings-btn');
-        this.scoringBtn = document.querySelector('#open-scoring-btn');
+// Globale variabelen declareren (References / Sequencing)
+// Veranderd van 'const' naar 'let' omdat ze later pas geïnitialiseerd worden.
+let rulesPopup;
+let openBtn;
+let closeBtn;
+let scoringBtn;
 
-        this.initUI();
-    }
+// Hoofdfunctie om de UI te initialiseren (Functions)
+function initUI() {
+    // Domelementen ophalen
+    rulesPopup = document.querySelector('#settings-popup');
+    openBtn = document.querySelector('#open-settings-btn');
+    closeBtn = document.querySelector('#close-settings-btn');
+    scoringBtn = document.querySelector('#open-scoring-btn');
 
-    initUI() {
-        this.checkUrlParams();
-        this.setupEventListeners();
-    }
+    checkUrlParams();
+    setupEventListeners();
+}
 
-    checkUrlParams() {
-        // 1. Controleer of de pop-up direct open moet via de URL-parameter
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('popup') === 'open' && this.rulesPopup) {
-            this.rulesPopup.showModal();
-        }
-    }
-
-    setupEventListeners() {
-        // 2. Open pop-up
-        if (this.openBtn && this.rulesPopup) {
-            this.openBtn.addEventListener('click', () => this.handleOpenClick());
-        }
-
-        // 3. Sluit pop-up
-        if (this.closeBtn && this.rulesPopup) {
-            this.closeBtn.addEventListener('click', () => this.handleCloseClick());
-        }
-
-        // 4. Navigeer naar aparte scoring.html
-        if (this.scoringBtn) {
-            this.scoringBtn.addEventListener('click', () => this.handleScoringClick());
-        }
-    }
-
-    handleOpenClick() {
-        this.rulesPopup.showModal();
-    }
-
-    handleCloseClick() {
-        this.rulesPopup.close();
-    }
-
-    handleScoringClick() {
-        window.location.href = 'scoring.html';
+function checkUrlParams() {
+    // 1. Controleer of de pop-up direct open moet via de URL-parameter
+    let urlParams = new URLSearchParams(window.location.search);
+    
+    // Selection & Booleans: controleer expliciet of het element bestaat
+    if (urlParams.get('popup') === 'open' && rulesPopup !== null) {
+        rulesPopup.showModal();
     }
 }
 
-// Initialize on DOM load
-document.addEventListener('DOMContentLoaded', () => {
-    window.settingsController = new SettingsController();
-});
+function setupEventListeners() {
+    // 2. Open pop-up (Selection)
+    if (openBtn !== null && rulesPopup !== null) {
+        openBtn.addEventListener('click', handleOpenClick);
+    }
+
+    // 3. Sluit pop-up
+    if (closeBtn !== null && rulesPopup !== null) {
+        closeBtn.addEventListener('click', handleCloseClick);
+    }
+
+    // 4. Navigeer naar aparte scoring.html
+    if (scoringBtn !== null) {
+        scoringBtn.addEventListener('click', handleScoringClick);
+    }
+}
+
+// Losse handler functies (Functions)
+function handleOpenClick() {
+    rulesPopup.showModal();
+}
+
+function handleCloseClick() {
+    rulesPopup.close();
+}
+
+function handleScoringClick() {
+    globalThis.location.href = 'scoring.html';
+}
+
+// Initialize on DOM load met een standaard callback functie (geen arrow function)
+document.addEventListener('DOMContentLoaded', initUI);
