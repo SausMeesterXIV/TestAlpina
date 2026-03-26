@@ -24,11 +24,11 @@ function getPlayerName(){
 
 function renderPlayerInfo(){
   const gameId = Number(loadFromStorage("gameId"));
-  const playername = getPlayerName();
-  console.log(playername)
+  const playerName = getPlayerName();
+  console.log(playerName)
 
   fetchPlayerInfo(gameId)
-    .then(players => players.find(player => player.name === playername))
+    .then(players => players.find(player => player.name === playerName))
     .then(player => {
       loadPlayerName(player.name);
       selectPlayerColor(player.hiker);
