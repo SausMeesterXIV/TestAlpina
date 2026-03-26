@@ -2,25 +2,19 @@ import { fetchPlayerInfo } from "./api/player-info.js";
 import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
 
 function init() {
-    loadPlayers();
+   renderPlayers();
 }
 
 function getGameId() {
     return Number(loadFromStorage("gameId")); // Number() changes the returned value into an actual int instead of a String.
 }
 
-function getPlayerNames() {
-    const names = [];
+function renderPlayers() {
+    const $container = document.querySelector("#player-names");
     fetchPlayerInfo(getGameId())
         .then(players => players.forEach(player => {
-            names.push(player.name);
+            $container.insertAdjacentHTML("beforeend", `<h2>${player.name}</h2>`)
         }));
-    return names;
-}
-
-function renderPlayers() {
-    
 }
 
 init();
-getPlayerNames();
