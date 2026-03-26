@@ -1,5 +1,4 @@
-import {fetchPlayerInfo} from "./api/player-info.js"
-import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
+import {fetchPlayerInfo} from "./api/player-info.js";
 
 function defaultPlayerName(gameId){
   let playerName = `player`;
