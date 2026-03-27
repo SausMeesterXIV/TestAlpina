@@ -26,7 +26,6 @@ function getPlayerName(){
 function renderPlayerInfo(){
   const gameId = Number(loadFromStorage("gameId"));
   const playerName = getPlayerName();
-  console.log(playerName)
 
   fetchPlayerInfo(gameId)
     .then(players => players.find(player => player.name === playerName))
@@ -42,7 +41,7 @@ function loadPlayerName(name){
 }
 
 function selectPlayerColor(hiker){
-  const selectedColor = `#${hiker}-radio`
+  const selectedColor = `#${hiker}-radio`;
   const $selectedRadioButton = document.querySelector(`${selectedColor}`);
   $selectedRadioButton.checked = true;
 }
