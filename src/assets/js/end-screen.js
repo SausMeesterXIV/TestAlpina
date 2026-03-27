@@ -20,6 +20,7 @@ function calcBestPlayer(players) {
         }
         return currentBest;
     })
+    // TODO: Edge-case: if 2 players have the same amount of points, the last one in turn-order wins.
 }
 
 function hasMostPoints(players) {
