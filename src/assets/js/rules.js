@@ -12,6 +12,7 @@ function initUI() {
     openBtn = document.querySelector('#open-settings-btn');
     closeBtn = document.querySelector('#close-settings-btn');
     scoringBtn = document.querySelector('#open-scoring-btn');
+    closeBtnRedirect = document.querySelector('#close-settings-btn');
 
     checkUrlParams();
     setupEventListeners();
@@ -59,3 +60,7 @@ function handleScoringClick() {
 
 // Initialize on DOM load met een standaard callback functie (geen arrow function)
 document.addEventListener('DOMContentLoaded', initUI);
+
+document.querySelector("#close-settings-btn").addEventListener("click", function() {
+    window.location.href = "index.html";
+});
