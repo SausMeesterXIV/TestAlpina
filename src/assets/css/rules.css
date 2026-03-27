@@ -10,8 +10,21 @@ ul { font-size: 1.25rem; margin-bottom: 0.75rem; list-style: none; padding: 0; }
 .voorwaarden { font-size: 1rem; margin-bottom: 0; margin-left: 1.5rem; }
 .voorwaarden::before { content: "○ "; }
 
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+main {
+    width: 100%;
+    max-width: 45rem; 
+    padding: 2rem;
+    box-sizing: border-box;
+}
 /* --- Pop-up Dialog & Mock Dialog --- */
-dialog, .mock-dialog {
+article, .mock-dialog {
     background-color: #fff;
     border: none;
     border-radius: 0.5rem;
