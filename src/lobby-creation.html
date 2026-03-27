@@ -24,12 +24,13 @@
 </nav>
 
 <h1>New expedition</h1>
-<form id="name">
+<form>
+<div id="name">
     <label for="expedition-name">Expedition name:</label><br>
     <input type="text" id="expedition-name" name="expedition-name" placeholder="e.g. ILoveAnimals" ><br>
-</form>
+</div>
 
-<form id="players">
+<div id="players">
     <h2>Players:</h2>
     <input type="radio" id="player-choice-2" name="amount of players" value="2">
     <label for="player-choice-2">2</label>
@@ -37,8 +38,8 @@
     <label for="player-choice-3">3</label>
     <input type="radio" id="player-choice-4" name="amount of players" value="4">
     <label for="player-choice-4">4</label>
-</form>
-<form id="time">
+</div>
+<div id="time">
     <h2>Max turn time (in seconds):</h2>
     <input type="radio" id="time-choice-20" name="amount of time" value="20">
     <label for="time-choice-20">20</label>
@@ -46,15 +47,16 @@
     <label for="time-choice-40">40</label>
     <input type="radio" id="time-choice-60" name="amount of time" value="60">
     <label for="time-choice-60">60</label>
-</form>
-<form>
+</div>
+<div>
     <label for="private">Private?</label>
     <input type="checkbox" id="private" name="private">
-</form>
+</div>
 
 
-<form>
+<div>
     <input type="button" value="Create expedition">
+</div>
 </form>
 
 </body>
