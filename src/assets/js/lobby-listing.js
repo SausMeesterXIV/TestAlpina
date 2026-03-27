@@ -31,13 +31,19 @@ function createGameElement(game) {
 
 function renderGames(games) {
     const $target = document.querySelector("#expeditions");
+
+    const fragment = document.createDocumentFragment();
+
     games.forEach(game => {
-        $target.appendChild(createGameElement(game));
+        fragment.appendChild(createGameElement(game));
     })
+
+    $target.replaceChildren(fragment);
 }
 
 function renderGameList() {
     fetchUnstartedGames().then(renderGames);
+    setTimeout(renderGameList, 2000); // creates a new document fragment, appends each game to it, and then replaces the old games once the fragment is ready to overwrite them: this avoids flickering
 }
 
 function joinOrSpectateGame(e){
