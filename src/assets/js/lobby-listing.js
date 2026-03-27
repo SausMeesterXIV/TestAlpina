@@ -4,10 +4,16 @@ import {saveToStorage} from "./data-connector/local-storage-abstractor.js";
 
 function init () {
     renderGameList();
+    addEventListeners();
+    //$expeditions.addEventListener('click', spectate);
+}
 
+function addEventListeners() {
     const $expeditions = document.querySelector('#expeditions');
     $expeditions.addEventListener('click', joinOrSpectateGame, true);
-    //$expeditions.addEventListener('click', spectate);
+
+    const $createGameBtn = document.querySelector("#new-expedition-button");
+    $createGameBtn.addEventListener("click", redirectToCreationPage)
 }
 
 function createGameElement(game) {
@@ -58,8 +64,12 @@ function joinGame(gameId){
 
   fetchJoinGame(Number(gameId)).then(() => {
     // redirect page to lobby.
-    window.location.replace("http://localhost:63342/client/src/lobby.html")}
+    window.location.replace("lobby.html")}
   );
+}
+
+function redirectToCreationPage() {
+  window.location.replace("lobby-creation.html");
 }
 
 init();

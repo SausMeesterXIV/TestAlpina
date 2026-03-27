@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/screen.css">
     <link rel="stylesheet" href="assets/css/lobbyCreation.css">
+
+    <script src="./assets/js/lobby-creation.js" type="module"></script>
 </head>
 <body>
 <nav>
@@ -22,37 +24,39 @@
 </nav>
 
 <h1>New expedition</h1>
-<form id="name">
-    <label for="expedition-name">Expedition name:</label><br>
-    <input type="text" id="expedition-name" name="expedition-name" placeholder="e.g. ILoveAnimals" ><br>
-</form>
-
-<form id="players">
-    <h2>Players:</h2>
-    <input type="radio" id="player-choice-2" name="amount of players" value="2">
-    <label for="player-choice-2">2</label>
-    <input type="radio" id="player-choice-3" name="amount of players" value="3">
-    <label for="player-choice-3">3</label>
-    <input type="radio" id="player-choice-4" name="amount of players" value="4">
-    <label for="player-choice-4">4</label>
-</form>
-<form id="time">
-    <h2>Max turn time (in seconds):</h2>
-    <input type="radio" id="time-choice-20" name="amount of time" value="20">
-    <label for="time-choice-20">20</label>
-    <input type="radio" id="time-choice-40" name="amount of time" value="40">
-    <label for="time-choice-40">40</label>
-    <input type="radio" id="time-choice-60" name="amount of time" value="60">
-    <label for="time-choice-60">60</label>
-</form>
 <form>
+<div id="name">
+    <label for="expedition-name">Expedition name:</label><br>
+    <input type="text" id="expedition-name" name="expedition-name" placeholder="e.g. ILoveAnimals" required><br>
+</div>
+
+<div id="players">
+    <h2>Players:</h2>
+    <input type="radio" id="player-choice-2" name="amount-of-players" value="2" checked>
+    <label for="player-choice-2">2</label>
+    <input type="radio" id="player-choice-3" name="amount-of-players" value="3">
+    <label for="player-choice-3">3</label>
+    <input type="radio" id="player-choice-4" name="amount-of-players" value="4">
+    <label for="player-choice-4">4</label>
+</div>
+<div id="time">
+    <h2>Max turn time (in seconds):</h2>
+    <input type="radio" id="time-choice-20" name="amount-of-time" value="20">
+    <label for="time-choice-20">20</label>
+    <input type="radio" id="time-choice-40" name="amount-of-time" value="40">
+    <label for="time-choice-40">40</label>
+    <input type="radio" id="time-choice-60" name="amount-of-time" value="60">
+    <label for="time-choice-60">60</label>
+</div>
+<div>
     <label for="private">Private?</label>
     <input type="checkbox" id="private" name="private">
-</form>
+</div>
 
 
-<form>
-    <input type="button" value="Create expedition">
+<div>
+    <input type="submit" value="Create expedition">
+</div>
 </form>
 
 </body>
