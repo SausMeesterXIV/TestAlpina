@@ -25,6 +25,7 @@ function init() {
 
   //hiker
   document.querySelector("#select-hiker-button").addEventListener("click", selectHiker);
+  placeHikerOnCard();
 }
 
 function renderHand(cardArray) {
@@ -64,12 +65,30 @@ function foo(e){
   }
 }
 
+function placeCard(move){
+  console.log("move");
+}
+
 function selectHiker(){
   document.querySelector("main").classList.toggle("hiker-image");
 }
 
-function placeHikerOnCard(){
-  const $board = document.querySelector("#game-board");
+function placeHikerOnCard() {
+  const cards = document.querySelectorAll(".card");
+  const hiker = document.querySelector(".hiker");
+  const main = document.querySelector("main");
+
+  cards.forEach(card => {
+    card.addEventListener("click", () => {
+      //this code moves the hiker
+      if (main.classList.contains("hiker-image")){
+        card.appendChild(hiker);
+        hiker.classList.remove("hidden");
+      }
+
+    });
+  });
+
 
 }
 init();
