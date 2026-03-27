@@ -10,17 +10,26 @@ const arrayOfCards =
   {id: 12, animal: "frog", landscape: "mountain", victoryPointCondition: {basescore: 1, score: 2, selector: "HI", filter: "DW"}}]
 //for testing purposes
 
+let selectedCard = null;
 
 function init() {
+  // for selecting a card
+  const $hand = document.querySelector("#hand")
+  $hand.addEventListener('click', selectCard, true);
+
+  // for selecting a tile
   renderHand(arrayOfCards);
-  placeHikerOnCard();
+
+  let $gameBoard = document.querySelector("#game-board");
+  $gameBoard.addEventListener('click', foo, true);
+
+  //hiker
   document.querySelector("#select-hiker-button").addEventListener("click", selectHiker);
 }
 
 function renderHand(cardArray) {
   let $fragment = document.createDocumentFragment();
   const $template = document.querySelector("#card-template");
-
 
   cardArray.forEach(card => {
     const $clone = $template.content.cloneNode(true);
@@ -33,6 +42,27 @@ function renderHand(cardArray) {
   document.querySelector("#hand").appendChild($fragment);
 }
 
+function selectCard(e){
+  //TODO:change the css + add the css.
+  selectedCard = e.target.closest('article');
+}
+
+function foo(e){
+  const selectedTile = e.target.closest("div");
+  const tileId = selectedTile.dataset.id;
+  const cardId = selectedTile.dataset.cardId;
+
+  if (selectedCard !== null){
+    if (Number(cardId) !== 0) {
+      const move = {
+        tileId: tileId,
+        tile: selectedTile,
+        cardId: cardId
+      };
+      placeCard(move);
+    }
+  }
+}
 
 function selectHiker(){
   document.querySelector("main").classList.toggle("hiker-image");
