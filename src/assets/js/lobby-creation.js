@@ -25,7 +25,13 @@ function createNewGame(e) {
     const gameName = getGameName();
     const playerAmount = getPlayerAmount();
     
-    createGame(gameName, playerAmount).then(data => saveToStorage("playerToken", data.playerToken));
+    createGame(gameName, playerAmount).then(data => {
+        saveToStorage("gameId", data.gameId);
+        saveToStorage("playerToken", data.playerToken);
+        saveToStorage("hikerColor", data.hiker);
+
+        window.location.replace("lobby.html");
+    });
 }
 
 init();
