@@ -89,7 +89,7 @@ input[type="checkbox"]{
     cursor: pointer;
 }
 
-input[type="button"]{
+input[type="submit"]{
     font-size: 4rem;
     background-color: black;
     color: white;
@@ -100,11 +100,11 @@ input[type="button"]{
     transition: background-color 0.15s ease;
 }
 
-input[type="button"]:hover{
+input[type="submit"]:hover{
     cursor: pointer;
     background-color: #333;
 }
-input[type="button"]:active{
+input[type="submit"]:active{
     background-color: #111;
     transform: scale(0.97);
 }
