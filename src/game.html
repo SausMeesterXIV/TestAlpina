@@ -58,26 +58,25 @@
                     <progress value="" max=""></progress> <!--This indicates how much time a player has left. Extra info: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/progress-->
                 </aside>
             </section>
-                 <section id="game-board"> <!--divs are temporary for styling purposes, remove it later-->
-                    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-
-                <section id="player-controls">
-                    <button id="select-hiker-button">Select hiker</button>
-                    <button id="end-turn-button">End Turn</button>
-                </section>
-
-                <section id="bottom-area">
-                    <div id="hand">
-                        <!--here the cards which the user possesses will be added-->
-                    </div>
-                    <template id="card-template">
-                        <article class="card" data-card-id="#">
-                            <img class="card-image" src="#" alt="tmp">
-                            <p class="win-conditions">#</p>
-                        </article>
-                    </template>
-                </section>
+             <section id="game-board"> <!--divs are temporary for styling purposes, remove it later-->
+                <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
              </section>
+            <section id="player-controls">
+                <button id="select-hiker-button">Select hiker</button>
+                <button id="end-turn-button">End Turn</button>
+            </section>
+
+            <section id="bottom-area">
+                <div id="hand">
+                    <!--here the cards which the user possesses will be added-->
+                </div>
+                <template id="card-template">
+                    <article class="card" data-card-id="#">
+                        <img class="card-image" src="#" alt="tmp">
+                        <p class="win-conditions">#</p>
+                    </article>
+                </template>
+            </section>
         </main>
         <footer>
             <button id="leave-button">Leave game</button>
