@@ -1,5 +1,6 @@
 import {fetchAllCards} from "./api/card-info.js";
-import {fetchFromServer} from "./data-connector/api-communication-abstractor.js";
+import {fetchGameDetails} from "./api/game-info.js";
+import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
 
 const arrayOfCards =
   [{id: 50, animal: "chamois", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 1, selector: "HI", filter: "Pa"}},
@@ -11,17 +12,19 @@ const arrayOfCards =
 //for testing purposes
 
 let selectedCard = null;
+let currenBoard = null;
 
 function init() {
+  renderBoard();
+  renderHand(arrayOfCards);
+
+  // for selecting a tile
+  let $gameBoard = document.querySelector("#game-board");
+  $gameBoard.addEventListener('click', foo, true)
+
   // for selecting a card
   const $hand = document.querySelector("#hand")
   $hand.addEventListener('click', selectCard, true);
-
-  // for selecting a tile
-  renderHand(arrayOfCards);
-
-  let $gameBoard = document.querySelector("#game-board");
-  $gameBoard.addEventListener('click', foo, true)
 }
 
 function renderHand(cardArray) {
@@ -62,11 +65,58 @@ function foo(e){
 }
 
 function placeCard(move){
-  console.log("move");
+  console.log("Move geïnitieerd voor tile:", move.tile);
+  getClosestCard(move.tile).then(closest => {
+    if (closest) {
+      console.log("Gevonden kaart:", closest);
+    }
+  });
+}
+
+function getClosestCard(tile){
+  const tilePos = tile.dataset.id;
+
+  const tilePosRow = Math.floor(tilePos / 5);
+  const tilePosColumn = tilePos % 5;
+
+  const size = 5;
+  return fetchGameDetails(getGameId()).then(game=>{
+    const currenBoard = game.board;
+
+    // Checks whether a given (row, column) is inside the board
+    // and if it contains a non‑zero card.
+    const safe = (row, column) => {
+      if (
+        row >= 0 &&
+        column >= 0 &&
+        row < size &&
+        column < size &&
+        Number(currenBoard[row][column].card) !== 0
+      ){const card = Number(currenBoard[row][column].card);
+        return card !== 0 ? card : null;
+      }
+    };
+
+    const up = safe(tilePosRow - 1, tilePosColumn);
+    const right = safe(tilePosRow, tilePosColumn + 1);
+    const down = safe(tilePosRow + 1, tilePosColumn);
+    const left = safe(tilePosRow, tilePosColumn - 1);
+
+    if (up) return up;
+    if (right) return right;
+    if (down) return down;
+    if (left) return left;
+
+    return null;
+  });
 }
 
 
+function renderBoard(board) {
 
+}
 
-
+function getGameId(){
+  return loadFromStorage("gameId");
+}
 init();
