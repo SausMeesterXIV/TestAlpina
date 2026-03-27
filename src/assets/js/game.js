@@ -1,6 +1,7 @@
 import {fetchAllCards} from "./api/card-info.js";
 import {fetchGameDetails} from "./api/game-info.js";
 import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
+import {addCardToBoard} from "./api/place-card.js";
 
 const arrayOfCards =
   [{id: 50, animal: "chamois", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 1, selector: "HI", filter: "Pa"}},
@@ -68,7 +69,7 @@ function placeCard(move){
   console.log("Move geïnitieerd voor tile:", move.tile);
   getClosestCard(move.tile).then(closest => {
     if (closest) {
-      console.log("Gevonden kaart:", closest);
+      return addCardToBoard(move.tile.dataset.id, closest.card, closest.direction)
     }
   });
 }
@@ -102,10 +103,10 @@ function getClosestCard(tile){
     const down = safe(tilePosRow + 1, tilePosColumn);
     const left = safe(tilePosRow, tilePosColumn - 1);
 
-    if (up) return up;
-    if (right) return right;
-    if (down) return down;
-    if (left) return left;
+    if (up) return { direction: "north", card : up };
+    if (right) return { direction: "east", card: right };
+    if (down) return { direction: "south", card: down };
+    if (left) return { direction: "west", card: left };
 
     return null;
   });
