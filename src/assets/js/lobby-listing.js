@@ -1,4 +1,5 @@
 import { fetchUnstartedGames } from "./api/game-info.js";
+import {joinGame as fetchJoinGame} from "./api/join-game.js";
 import {saveToStorage} from "./data-connector/local-storage-abstractor.js";
 
 function init () {
@@ -54,8 +55,11 @@ function isJoinOrSpectate(e){
 function joinGame(gameId){
   // set group into localstorage.
   saveToStorage("gameId", gameId);
-  // redirect page to lobby.
-  window.location.replace("http://localhost:63342/client/src/lobby.html");
+
+  fetchJoinGame(Number(gameId)).then(() => {
+    // redirect page to lobby.
+    window.location.replace("http://localhost:63342/client/src/lobby.html")}
+  );
 }
 
 init();
