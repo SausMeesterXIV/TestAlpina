@@ -16,7 +16,7 @@ function getGameName() {
 }
 
 function getPlayerAmount() {
-    return Number(document.querySelector("input[name='amount-of-players']:checked").value)
+    return Number(document.querySelector("input[name='amount-of-players']:checked").value); // Number() turns the string into an int
 }
 
 function createNewGame(e) {
