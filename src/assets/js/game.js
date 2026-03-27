@@ -1,11 +1,9 @@
 import {fetchAllCards} from "./api/card-info.js";
 import {fetchFromServer} from "./data-connector/api-communication-abstractor.js";
 import {fetchPlayerInfo} from "./api/player-info.js";
-import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
-import {fetchSpecificGame} from "./api/game-info.js";
+import {loadFromStorage, saveToStorage} from "./data-connector/local-storage-abstractor.js";
+import {fetchGameDetails, fetchSpecificGame} from "./api/game-info.js";
 
-const playingOrder = [];
-let count = 0;
 const arrayOfCards =
   [{id: 50, animal: "chamois", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 1, selector: "HI", filter: "Pa"}},
   {id: 49, animal: "frog", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 2, selector: "AN", filter: "Or"}},
@@ -18,9 +16,9 @@ const arrayOfCards =
 
 function init() {
   renderHand(arrayOfCards);
-  setProgressBar();
-  tick();
-  updateCurrentPlayer();
+  setProgressBar(); // sets the initial and max values of the progress bar
+  tick(); // updates the progress bar every second
+  updateCurrentPlayer(); //must be used after the players turn has ended
 }
 
 function renderHand(cardArray) {
@@ -42,12 +40,13 @@ function renderHand(cardArray) {
 
 function updateCurrentPlayer() {
 
-  fetchSpecificGame( 7 /*loadFromStorage("gameId")*/).then(players =>{
+  fetchGameDetails(loadFromStorage("gameId")).then(players =>{
     // gets the current hiker color.
     const currentHiker = players.currentHiker;
-    console.log(currentHiker);
+    players.players.forEach(player => {if(player.hiker === currentHiker) { // finds the hiker which has the same color as current hiker
+      document.querySelector("em").textContent = `${player.name}'s turn`
+    }})
   })
-  /*document.querySelector("aside em").textContent = */
 }
 
 
@@ -55,12 +54,8 @@ function updateProgressBar() {
   document.querySelector("progress").value += 1;
   if (document.querySelector("progress").value >= document.querySelector("progress").max) {
     document.querySelector("progress").value = 0;
-    count++;
-    if (count >= 4) {
-      count = 0;
-    }
     updateCurrentPlayer();
-    /*endturn()*/
+    /*endturn()*/ //currently there is no end turn function
   }
 }
 
@@ -69,19 +64,9 @@ function tick() {
 }
 
 function setProgressBar() {
-  /*document.querySelector("progress").max = loadFromStorage(timePerTurn)*/
+  /*document.querySelector("progress").max = loadFromStorage(timePerTurn)*/ //there is currently no timeperturn in localstorage
   document.querySelector("progress").max = 60; //temporary
 }
-
-/*function establishPlayingOrder() {
-  fetchPlayerInfo(loadFromStorage("gameId")).then(players => {
-    for (let i = 0; i < players.length; i++) {
-      playingOrder.push(players[i].hiker);
-    }
-    console.log(playingOrder);
-  })
-
-}*/
 
 
 init();
