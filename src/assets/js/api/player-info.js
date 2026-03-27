@@ -1,4 +1,4 @@
-  import {fetchSpecificGame} from "./game-info.js";
+import {fetchSpecificGame} from "./game-info.js";
 
   function fetchPlayerInfo(gameId) {
     return fetchSpecificGame(gameId)
