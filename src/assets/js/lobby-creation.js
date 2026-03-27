@@ -28,7 +28,7 @@ function createNewGame(e) {
     createGame(gameName, playerAmount).then(data => {
         saveToStorage("gameId", data.gameId);
         saveToStorage("playerToken", data.playerToken);
-        saveToStorage("hikerColor", data.hiker);
+        saveToStorage("hiker", data.hiker);
 
         window.location.replace("lobby.html");
     });
