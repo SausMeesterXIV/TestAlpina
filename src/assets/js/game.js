@@ -1,5 +1,6 @@
 import {fetchAllCards} from "./api/card-info.js";
 import {fetchFromServer} from "./data-connector/api-communication-abstractor.js";
+import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
 
 const arrayOfCards =
   [{id: 50, animal: "chamois", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 1, selector: "HI", filter: "Pa"}},
@@ -26,6 +27,7 @@ function init() {
   //hiker
   document.querySelector("#select-hiker-button").addEventListener("click", selectHiker);
   placeHikerOnCard();
+  remainingHikers();
 }
 
 function renderHand(cardArray) {
@@ -74,21 +76,33 @@ function selectHiker(){
 }
 
 function placeHikerOnCard() {
-  const cards = document.querySelectorAll(".card");
-  const hiker = document.querySelector(".hiker");
-  const main = document.querySelector("main");
+  if (remainingHikers() > 0) {
 
-  cards.forEach(card => {
-    card.addEventListener("click", () => {
-      //this code moves the hiker
-      if (main.classList.contains("hiker-image")){
-        card.appendChild(hiker);
-        hiker.classList.remove("hidden");
-      }
+    const cards = document.querySelectorAll(".card");
+    const hiker = document.querySelector(".hiker");
+    const main = document.querySelector("main");
 
+    cards.forEach(card => {
+      card.addEventListener("click", () => {
+        //this code moves the hiker
+        if (main.classList.contains("hiker-image")) {
+          card.appendChild(hiker);
+          hiker.classList.remove("hidden");
+        }
+      });
     });
-  });
+  }
+}
 
+function remainingHikers() {
+  const $button = document.querySelector("#select-hiker-button");
+  const hikers = loadFromStorage("hikersLeft");
+  const p = document.createElement("p");
 
+  p.textContent = hikers;
+  p.classList.add("hikers-left");
+  $button.appendChild(p);
+
+  return hikers;
 }
 init();

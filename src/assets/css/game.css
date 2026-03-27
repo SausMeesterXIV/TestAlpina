@@ -93,6 +93,10 @@ footer {
     cursor: pointer;
 }
 
+#select-hiker-button{
+    position: relative;
+}
+
 #game-board > div {
     border: dashed black 0.25rem;
 }
@@ -152,6 +156,15 @@ footer {
 }
 
 .popup{
-    position: relative;
     bottom: 4rem;
+}
+
+.hikers-left{
+    position: absolute;
+    top: -0.3rem;
+    right: -0.3rem;
+
+    padding: 0.3rem;
+    background-color: #888888;
+
 }
