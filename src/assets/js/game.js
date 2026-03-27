@@ -13,6 +13,7 @@ const arrayOfCards =
 
 function init() {
   renderHand(arrayOfCards);
+  document.querySelector("#select-hiker-button").addEventListener("click", selectHiker);
 }
 
 function renderHand(cardArray) {
@@ -29,6 +30,11 @@ function renderHand(cardArray) {
   })
 
   document.querySelector("#hand").appendChild($fragment);
+}
+
+
+function selectHiker(){
+  document.querySelector("main").classList.toggle("hiker-image");
 }
 
 init();
