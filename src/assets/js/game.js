@@ -73,11 +73,12 @@ function placeCard(move){
 
 function updateCurrentPlayer() {
 
-  fetchGameDetails(loadFromStorage("gameId")).then(players =>{
+  fetchGameDetails(loadFromStorage("gameId"))
+    .then(data =>{
     // gets the current hiker color.
-    const currentHiker = players.currentHiker;
-    players.players.forEach(player => {if(player.hiker === currentHiker) { // finds the hiker which has the same color as current hiker
-      document.querySelector("em").textContent = `${player.name}'s turn`
+    const currentHiker = data.currentHiker;
+    data.players.forEach(player => {if(player.hiker === currentHiker) { // finds the hiker which has the same color as current hiker
+      document.querySelector("#turn-name").textContent = `${player.name}'s turn`
     }})
   })
 }
