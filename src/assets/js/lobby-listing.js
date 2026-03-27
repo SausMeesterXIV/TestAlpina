@@ -68,7 +68,11 @@ function joinGame(gameId){
   // set group into localstorage.
   saveToStorage("gameId", gameId);
 
-  fetchJoinGame(Number(gameId)).then(() => {
+  fetchJoinGame(Number(gameId)).then(data => {
+    // save users info to local storage upon joining
+          saveToStorage("gameId", data.gameId);
+          saveToStorage("hikerColor", data.hiker);
+          saveToStorage("playerToken", data.playerToken);
     // redirect page to lobby.
     window.location.replace("lobby.html")}
   );
