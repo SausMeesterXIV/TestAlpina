@@ -13,6 +13,7 @@ const arrayOfCards =
 
 function init() {
   renderHand(arrayOfCards);
+  placeHikerOnCard();
   document.querySelector("#select-hiker-button").addEventListener("click", selectHiker);
 }
 
@@ -37,4 +38,8 @@ function selectHiker(){
   document.querySelector("main").classList.toggle("hiker-image");
 }
 
+function placeHikerOnCard(){
+  const $board = document.querySelector("#game-board");
+
+}
 init();

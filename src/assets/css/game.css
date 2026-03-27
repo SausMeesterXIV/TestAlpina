@@ -129,6 +129,7 @@ footer {
 }
 
 .card {
+    position: relative;
     margin: 0.2rem;
     border: 0.2rem black double;
     height: 10rem;
@@ -137,4 +138,11 @@ footer {
 
 .hiker-image{
     cursor: url("../media/Alpina_Hiker.png"), auto;
+}
+
+.hiker{
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
