@@ -1,4 +1,4 @@
-import { fetchFromServer } from "./data-connector/api-communication-abstractor.js";
+import { fetchFromServer } from "../data-connector/api-communication-abstractor.js";
 
 const _HOSTNAME = "player1"; // remove later
 const _HOSTCOLOR = "purple"; // remove later
@@ -10,5 +10,7 @@ function createGame(nameOfGame, playerAmount) { // add hostName and hostColor on
         playerName : _HOSTNAME,
         hiker : _HOSTCOLOR
     };
-    fetchFromServer("/games", "POST", body);
+    return fetchFromServer("/games", "POST", body); // returns the playertoken
 }
+
+export { createGame };
