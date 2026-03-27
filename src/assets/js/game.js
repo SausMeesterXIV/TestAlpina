@@ -93,7 +93,7 @@ function updateProgressBar() {
 }
 
 function tick() {
-  setInterval(updateProgressBar, 100);
+  setInterval(updateProgressBar, 1000);
 }
 
 function setProgressBar() {
