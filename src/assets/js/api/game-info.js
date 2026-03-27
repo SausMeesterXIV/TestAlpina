@@ -1,4 +1,5 @@
 import {fetchFromServer} from "../data-connector/api-communication-abstractor.js";
+import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
 
 function fetchAllGames() {
   return fetchFromServer("/games")

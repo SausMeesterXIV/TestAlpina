@@ -2,8 +2,10 @@ import {fetchAllCards} from "./api/card-info.js";
 import {fetchFromServer} from "./data-connector/api-communication-abstractor.js";
 import {fetchPlayerInfo} from "./api/player-info.js";
 import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
+import {fetchSpecificGame} from "./api/game-info.js";
 
-
+const playingOrder = [];
+let count = 0;
 const arrayOfCards =
   [{id: 50, animal: "chamois", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 1, selector: "HI", filter: "Pa"}},
   {id: 49, animal: "frog", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 2, selector: "AN", filter: "Or"}},
@@ -16,8 +18,8 @@ const arrayOfCards =
 
 function init() {
   renderHand(arrayOfCards);
-  establishPlayingOrder();
-  updateProgressBar();
+  setProgressBar();
+  tick();
   updateCurrentPlayer();
 }
 
@@ -37,16 +39,49 @@ function renderHand(cardArray) {
   document.querySelector("#hand").appendChild($fragment);
 }
 
-function updateProgressBar() {
-
-}
 
 function updateCurrentPlayer() {
-  document.querySelector("aside em").textContent = $currentPlayer;
+
+  fetchSpecificGame( 7 /*loadFromStorage("gameId")*/).then(players =>{
+    // gets the current hiker color.
+    const currentHiker = players.currentHiker;
+    console.log(currentHiker);
+  })
+  /*document.querySelector("aside em").textContent = */
 }
 
-function establishPlayingOrder() {
-  fetchPlayerInfo(Number(loadFromStorage("gameId")))
+
+function updateProgressBar() {
+  document.querySelector("progress").value += 1;
+  if (document.querySelector("progress").value >= document.querySelector("progress").max) {
+    document.querySelector("progress").value = 0;
+    count++;
+    if (count >= 4) {
+      count = 0;
+    }
+    updateCurrentPlayer();
+    /*endturn()*/
+  }
 }
+
+function tick() {
+  setInterval(updateProgressBar, 100);
+}
+
+function setProgressBar() {
+  /*document.querySelector("progress").max = loadFromStorage(timePerTurn)*/
+  document.querySelector("progress").max = 60; //temporary
+}
+
+/*function establishPlayingOrder() {
+  fetchPlayerInfo(loadFromStorage("gameId")).then(players => {
+    for (let i = 0; i < players.length; i++) {
+      playingOrder.push(players[i].hiker);
+    }
+    console.log(playingOrder);
+  })
+
+}*/
+
 
 init();
