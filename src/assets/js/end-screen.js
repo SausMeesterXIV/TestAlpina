@@ -1,5 +1,5 @@
 import { fetchGameDetails } from "./api/game-info.js";
-import { loadFromStorage } from "./data-connector/local-storage-abstractor.js"
+import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
 
 function init() {
     setBackground();
