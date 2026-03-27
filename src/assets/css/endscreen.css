@@ -1,11 +1,18 @@
 body {
-    background-image: url(../../images/alpina_victory_page_background.png); 
     background-size: cover;
     background-position: center;
     height: 100vh;
     margin: 0;
     display: flex;
     flex-direction: column;
+}
+
+.victory {
+    background-image: url(../../images/alpina_victory_page_background.png);
+}
+
+.defeat {
+    background-image: url(../../images/alpina_defeat_page_background.png);
 }
 
 article {
