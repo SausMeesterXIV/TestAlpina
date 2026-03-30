@@ -2,6 +2,8 @@ import {fetchAllCards} from "./api/card-info.js";
 import {fetchGameDetails} from "./api/game-info.js";
 import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
 import {addCardToBoard} from "./api/place-card.js";
+import {fetchFromServer} from "./data-connector/api-communication-abstractor.js";
+import {fetchPlayerInfo} from "./api/player-info.js";
 
 const arrayOfCards =
   [{id: 50, animal: "chamois", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 1, selector: "HI", filter: "Pa"}},
@@ -26,6 +28,10 @@ function init() {
   // for selecting a card
   const $hand = document.querySelector("#hand")
   $hand.addEventListener('click', selectCard, true);
+
+  setProgressBar(); // sets the initial and max values of the progress bar
+  tick(); // updates the progress bar every second
+  updateCurrentPlayer(); //must be used after the players turn has ended
 }
 
 function renderHand(cardArray) {
@@ -114,10 +120,41 @@ function getClosestCard(tile){
 
 
 function renderBoard(board) {
-
+  return null;
 }
 
 function getGameId(){
   return loadFromStorage("gameId");
 }
+
+function updateCurrentPlayer() {
+
+  fetchGameDetails(loadFromStorage("gameId"))
+    .then(data =>{
+      // gets the current hiker color.
+      const currentHiker = data.currentHiker;
+      data.players.forEach(player => {if(player.hiker === currentHiker) { // finds the hiker which has the same color as current hiker
+        document.querySelector("#turn-name").textContent = `${player.name}'s turn`
+      }})
+    })
+}
+
+function updateProgressBar() {
+  document.querySelector("progress").value += 1;
+  if (document.querySelector("progress").value >= document.querySelector("progress").max) {
+    document.querySelector("progress").value = 0;
+    updateCurrentPlayer();
+    /*endturn()*/ //currently there is no end turn function
+  }
+}
+
+function tick() {
+  setInterval(updateProgressBar, 1000);
+}
+
+function setProgressBar() {
+  /*document.querySelector("progress").max = loadFromStorage(timePerTurn)*/ //there is currently no timeperturn in localstorage
+  document.querySelector("progress").max = 60; //temporary
+}
+
 init();
