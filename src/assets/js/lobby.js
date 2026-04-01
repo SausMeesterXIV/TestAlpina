@@ -33,28 +33,28 @@ function renderPlayers(players) {
 }
 
 // olivier delete when you are ready
-function getPlayerName(){
-  return loadFromStorage("playerName");
+function getHiker(){
+  return loadFromStorage("hiker");
 }
 
 function renderPlayerInfo(){
   const gameId = Number(loadFromStorage("gameId"));
-  const playerName = getPlayerName();
+  const hiker = getHiker();
 
   fetchPlayerInfo(gameId)
-    .then(players => players.find(player => player.name === playerName))
+    .then(players => players.find(player => player.hiker === hiker))
     .then(player => {
       loadPlayerName(player.name);
       selectPlayerColor(player.hiker);
     });
 }
 
-function loadPlayerName(name){
+function loadPlayerName(name){ // loads the player's name into the input field
   const $playerNameInput = document.querySelector("#nickname-input");
   $playerNameInput.value = name;
 }
 
-function selectPlayerColor(hiker){
+function selectPlayerColor(hiker){ // marks the correct radio button for the player's hiker colour
   const selectedColor = `#${hiker}-radio`;
   const $selectedRadioButton = document.querySelector(`${selectedColor}`);
   $selectedRadioButton.checked = true;
