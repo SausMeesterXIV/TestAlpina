@@ -25,7 +25,7 @@ function fetchUnstartedGames() {
 
 function fetchGameDetails(gameId) {
   return fetchFromServer(`/games/${gameId}`);
-} 
+}
 
 export{
   fetchSpecificGame,
