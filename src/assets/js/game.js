@@ -13,7 +13,6 @@ const arrayOfCards =
 //for testing purposes
 
 let selectedCard = null;
-let currenBoard = null;
 
 function init() {
   renderBoard();
@@ -21,7 +20,7 @@ function init() {
 
   // for selecting a tile
   let $gameBoard = document.querySelector("#game-board");
-  $gameBoard.addEventListener('click', foo, true)
+  $gameBoard.addEventListener('click', handleTileClick, true)
 
   // for selecting a card
   const $hand = document.querySelector("#hand")
@@ -59,7 +58,7 @@ function selectCard(e){
   selectedCard = e.target.closest('article');
 }
 
-function foo(e){
+function handleTileClick(e){
   const selectedTile = e.target.closest("div");
   const tileId = selectedTile.dataset.id;
   const cardId = selectedTile.dataset.cardId;
@@ -80,13 +79,13 @@ function placeCard(move){
   console.log("Move geïnitieerd voor tile:", move.tile);
   getClosestCard(move.tile).then(closest => {
     if (closest) {
-      return addCardToBoard(move.tile.dataset.id, closest.card, closest.direction)
+      return addCardToBoard(move.tile.dataset.index, closest.card, closest.direction)
     }
   });
 }
 
 function getClosestCard(tile){
-  const tilePos = tile.dataset.id;
+  const tilePos = tile.dataset.index;
 
   const tilePosRow = Math.floor(tilePos / 5);
   const tilePosColumn = tilePos % 5;
@@ -143,12 +142,16 @@ function renderTile(tile, cards, cardId, $emptyTile, index) {
 
 function renderBoard() {
   const $board = document.createDocumentFragment();
+  const gameId = Number(loadFromStorage("gameId"));
+
   fetchAllCards().then(res =>{
-    const gameId = Number(loadFromStorage("gameId"));
     fetchGameBoard(gameId).then((res2) => {
+      // indexing for tile id
       let index = 0;
 
+      // loops trough board row.
       res2.board.forEach((row) =>{
+        // loops true each card in the row.
         row.forEach((tile) => {
           const cardId = tile.card;
           const $emptyTile = document.querySelector('#tile-template').content.cloneNode(true);
