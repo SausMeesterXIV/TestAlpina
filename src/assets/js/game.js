@@ -166,8 +166,20 @@ function selectHiker(){
 }
 
 function placeHikerOnCard() {
-  if (remainingHikers() > 0) {
 
+  let canPlay = true;
+  const gameId = Number(loadFromStorage("gameId"))
+  fetchGameDetails(gameId)
+    .then(data => data.players)
+    .then(players => {
+      players.forEach(player => {
+        if (players.hikersLeft <= 0) {
+          canPlay = false;
+        }
+      })
+      })
+  //doing this again with a long fetch because I don't know another way atm
+    if (canPlay){
     const cards = document.querySelectorAll(".card"); // class/selector needs to be changed so only the cards in a grid are selected
     const hiker = document.querySelector(".hiker");
     const main = document.querySelector("main");
@@ -188,20 +200,16 @@ function remainingHikers() {
   const $button = document.querySelector("#select-hiker-button");
   const gameId = Number(loadFromStorage("gameId"));
   const currentPlayer ="purple"
-  console.log(currentPlayer)
   const tekst = document.querySelector("span");
 
   fetchGameDetails(gameId)
     .then(data => data.players)
     .then(players => {
       players.forEach(player => {
-        console.log(player)
         if (player.hiker === currentPlayer){
           const hikers = player.hikersLeft;
           tekst.textContent = hikers;
           $button.appendChild(tekst);
-
-          console.log(hikers)
         }
       })
 
