@@ -1,10 +1,8 @@
 import {fetchAllCards} from "./api/card-info.js";
-import {fetchGameDetails} from "./api/game-info.js";
+import {fetchGameDetails,fetchSpecificGame} from "./api/game-info.js";
 import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
 import {addCardToBoard} from "./api/place-card.js";
 import {fetchFromServer} from "./data-connector/api-communication-abstractor.js";
-import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
-import {fetchSpecificGame} from "./api/game-info.js";
 import {fetchPlayerInfo} from "./api/player-info.js";
 
 const arrayOfCards =
@@ -95,7 +93,7 @@ function getClosestCard(tile){
 
   const size = 5;
   return fetchGameDetails(getGameId()).then(game=>{
-    const currenBoard = game.board;
+    const currentBoard = game.board;
 
     // Checks whether a given (row, column) is inside the board
     // and if it contains a non‑zero card.
@@ -105,8 +103,8 @@ function getClosestCard(tile){
         column >= 0 &&
         row < size &&
         column < size &&
-        Number(currenBoard[row][column].card) !== 0
-      ){const card = Number(currenBoard[row][column].card);
+        Number(currentBoard[row][column].card) !== 0
+      ){const card = Number(currentBoard[row][column].card);
         return card !== 0 ? card : null;
       }
     };
@@ -189,14 +187,26 @@ function placeHikerOnCard() {
 
 function remainingHikers() {
   const $button = document.querySelector("#select-hiker-button");
-  const gameId = loadFromStorage("gameId");
-  const players = fetchSpecificGame(gameId).players;
-  const hikers = players[3];
-  const p = document.createElement("p");
+  const gameId = Number(loadFromStorage("gameId"));
+  const currentPlayer = loadFromStorage("currentHiker");
 
-  p.textContent = hikers;
-  p.classList.add("hikers-left");
-  $button.appendChild(p);
+  fetchPlayerInfo(gameId)
+    .then(players => {
+      players.forEach(player => {
+        if (player.hiker === currentPlayer){
+          //const hikers = player.hikersLeft;
+          const hikers = 5;
+        }
+      })
+    })
+
+
+
+  const tekst = document.querySelector("span");
+
+  tekst.textContent = hikers;
+  tekst.classList.add("hikers-left");
+  $button.appendChild(tekst);
 
   return hikers;
 }
