@@ -2,7 +2,6 @@ import {fetchAllCards} from "./api/card-info.js";
 import {fetchGameDetails,fetchSpecificGame} from "./api/game-info.js";
 import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
 import {addCardToBoard} from "./api/place-card.js";
-import {fetchFromServer} from "./data-connector/api-communication-abstractor.js";
 import {fetchPlayerInfo} from "./api/player-info.js";
 
 const arrayOfCards =
@@ -188,27 +187,25 @@ function placeHikerOnCard() {
 function remainingHikers() {
   const $button = document.querySelector("#select-hiker-button");
   const gameId = Number(loadFromStorage("gameId"));
-  const currentPlayer = loadFromStorage("currentHiker");
-
-  fetchPlayerInfo(gameId)
-    .then(players => {
-      players.forEach(player => {
-        if (player.hiker === currentPlayer){
-          //const hikers = player.hikersLeft;
-          const hikers = 5;
-        }
-      })
-    })
-
-
-
+  const currentPlayer ="purple"
+  console.log(currentPlayer)
   const tekst = document.querySelector("span");
 
-  tekst.textContent = hikers;
-  tekst.classList.add("hikers-left");
-  $button.appendChild(tekst);
+  fetchGameDetails(gameId)
+    .then(data => data.players)
+    .then(players => {
+      players.forEach(player => {
+        console.log(player)
+        if (player.hiker === currentPlayer){
+          const hikers = player.hikersLeft;
+          tekst.textContent = hikers;
+          $button.appendChild(tekst);
 
-  return hikers;
+          console.log(hikers)
+        }
+      })
+
+    })
 }
 
 init();
