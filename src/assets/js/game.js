@@ -1,6 +1,7 @@
 import {fetchAllCards} from "./api/card-info.js";
 import {fetchFromServer} from "./data-connector/api-communication-abstractor.js";
 import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
+import {fetchSpecificGame} from "./api/game-info.js";
 
 const arrayOfCards =
   [{id: 50, animal: "chamois", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 1, selector: "HI", filter: "Pa"}},
@@ -78,7 +79,7 @@ function selectHiker(){
 function placeHikerOnCard() {
   if (remainingHikers() > 0) {
 
-    const cards = document.querySelectorAll(".card");
+    const cards = document.querySelectorAll(".card"); // class/selector needs to be changed so only the cards in a grid are selected
     const hiker = document.querySelector(".hiker");
     const main = document.querySelector("main");
 
@@ -96,7 +97,9 @@ function placeHikerOnCard() {
 
 function remainingHikers() {
   const $button = document.querySelector("#select-hiker-button");
-  const hikers = loadFromStorage("hikersLeft");
+  const gameId = loadFromStorage("gameId");
+  const players = fetchSpecificGame(gameId).players;
+  const hikers = players[3];
   const p = document.createElement("p");
 
   p.textContent = hikers;
