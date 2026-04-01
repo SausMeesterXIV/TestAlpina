@@ -1,9 +1,7 @@
 import {fetchAllCards} from "./api/card-info.js";
-import {fetchGameDetails} from "./api/game-info.js";
+import {fetchGameBoard, fetchGameDetails} from "./api/game-info.js";
 import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
 import {addCardToBoard} from "./api/place-card.js";
-import {fetchFromServer} from "./data-connector/api-communication-abstractor.js";
-import {fetchPlayerInfo} from "./api/player-info.js";
 
 const arrayOfCards =
   [{id: 50, animal: "chamois", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 1, selector: "HI", filter: "Pa"}},
@@ -34,16 +32,23 @@ function init() {
   updateCurrentPlayer(); //must be used after the players turn has ended
 }
 
+function renderCard(card) {
+  const $template = document.querySelector("#card-template");
+  const $clone = $template.content.cloneNode(true);
+
+  $clone.querySelector("article").dataset.cardId = card.id;
+  $clone.querySelector("img").src = `images/${card.animal}_${card.landscape}.png`;
+  $clone.querySelector("p").textContent = `${card.victoryPointCondition.basescore} + ${card.victoryPointCondition.score} / ${card.victoryPointCondition.selector} - ${card.victoryPointCondition.filter}`;
+
+  return $clone;
+}
+
 function renderHand(cardArray) {
   let $fragment = document.createDocumentFragment();
-  const $template = document.querySelector("#card-template");
+
 
   cardArray.forEach(card => {
-    const $clone = $template.content.cloneNode(true);
-    $clone.querySelector("article").dataset.cardId = card.id;
-    $clone.querySelector("img").src = `images/${card.animal}_${card.landscape}.png`;
-    $clone.querySelector("p").textContent = `${card.victoryPointCondition.basescore} + ${card.victoryPointCondition.score} / ${card.victoryPointCondition.selector} - ${card.victoryPointCondition.filter}`;
-    $fragment.appendChild($clone);
+    $fragment.appendChild(renderCard(card));
   })
 
   document.querySelector("#hand").appendChild($fragment);
@@ -88,7 +93,7 @@ function getClosestCard(tile){
 
   const size = 5;
   return fetchGameDetails(getGameId()).then(game=>{
-    const currenBoard = game.board;
+    const currentBoard = game.board;
 
     // Checks whether a given (row, column) is inside the board
     // and if it contains a non‑zero card.
@@ -98,8 +103,8 @@ function getClosestCard(tile){
         column >= 0 &&
         row < size &&
         column < size &&
-        Number(currenBoard[row][column].card) !== 0
-      ){const card = Number(currenBoard[row][column].card);
+        Number(currentBoard[row][column].card) !== 0
+      ){const card = Number(currentBoard[row][column].card);
         return card !== 0 ? card : null;
       }
     };
@@ -118,9 +123,46 @@ function getClosestCard(tile){
   });
 }
 
+function renderDiv($tile, cardId, index) {
+  // store metadata
+  $tile.dataset.index = index;
+  $tile.dataset.card = cardId;
+}
 
-function renderBoard(board) {
-  return null;
+function renderTile(tile, cards, cardId, $emptyTile, index) {
+  if (tile.card > 0) {
+    const selectedCard = cards.find(card => card.id === cardId);
+    //store metadata in div for selecting card
+    renderDiv($emptyTile, cardId, index);
+    //render card
+    $emptyTile.appendChild(renderCard(selectedCard));
+  } else {
+    renderDiv($emptyTile, cardId, index);
+  }
+}
+
+function renderBoard() {
+  const $board = document.createDocumentFragment();
+  fetchAllCards().then(res =>{
+    const gameId = Number(loadFromStorage("gameId"));
+    fetchGameBoard(gameId).then((res2) => {
+      let index = 0;
+
+      res2.board.forEach((row) =>{
+        row.forEach((tile) => {
+          const cardId = tile.card;
+          const $emptyTile = document.querySelector('#tile-template').content.cloneNode(true);
+          const $tile = $emptyTile.querySelector('.tile');
+
+          renderTile(tile, res.cards, cardId, $tile, index);
+          $board.appendChild($emptyTile);
+
+          index++;
+        });
+      });
+      document.querySelector("#game-board").appendChild($board);
+    });
+  });
 }
 
 function getGameId(){
