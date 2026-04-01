@@ -1,9 +1,11 @@
 import { fetchPlayerInfo } from "./api/player-info.js";
+import { fetchSpecificGame } from "./api/game-info.js";
 import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
 
 function init() {
    renderPlayers();
    renderPlayerInfo();
+   redirectToGame();
 }
 
 function getGameId() {
@@ -49,6 +51,12 @@ function selectPlayerColor(hiker){
   const selectedColor = `#${hiker}-radio`;
   const $selectedRadioButton = document.querySelector(`${selectedColor}`);
   $selectedRadioButton.checked = true;
+}
+
+function redirectToGame() {
+  fetchSpecificGame(getGameId()).then(game => {
+    game.players.length === game.numberOfPlayers ? window.location.replace("game.html") : setTimeout(hasGameStarted, 2000);
+  })
 }
 
 init();
