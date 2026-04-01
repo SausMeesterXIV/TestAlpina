@@ -32,7 +32,6 @@ function renderPlayers(players) {
     $container.insertAdjacentHTML("beforeend", playerHTML);
 }
 
-// olivier delete when you are ready
 function getHiker(){
   return loadFromStorage("hiker");
 }
