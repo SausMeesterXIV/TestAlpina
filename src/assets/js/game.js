@@ -19,7 +19,7 @@ let currenBoard = null;
 
 function init() {
   renderBoard();
-  renderHand(arrayOfCards);
+  fetchFromServer(`/games/${loadFromStorage("gameId")}/hikers/${loadFromStorage("hiker")}/hand`).then(data => renderHand(data))
 
   // for selecting a tile
   let $gameBoard = document.querySelector("#game-board");
@@ -38,11 +38,11 @@ function renderHand(cardArray) {
   let $fragment = document.createDocumentFragment();
   const $template = document.querySelector("#card-template");
 
-  cardArray.forEach(card => {
+  cardArray.hand.forEach(card => {
     const $clone = $template.content.cloneNode(true);
     $clone.querySelector("article").dataset.cardId = card.id;
     $clone.querySelector("img").src = `images/${card.animal}_${card.landscape}.png`;
-    $clone.querySelector("p").textContent = `${card.victoryPointCondition.basescore} + ${card.victoryPointCondition.score} / ${card.victoryPointCondition.selector} - ${card.victoryPointCondition.filter}`;
+    $clone.querySelector("p").textContent = `${card.victoryPointCondition.baseScore} + ${card.victoryPointCondition.score} / ${card.victoryPointCondition.selector} - ${card.victoryPointCondition.filter}`;
     $fragment.appendChild($clone);
   })
 
