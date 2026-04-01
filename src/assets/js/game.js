@@ -3,7 +3,8 @@ import {fetchGameDetails} from "./api/game-info.js";
 import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
 import {addCardToBoard} from "./api/place-card.js";
 import {fetchFromServer} from "./data-connector/api-communication-abstractor.js";
-import {fetchPlayerInfo} from "./api/player-info.js";
+import {fetchPlayerInfo, fetchPlayerHand} from "./api/player-info.js";
+import {getHiker, getGameId, getPlayerToken} from "./storage-utils.js";
 
 const arrayOfCards =
   [{id: 50, animal: "chamois", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 1, selector: "HI", filter: "Pa"}},
@@ -19,7 +20,7 @@ let currenBoard = null;
 
 function init() {
   renderBoard();
-  fetchFromServer(`/games/${loadFromStorage("gameId")}/hikers/${loadFromStorage("hiker")}/hand`).then(data => renderHand(data))
+  fetchPlayerHand().then(data => renderHand(data))
 
   // for selecting a tile
   let $gameBoard = document.querySelector("#game-board");
@@ -38,7 +39,7 @@ function renderHand(cardArray) {
   let $fragment = document.createDocumentFragment();
   const $template = document.querySelector("#card-template");
 
-  cardArray.hand.forEach(card => {
+  cardArray.forEach(card => {
     const $clone = $template.content.cloneNode(true);
     $clone.querySelector("article").dataset.cardId = card.id;
     $clone.querySelector("img").src = `images/${card.animal}_${card.landscape}.png`;
@@ -121,10 +122,6 @@ function getClosestCard(tile){
 
 function renderBoard(board) {
   return null;
-}
-
-function getGameId(){
-  return loadFromStorage("gameId");
 }
 
 function updateCurrentPlayer() {
