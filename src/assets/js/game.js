@@ -1,8 +1,8 @@
 import {fetchAllCards} from "./api/card-info.js";
-import {fetchGameDetails,fetchGameBoard} from "./api/game-info.js";
+import {fetchGameDetails,fetchGameBoard,fetchSpecificGame} from "./api/game-info.js";
 import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
 import {addCardToBoard} from "./api/place-card.js";
-import {fetchPlayerHand} from "./api/player-info.js";
+import {fetchPlayerHand,fetchPlayerInfo} from "./api/player-info.js";
 import {getGameId} from "./storage-utils.js";
 import { renderLeaderboard as leaderboardRenderer } from "./leaderboard-renderer.js";
 
@@ -38,6 +38,11 @@ function addEventListeners() {
   // for selecting a card
   const $hand = document.querySelector("#hand");
   $hand.addEventListener('click', selectCard, true);
+
+  //hiker
+  document.querySelector("#select-hiker-button").addEventListener("click", selectHiker);
+  placeHikerOnCard();
+  remainingHikers();
 }
 
 function renderCard(card) {
@@ -119,6 +124,10 @@ function getClosestCard(tile){
   // size of the grid (5x5)
   const boardSize = 5;
 
+  const tilePosRow = Math.floor(tilePos / 5);
+  const tilePosColumn = tilePos % 5;
+
+  const size = 5;
   return fetchGameDetails(getGameId()).then(game=>{
     const currentBoard = game.board;
     // tile position based on 2D Array
@@ -219,6 +228,80 @@ function setProgressBar() {
 function renderLeaderboard() {
   const $target = document.querySelector("tbody");
   fetchGameDetails(getGameId()).then(resp => leaderboardRenderer(resp.players, $target));
+}
+
+function selectHiker(){
+  document.querySelector("main").classList.toggle("hiker-image");
+}
+
+
+
+function placeHikerOnCard() {
+  let canPlayHiker = true;
+  const gameId = Number(loadFromStorage("gameId"))
+  fetchGameDetails(gameId)
+    .then(data => data.players)
+    .then(players => {
+      players.forEach(player => {
+        if (player.hikersLeft <= 0) {
+          canPlayHiker = false;
+        }
+      })
+      if (canPlayHiker){
+        const cards = document.querySelectorAll(".card"); // class/selector needs to be changed so only the cards in a grid are selected
+        const hiker = document.querySelector(".hiker");
+        const main = document.querySelector("main");
+
+        cards.forEach(card => {
+          card.addEventListener("click", () => {
+            //this code moves the hiker
+            if (main.classList.contains("hiker-image")) {
+              card.appendChild(hiker);
+              hiker.classList.remove("hidden");
+            }
+          });
+        });
+      }
+    })
+}
+
+function remainingHikers() {
+  const $button = document.querySelector("#select-hiker-button");
+  const gameId = Number(loadFromStorage("gameId"));
+  const currentPlayer ="purple";
+  const text = document.querySelector("span");
+
+  fetchGameDetails(gameId)
+    .then(data => data.players)
+    .then(players => {
+      players.forEach(player => {
+        if (player.hiker === currentPlayer){
+          const hikers = player.hikersLeft;
+          text.textContent = hikers;
+          $button.appendChild(text);
+        }
+      })
+
+    })
+}
+
+function endTurn() {
+  fetchGameDetails.endTurn(_gameId, _hiker)
+    .then(() => {
+      $endTurnButton.disabled = true; // Disable the button to prevent multiple clicks
+      document.querySelector("progress").value = 0; // Reset the progress bar
+      gameLoop();
+    });
+}
+
+function gameLoop() {
+  fetchGameDetails.getGameId(_gameId)
+    .then(data => {
+      if (data.currentHiker === _hiker)
+        $endTurnButton.disabled = false; // Enable the button when it's the player's turn
+      else
+        setTimeout(gameLoop, 1000); // Check again after 1 second
+    })
 }
 
 init();

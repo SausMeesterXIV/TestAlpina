@@ -4,7 +4,8 @@ function defaultPlayerName(gameId){
   let playerName = `player`;
 
   return fetchPlayerInfo(gameId).then(players => {
-    return playerName + players.length;
+    const number = players.length + 1;
+    return playerName + number;
   });
 }
 

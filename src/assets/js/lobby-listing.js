@@ -1,6 +1,7 @@
 import { fetchUnstartedGames } from "./api/game-info.js";
 import {joinGame as fetchJoinGame} from "./api/join-game.js";
 import {saveToStorage} from "./data-connector/local-storage-abstractor.js";
+import {getGameId} from "./storage-utils.js";
 
 function init () {
     renderGameList();
@@ -64,15 +65,19 @@ function isJoinOrSpectate(e){
   return e.value === "join" || e.value === "spectate";
 }
 
+function joinGame(gameId) {
+  // set group into localstorage.
+  saveToStorage("gameId", gameId);
 
-  fetchJoinGame(Number(gameId)).then(data => {
+  fetchJoinGame(Number(gameId)).then((data) => {
     // save users info to local storage upon joining
-          saveToStorage("gameId", data.gameId);
-          saveToStorage("hiker", data.hiker);
-          saveToStorage("playerToken", data.playerToken);
+    saveToStorage("hiker", data.hiker);
+    saveToStorage("playerToken", data.playerToken);
     // redirect page to lobby.
     window.location.replace("lobby.html");
   });
+
+}
 
 function redirectToCreationPage() {
   window.location.replace("lobby-creation.html");
