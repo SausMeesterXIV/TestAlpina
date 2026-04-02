@@ -20,10 +20,10 @@ function init() {
 
   // for selecting a tile
   let $gameBoard = document.querySelector("#game-board");
-  $gameBoard.addEventListener('click', handleTileClick, true)
+  $gameBoard.addEventListener('click', handleTileClick, true);
 
   // for selecting a card
-  const $hand = document.querySelector("#hand")
+  const $hand = document.querySelector("#hand");
   $hand.addEventListener('click', selectCard, true);
 
   setProgressBar(); // sets the initial and max values of the progress bar
@@ -79,7 +79,7 @@ function placeCard(move){
   console.log("Move geïnitieerd voor tile:", move.tile);
   getClosestCard(move.tile).then(closest => {
     if (closest) {
-      return addCardToBoard(move.tile.dataset.index, closest.card, closest.direction)
+      return addCardToBoard(move.tile.dataset.index, closest.card, closest.direction);
     }
   });
 }
@@ -179,7 +179,7 @@ function updateCurrentPlayer() {
       // gets the current hiker color.
       const currentHiker = data.currentHiker;
       data.players.forEach(player => {if(player.hiker === currentHiker) { // finds the hiker which has the same color as current hiker
-        document.querySelector("#turn-name").textContent = `${player.name}'s turn`
+        document.querySelector("#turn-name").textContent = `${player.name}'s turn`;
       }})
     })
 }
