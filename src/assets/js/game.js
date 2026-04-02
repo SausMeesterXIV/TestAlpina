@@ -58,21 +58,29 @@ function selectCard(e){
   selectedCard = e.target.closest('article');
 }
 
+function getMove(tileId, selectedTile, cardId) {
+  return {
+    tileId: tileId,
+    tile: selectedTile,
+    cardId: cardId
+  };
+}
+
+function handleSelectedCardPlacement(cardId, tileId, selectedTile) {
+  if (selectedCard !== null) {
+    if (Number(cardId) !== 0) {
+      const move = getMove(tileId, selectedTile, cardId);
+      placeCard(move);
+    }
+  }
+}
+
 function handleTileClick(e){
   const selectedTile = e.target.closest("div");
   const tileId = selectedTile.dataset.id;
   const cardId = selectedTile.dataset.cardId;
 
-  if (selectedCard !== null){
-    if (Number(cardId) !== 0) {
-      const move = {
-        tileId: tileId,
-        tile: selectedTile,
-        cardId: cardId
-      };
-      placeCard(move);
-    }
-  }
+  handleSelectedCardPlacement(cardId, tileId, selectedTile);
 }
 
 function placeCard(move){
@@ -84,34 +92,35 @@ function placeCard(move){
   });
 }
 
+function safe(row,column,currentBoard, size){
+  const inBounds = row >= 0 && column >= 0 && row < size && column < size;
+  const hasCard = Number(currentBoard[row][column].card) === 0;
+
+  if(inBounds && !hasCard){
+    const card = Number(currentBoard[row][column].card);
+    // returns null when there is no card
+    return card !== 0 ? card : null;
+  }
+}
+
+
 function getClosestCard(tile){
+  // tile position based on 1 array value (0-24)
   const tilePos = tile.dataset.index;
+  // size of the grid (5x5)
+  const boardSize = 5;
 
-  const tilePosRow = Math.floor(tilePos / 5);
-  const tilePosColumn = tilePos % 5;
-
-  const size = 5;
   return fetchGameDetails(getGameId()).then(game=>{
     const currentBoard = game.board;
-
-    // Checks whether a given (row, column) is inside the board
-    // and if it contains a non‑zero card.
-    const safe = (row, column) => {
-      if (
-        row >= 0 &&
-        column >= 0 &&
-        row < size &&
-        column < size &&
-        Number(currentBoard[row][column].card) !== 0
-      ){const card = Number(currentBoard[row][column].card);
-        return card !== 0 ? card : null;
-      }
-    };
-
-    const up = safe(tilePosRow - 1, tilePosColumn);
-    const right = safe(tilePosRow, tilePosColumn + 1);
-    const down = safe(tilePosRow + 1, tilePosColumn);
-    const left = safe(tilePosRow, tilePosColumn - 1);
+    // tile position based on 2D Array
+    const tilePosRow = Math.floor(tilePos / boardSize);
+    const tilePosColumn = tilePos % boardSize;
+    //SAFE: Checks whether a given (row, column) is inside the board
+    //and if it contains a non‑zero card.
+    const up = safe(tilePosRow - 1, tilePosColumn, currentBoard, boardSize);
+    const right = safe(tilePosRow, tilePosColumn + 1, currentBoard, boardSize);
+    const down = safe(tilePosRow + 1, tilePosColumn, currentBoard, boardSize);
+    const left = safe(tilePosRow, tilePosColumn - 1, currentBoard, boardSize);
 
     if (up) return { direction: "north", card : up };
     if (right) return { direction: "east", card: right };
