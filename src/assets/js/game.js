@@ -289,4 +289,23 @@ function remainingHikers() {
     })
 }
 
+function endTurn() {
+  fetchGameDetails.endTurn(_gameId, _hiker)
+    .then(() => {
+      $endTurnButton.disabled = true; // Disable the button to prevent multiple clicks
+      document.querySelector("progress").value = 0; // Reset the progress bar
+      gameLoop();
+    });
+}
+
+function gameLoop() {
+  fetchGameDetails.getGameId(_gameId)
+    .then(data => {
+      if (data.currentHiker === _hiker)
+        $endTurnButton.disabled = false; // Enable the button when it's the player's turn
+      else
+        setTimeout(gameLoop, 1000); // Check again after 1 second
+    })
+}
+
 init();
