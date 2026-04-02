@@ -236,43 +236,39 @@ function selectHiker(){
 
 
 
-async function placeHikerOnCard() {
-  //async function creates an asyncFunction object that will return a promise or exception
-  //this way I can use "await" makes the code act synchronous by suspending execution until the returned promise is fulfilled source : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
-
+function placeHikerOnCard() {
   let canPlayHiker = true;
-  const gameId = Number(loadFromStorage("gameId"));
-  const data = await fetchGameDetails(gameId);
-  const players = data.players;
-
-  players.forEach(player => {
-    if (player.hikersLeft <= 0) {
-      canPlayHiker = false;
-    }
-  });
-
-
-  if (canPlayHiker){
-    const cards = document.querySelectorAll(".card"); // class/selector needs to be changed so only the cards in a grid are selected
-    const hiker = document.querySelector(".hiker");
-    const main = document.querySelector("main");
-
-    cards.forEach(card => {
-      card.addEventListener("click", () => {
-        //this code moves the hiker
-        if (main.classList.contains("hiker-image")) {
-          card.appendChild(hiker);
-          hiker.classList.remove("hidden");
+  const gameId = Number(loadFromStorage("gameId"))
+  fetchGameDetails(gameId)
+    .then(data => data.players)
+    .then(players => {
+      players.forEach(player => {
+        if (player.hikersLeft <= 0) {
+          canPlayHiker = false;
         }
-      });
-    });
-  }
+      })
+      if (canPlayHiker){
+        const cards = document.querySelectorAll(".card"); // class/selector needs to be changed so only the cards in a grid are selected
+        const hiker = document.querySelector(".hiker");
+        const main = document.querySelector("main");
+
+        cards.forEach(card => {
+          card.addEventListener("click", () => {
+            //this code moves the hiker
+            if (main.classList.contains("hiker-image")) {
+              card.appendChild(hiker);
+              hiker.classList.remove("hidden");
+            }
+          });
+        });
+      }
+    })
 }
 
 function remainingHikers() {
   const $button = document.querySelector("#select-hiker-button");
   const gameId = Number(loadFromStorage("gameId"));
-  const currentPlayer ="purple"
+  const currentPlayer ="purple";
   const text = document.querySelector("span");
 
   fetchGameDetails(gameId)
