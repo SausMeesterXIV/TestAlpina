@@ -27,8 +27,13 @@ function fetchGameDetails(gameId) {
   return fetchFromServer(`/games/${gameId}`);
 }
 
+function fetchGameBoard(gameId){
+  return fetchFromServer(`/games/${gameId}/board`);
+}
+
 export{
   fetchSpecificGame,
   fetchUnstartedGames,
-  fetchGameDetails
+  fetchGameDetails,
+  fetchGameBoard
 };

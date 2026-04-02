@@ -71,9 +71,8 @@ function isJoinOrSpectate(e){
           saveToStorage("hiker", data.hiker);
           saveToStorage("playerToken", data.playerToken);
     // redirect page to lobby.
-    window.location.replace("lobby.html")}
-  );
-
+    window.location.replace("lobby.html")
+  });
 
 function redirectToCreationPage() {
   window.location.replace("lobby-creation.html");
