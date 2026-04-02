@@ -19,21 +19,25 @@ let selectedCard = null;
 
 function init() {
   renderBoard();
-  fetchPlayerHand().then(data => renderHand(data))
+  fetchPlayerHand().then(data => renderHand(data));
 
-  // for selecting a tile
-  let $gameBoard = document.querySelector("#game-board");
-  $gameBoard.addEventListener('click', handleTileClick, true);
-
-  // for selecting a card
-  const $hand = document.querySelector("#hand");
-  $hand.addEventListener('click', selectCard, true);
+  addEventListeners();
 
   setProgressBar(); // sets the initial and max values of the progress bar
   tick(); // updates the progress bar every second
   updateCurrentPlayer(); //must be used after the players turn has ended
 
   renderLeaderboard();
+}
+
+function addEventListeners() {
+   // for selecting a tile
+  let $gameBoard = document.querySelector("#game-board");
+  $gameBoard.addEventListener('click', handleTileClick, true);
+
+  // for selecting a card
+  const $hand = document.querySelector("#hand");
+  $hand.addEventListener('click', selectCard, true);
 }
 
 function renderCard(card) {
