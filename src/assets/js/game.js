@@ -4,6 +4,7 @@ import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
 import {addCardToBoard} from "./api/place-card.js";
 import {fetchPlayerHand} from "./api/player-info.js";
 import {getGameId} from "./storage-utils.js";
+import { renderLeaderboard as leaderboardRenderer } from "./leaderboard-renderer.js";
 
 const arrayOfCards =
   [{id: 50, animal: "chamois", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 1, selector: "HI", filter: "Pa"}},
@@ -31,6 +32,8 @@ function init() {
   setProgressBar(); // sets the initial and max values of the progress bar
   tick(); // updates the progress bar every second
   updateCurrentPlayer(); //must be used after the players turn has ended
+
+  renderLeaderboard();
 }
 
 function renderCard(card) {
@@ -207,6 +210,11 @@ function tick() {
 function setProgressBar() {
   /*document.querySelector("progress").max = loadFromStorage(timePerTurn)*/ //there is currently no timeperturn in localstorage
   document.querySelector("progress").max = 60; //temporary
+}
+
+function renderLeaderboard() {
+  const $target = document.querySelector("tbody");
+  fetchGameDetails(getGameId()).then(resp => leaderboardRenderer(resp.players, $target));
 }
 
 init();
