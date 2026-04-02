@@ -1,7 +1,10 @@
 import {fetchAllCards} from "./api/card-info.js";
-import {fetchGameBoard, fetchGameDetails} from "./api/game-info.js";
+import {fetchGameDetails} from "./api/game-info.js";
 import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
 import {addCardToBoard} from "./api/place-card.js";
+import {fetchFromServer} from "./data-connector/api-communication-abstractor.js";
+import {fetchPlayerInfo, fetchPlayerHand} from "./api/player-info.js";
+import {getHiker, getGameId, getPlayerToken} from "./storage-utils.js";
 
 const arrayOfCards =
   [{id: 50, animal: "chamois", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 1, selector: "HI", filter: "Pa"}},
@@ -16,7 +19,7 @@ let selectedCard = null;
 
 function init() {
   renderBoard();
-  renderHand(arrayOfCards);
+  fetchPlayerHand().then(data => renderHand(data))
 
   // for selecting a tile
   let $gameBoard = document.querySelector("#game-board");
@@ -175,10 +178,6 @@ function renderBoard() {
       document.querySelector("#game-board").appendChild($board);
     });
   });
-}
-
-function getGameId(){
-  return loadFromStorage("gameId");
 }
 
 function updateCurrentPlayer() {
