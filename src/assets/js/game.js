@@ -1,10 +1,9 @@
 import {fetchAllCards} from "./api/card-info.js";
-import {fetchGameDetails} from "./api/game-info.js";
+import {fetchGameDetails,fetchGameBoard} from "./api/game-info.js";
 import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
 import {addCardToBoard} from "./api/place-card.js";
-import {fetchFromServer} from "./data-connector/api-communication-abstractor.js";
-import {fetchPlayerInfo, fetchPlayerHand} from "./api/player-info.js";
-import {getHiker, getGameId, getPlayerToken} from "./storage-utils.js";
+import {fetchPlayerHand} from "./api/player-info.js";
+import {getGameId} from "./storage-utils.js";
 
 const arrayOfCards =
   [{id: 50, animal: "chamois", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 1, selector: "HI", filter: "Pa"}},
