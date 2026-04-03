@@ -5,6 +5,7 @@ import {addCardToBoard} from "./api/place-card.js";
 import {fetchPlayerHand,fetchPlayerInfo} from "./api/player-info.js";
 import {getGameId, getHiker} from "./storage-utils.js";
 import { renderLeaderboard as leaderboardRenderer } from "./leaderboard-renderer.js";
+import * as storageHandler from "./storage-utils.js";
 
 const arrayOfCards =
   [{id: 50, animal: "chamois", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 1, selector: "HI", filter: "Pa"}},
@@ -29,6 +30,7 @@ function init() {
 
   renderLeaderboard();
   gameLoop();
+  renderLoop();
 }
 
 function addEventListeners() {
@@ -49,10 +51,22 @@ function addEventListeners() {
   document.querySelector("#end-turn-button").addEventListener("click", endTurn);
 }
 
+let lastBoardState = null; // makes sure the browser knows whether the board the player sees is the same as the one saved in the server
+
 function renderLoop() {
-  // renderBoard(); If it isn't your turn, it should rerender the board.
   // renderHand(); Should only be done when a player loads into game.html and plays a card
   // renderLeaderboard(); should be done the whole time
+  const gameId = storageHandler.getGameId();
+  
+  fetchGameDetails(gameId).then(data => {
+    const currentBoard = JSON.stringify(data.board); // By turning the array into a string, the values can be compared. 
+    if (currentBoard !== lastBoardState) { // If it would remain an array, this line would look at whether currentBoard and lastBoardState don't point to the same object in memory, which would always be true.
+      lastBoardState = currentBoard;
+      renderBoard();
+    }
+    
+    setTimeout(renderLoop, 1000);
+  });
 }
 
 function renderCard(card) {
@@ -181,7 +195,7 @@ function renderTile(tile, cards, cardId, $emptyTile, index) {
 
 function renderBoard() {
   const $board = document.createDocumentFragment();
-  const gameId = Number(loadFromStorage("gameId"));
+  const gameId = Number(storageHandler.getGameId());
 
   fetchAllCards().then(res =>{
     fetchGameBoard(gameId).then((res2) => {
@@ -202,7 +216,7 @@ function renderBoard() {
           index++;
         });
       });
-      document.querySelector("#game-board").appendChild($board);
+      document.querySelector("#game-board").replaceChildren($board); // Replace children prevents flickering
     });
   });
 }
@@ -326,5 +340,5 @@ init();
 
 // temp
 document.querySelector("#leave-button").addEventListener("click", function() {
-  window.location.href = "lobby-listing.html"
+  window.location.href = "lobby-listing.html";
 })
