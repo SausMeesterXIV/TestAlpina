@@ -3,7 +3,7 @@ import {fetchGameDetails,fetchGameBoard,fetchSpecificGame} from "./api/game-info
 import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
 import {addCardToBoard} from "./api/place-card.js";
 import {fetchPlayerHand,fetchPlayerInfo} from "./api/player-info.js";
-import {getGameId} from "./storage-utils.js";
+import {getGameId, getHiker} from "./storage-utils.js";
 import { renderLeaderboard as leaderboardRenderer } from "./leaderboard-renderer.js";
 
 const arrayOfCards =
@@ -28,6 +28,7 @@ function init() {
   updateCurrentPlayer(); //must be used after the players turn has ended
 
   renderLeaderboard();
+  gameLoop();
 }
 
 function addEventListeners() {
@@ -43,6 +44,9 @@ function addEventListeners() {
   document.querySelector("#select-hiker-button").addEventListener("click", selectHiker);
   placeHikerOnCard();
   remainingHikers();
+
+  //endTurnButton
+  document.querySelector("#end-turn-button").addEventListener("click", endTurn);
 }
 
 function renderCard(card) {
@@ -51,7 +55,7 @@ function renderCard(card) {
 
   $clone.querySelector("article").dataset.cardId = card.id;
   $clone.querySelector("img").src = `images/${card.animal}_${card.landscape}.png`;
-  $clone.querySelector("p").textContent = `${card.victoryPointCondition.basescore} + ${card.victoryPointCondition.score} / ${card.victoryPointCondition.selector} - ${card.victoryPointCondition.filter}`;
+  $clone.querySelector("p").textContent = `${card.victoryPointCondition.baseScore} + ${card.victoryPointCondition.score} / ${card.victoryPointCondition.selector} - ${card.victoryPointCondition.filter}`;
 
   return $clone;
 }
@@ -284,21 +288,26 @@ function remainingHikers() {
 }
 
 function endTurn() {
-  fetchGameDetails.endTurn(_gameId, _hiker)
+  const $endTurnButton = document.querySelector("#end-turn-button");
+  const $selectHikerButton = document.querySelector("#select-hiker-button");
+  fetchGameDetails(getGameId())
     .then(() => {
       $endTurnButton.disabled = true; // Disable the button to prevent multiple clicks
+      $selectHikerButton.disabled = true;
       document.querySelector("progress").value = 0; // Reset the progress bar
       gameLoop();
     });
 }
 
 function gameLoop() {
-  fetchGameDetails.getGameId(_gameId)
+  const $endTurnButton = document.querySelector("#end-turn-button");
+  const $selectHikerButton = document.querySelector("#select-hiker-button");
+  fetchGameDetails(getGameId())
     .then(data => {
-      if (data.currentHiker === _hiker)
+      if (data.currentHiker === getHiker()) {
         $endTurnButton.disabled = false; // Enable the button when it's the player's turn
-      else
-        setTimeout(gameLoop, 1000); // Check again after 1 second
+        $selectHikerButton.disabled = false;
+      } else setTimeout(gameLoop, 2000); // Check again after 2 second and will need to be put in different function dedicated to polling
     })
 }
 
