@@ -1,6 +1,7 @@
 import { fetchGameDetails } from "./api/game-info.js";
 import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
 import { renderLeaderboard as leaderboardRenderer } from "./leaderboard-renderer.js";
+import * as storageHandler from "./storage-utils.js";
 
 function init() {
     setBackground();
@@ -31,13 +32,13 @@ function hasMostPoints(players) {
 
 function setBackground() {
     const $body = document.querySelector("body");
-    fetchGameDetails(getGameId())
+    fetchGameDetails(Number(storageHandler.getGameId()))
         .then(data => hasMostPoints(data.players) ? $body.classList.add("victory") : $body.classList.add("defeat")); // typical if-else structure, but simplified notation
 }
 
 function renderLeaderboard() {
   const $target = document.querySelector("tbody");
-  fetchGameDetails(getGameId()).then(resp => leaderboardRenderer(resp.players, $target, false)); // false prevents the function from trying to load the amount of hikers
+  fetchGameDetails(Number(storageHandler.getGameId())).then(resp => leaderboardRenderer(resp.players, $target, false)); // false prevents the function from trying to load the amount of hikers
 }
 
 init();
