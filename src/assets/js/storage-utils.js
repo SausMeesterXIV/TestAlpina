@@ -5,11 +5,11 @@ function getGameId(){
 }
 
 function getPlayerToken(){
-  return loadFromStorage("playerToken")
+  return loadFromStorage("playerToken");
 }
 
 function getHiker() {
-  return loadFromStorage("hiker")
+  return loadFromStorage("hiker");
 }
 
 export {getHiker, getGameId, getPlayerToken}
