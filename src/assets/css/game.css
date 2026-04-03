@@ -93,6 +93,10 @@ footer {
     cursor: pointer;
 }
 
+#select-hiker-button{
+    position: relative;
+}
+
 #game-board > div {
     border: dashed black 0.25rem;
 }
@@ -129,9 +133,34 @@ footer {
 }
 
 .card {
+    position: relative;
     margin: 0.2rem;
     border: 0.2rem black double;
     height: 10rem;
     width: 8rem
 }
 
+.hiker-image{
+    cursor: url("../media/Alpina_Hiker.png"), auto;
+}
+
+.hiker{
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: black;
+}
+
+.hidden{
+    display: none;
+}
+
+.hikers-left{
+    position: absolute;
+    top: -0.3rem;
+    right: -0.3rem;
+
+    padding: 0.3rem;
+    background-color: #888888;
+
+}

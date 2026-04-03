@@ -37,31 +37,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr> <!--Example data, remove later-->
-                                <td>#1</td>
-                                <td>Tibo</td>
-                                <td>0</td>
-                                <td>50</td>
-                            </tr>
-                            <tr> <!--Example data, remove later-->
-                                <td>#2</td>
-                                <td>Dayvid</td>
-                                <td>0</td>
-                                <td>50</td>
-                            </tr>
+                            <!--The leaderboard data comes here-->
                         </tbody>
                     </table>
                 </article>
                 <aside id="turn-info">
-                    <h2 id="turn-name">Rhune's turn</h2>
+                    <h2 id="turn-name">Rhune's turn</h2> <!--Must change dynamically eventually, change this later-->
                     <progress id="progress" value="0" max="60"></progress> <!--This indicates how much time a player has left. Extra info: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/progress-->
                 </aside>
             </section>
              <section id="game-board"> <!--divs are temporary for styling purposes, remove it later-->
-                <div data-id="0" data-card-id="0"></div><div data-id="1" data-card-id="1"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
              </section>
             <section id="player-controls">
-                <button id="select-hiker-button">Select hiker</button>
+                <button id="select-hiker-button">Select hiker <span class="hikers-left"></span></button>
                 <button id="end-turn-button">End Turn</button>
             </section>
 
@@ -73,12 +61,27 @@
                     <article class="card" data-card-id="#">
                         <img class="card-image" src="#" alt="tmp">
                         <p class="win-conditions">#</p>
+                        <img class = "hiker hidden" src="assets/media/Alpina_Hiker.png" alt="tmp">
+                        <!--voorlopig gwn als image, deze wel nog veranderen naar een BG-image -->
                     </article>
                 </template>
             </section>
+            <template id="leaderboard-template">
+                <tr>
+                    <td class="leaderboard-pos">#</td> <!--Pos.-->
+                    <td class="leaderboard-name">Name</td>
+                    <td class="leaderboard-hikers">Amount of hikers</td>
+                    <td class="leaderboard-points">Points</td>
+                </tr>
+            </template>
         </main>
         <footer>
             <button id="leave-button">Leave game</button>
         </footer>
     </body>
+
+    <template id="tile-template">
+        <div class="tile" data-index="0" data-card="1"></div>
+    </template>
 </html>
+
