@@ -108,12 +108,17 @@ function placeCard(move){
 
 function safe(row,column,currentBoard, size){
   const inBounds = row >= 0 && column >= 0 && row < size && column < size;
-  const hasCard = Number(currentBoard[row][column].card) === 0;
 
-  if(inBounds && !hasCard){
-    const card = Number(currentBoard[row][column].card);
-    // returns null when there is no card
-    return card !== 0 ? card : null;
+  if (currentBoard?.[row]?.[column] === undefined) {
+    return null;
+  }else{
+    const hasCard = Number(currentBoard[row][column].card) === 0;
+
+    if(inBounds && !hasCard){
+      const card = Number(currentBoard[row][column].card);
+      // returns null when there is no card
+      return card !== 0 ? card : null;
+    }
   }
 }
 
