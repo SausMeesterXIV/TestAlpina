@@ -8,14 +8,6 @@ function init() {
     renderLeaderboard();
 }
 
-function getPlayerName() {
-    return loadFromStorage("playerName");
-}
-
-function getGameId() {
-    return Number(loadFromStorage("gameId")); //Makes sure the gameId is returned as an int and not a String.
-}
-
 function calcBestPlayer(players) {
     return players.reduce((currentBest, player) => { // iterates over the array until only the player with the best score remains
         if (player.score > currentBest.score) {
@@ -27,7 +19,7 @@ function calcBestPlayer(players) {
 }
 
 function hasMostPoints(players) {
-    return getPlayerName() === calcBestPlayer(players).name;
+    return storageHandler.getHiker() === calcBestPlayer(players).hiker;
 }
 
 function setBackground() {
