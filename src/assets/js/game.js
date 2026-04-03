@@ -46,7 +46,7 @@ function addEventListeners() {
   remainingHikers();
 
   //endTurnButton
-  document.querySelector("#end-turn-button").addEventListener("click", endTurn)
+  document.querySelector("#end-turn-button").addEventListener("click", endTurn);
 }
 
 function renderCard(card) {
@@ -307,8 +307,7 @@ function gameLoop() {
       if (data.currentHiker === getHiker()) {
         $endTurnButton.disabled = false; // Enable the button when it's the player's turn
         $selectHikerButton.disabled = false;
-      } else
-        setTimeout(gameLoop, 1000); // Check again after 1 second
+      } else setTimeout(gameLoop, 2000); // Check again after 2 second and will need to be put in different function dedicated to polling
     })
 }
 
