@@ -105,7 +105,7 @@ function placeCard(move){
   console.log("Move geïnitieerd voor tile:", move.tile);
   getClosestCard(move.tile).then(closest => {
     if (closest) {
-      return addCardToBoard(move.tile.dataset.index, closest.card, closest.direction);
+      return addCardToBoard(selectedCard.dataset.cardId, closest.card, closest.direction);
     }
   });
 }
@@ -128,9 +128,6 @@ function getClosestCard(tile){
   // size of the grid (5x5)
   const boardSize = 5;
 
-  const tilePosRow = Math.floor(tilePos / 5);
-  const tilePosColumn = tilePos % 5;
-
   const size = 5;
   return fetchGameDetails(getGameId()).then(game=>{
     const currentBoard = game.board;
@@ -139,10 +136,11 @@ function getClosestCard(tile){
     const tilePosColumn = tilePos % boardSize;
     //SAFE: Checks whether a given (row, column) is inside the board
     //and if it contains a non‑zero card.
-    const up = safe(tilePosRow - 1, tilePosColumn, currentBoard, boardSize);
-    const right = safe(tilePosRow, tilePosColumn + 1, currentBoard, boardSize);
-    const down = safe(tilePosRow + 1, tilePosColumn, currentBoard, boardSize);
-    const left = safe(tilePosRow, tilePosColumn - 1, currentBoard, boardSize);
+    const up = safe(tilePosRow + 1, tilePosColumn, currentBoard, boardSize);
+    const right = safe(tilePosRow, tilePosColumn - 1, currentBoard, boardSize);
+    const down = safe(tilePosRow - 1, tilePosColumn, currentBoard, boardSize);
+    const left = safe(tilePosRow, tilePosColumn + 1, currentBoard, boardSize);
+
 
     if (up) return { direction: "north", card : up };
     if (right) return { direction: "east", card: right };

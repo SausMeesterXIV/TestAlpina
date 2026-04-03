@@ -1,15 +1,15 @@
 import {fetchFromServer} from "../data-connector/api-communication-abstractor.js";
 import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
 
-function addCardToBoard(card, currentCard, direction){
+function addCardToBoard(card, relativeCard, direction){
   const gameId = loadFromStorage("gameId");
   const body = {
     hiker: loadFromStorage("hiker"),
     cardPlacement:{
       // hard coded card should be the card that is played by the player
-      card: 51,
+      card: Number(card),
       // hard coded should be the card that is next to the card that you play in the grid.
-      relativeTo: 55,
+      relativeTo: relativeCard,
       direction: direction
     }
   };
