@@ -305,3 +305,9 @@ function gameLoop() {
 }
 
 init();
+
+
+// temp
+document.querySelector("#leave-button").addEventListener("click", function() {
+  window.location.href = "lobby-listing.html"
+})
