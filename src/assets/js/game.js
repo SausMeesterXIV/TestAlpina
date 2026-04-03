@@ -49,6 +49,12 @@ function addEventListeners() {
   document.querySelector("#end-turn-button").addEventListener("click", endTurn);
 }
 
+function renderLoop() {
+  // renderBoard(); If it isn't your turn, it should rerender the board.
+  // renderHand(); Should only be done when a player loads into game.html and plays a card
+  // renderLeaderboard(); should be done the whole time
+}
+
 function renderCard(card) {
   const $template = document.querySelector("#card-template");
   const $clone = $template.content.cloneNode(true);
