@@ -19,7 +19,7 @@ let selectedCard = null;
 
 function init() {
   renderBoard();
-  fetchPlayerHand().then(data => renderHand(data));
+  renderHand();
 
   addEventListeners();
 
@@ -60,15 +60,14 @@ function renderCard(card) {
   return $clone;
 }
 
-function renderHand(cardArray) {
+function renderHand() {
   let $fragment = document.createDocumentFragment();
-
-
-  cardArray.forEach(card => {
-    $fragment.appendChild(renderCard(card));
-  })
-
-  document.querySelector("#hand").appendChild($fragment);
+  fetchPlayerHand().then(cardArray => {
+    cardArray.forEach(card => {
+      $fragment.appendChild(renderCard(card));
+    });
+    document.querySelector("#hand").appendChild($fragment);
+  });
 }
 
 function selectCard(e){
