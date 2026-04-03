@@ -9,12 +9,11 @@ function init() {
 
 function calcBestPlayer(players) {
     return players.reduce((currentBest, player) => { // iterates over the array until only the player with the best score remains
-        if (player.score > currentBest.score) {
+        if (player.score >= currentBest.score) {
             return player;
         }
         return currentBest;
     })
-    // TODO: Edge-case: if 2 players have the same amount of points, the last one in turn-order wins.
 }
 
 function hasMostPoints(players) {
