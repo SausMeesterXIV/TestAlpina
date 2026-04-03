@@ -1,5 +1,4 @@
 import { fetchGameDetails } from "./api/game-info.js";
-import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
 import { renderLeaderboard as leaderboardRenderer } from "./leaderboard-renderer.js";
 import * as storageHandler from "./storage-utils.js";
 
