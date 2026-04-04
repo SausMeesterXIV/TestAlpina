@@ -28,7 +28,6 @@ function init() {
   tick(); // updates the progress bar every second
   updateCurrentPlayer(); //must be used after the players turn has ended
 
-  renderLeaderboard();
   gameLoop();
   renderLoop();
 }
@@ -54,11 +53,11 @@ function addEventListeners() {
 let lastBoardState = null; // makes sure the browser knows whether the board the player sees is the same as the one saved in the server
 
 function renderLoop() {
-  // renderHand(); Should only be done when a player loads into game.html and plays a card
-  // renderLeaderboard(); should be done the whole time
   const gameId = storageHandler.getGameId();
   
-  fetchGameDetails(gameId).then(data => {
+  fetchGameDetails(gameId).then(data => {  // This is currently the only reliable solution I found, if someone has a better idea then feel free to change it.
+    renderLeaderboard(data.players);
+   
     const currentBoard = JSON.stringify(data.board); // By turning the array into a string, the values can be compared. 
     if (currentBoard !== lastBoardState) { // If it would remain an array, this line would look at whether currentBoard and lastBoardState don't point to the same object in memory, which would always be true.
       lastBoardState = currentBoard;
@@ -86,7 +85,7 @@ function renderHand() {
     cardArray.forEach(card => {
       $fragment.appendChild(renderCard(card));
     });
-    document.querySelector("#hand").appendChild($fragment);
+    document.querySelector("#hand").replaceChildren($fragment);
   });
 }
 
@@ -124,7 +123,10 @@ function placeCard(move){
   console.log("Move geïnitieerd voor tile:", move.tile);
   getClosestCard(move.tile).then(closest => {
     if (closest) {
-      return addCardToBoard(selectedCard.dataset.cardId, closest.card, closest.direction);
+      return addCardToBoard(selectedCard.dataset.cardId, closest.card, closest.direction)
+      .then(() => {
+        renderHand();
+      });
     }
   });
 }
@@ -251,9 +253,9 @@ function setProgressBar() {
   document.querySelector("progress").max = 60; //temporary
 }
 
-function renderLeaderboard() {
+function renderLeaderboard(players) {
   const $target = document.querySelector("tbody");
-  fetchGameDetails(getGameId()).then(resp => leaderboardRenderer(resp.players, $target));
+  leaderboardRenderer(players, $target);
 }
 
 function selectHiker(){
