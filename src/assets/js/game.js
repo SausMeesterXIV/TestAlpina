@@ -5,6 +5,7 @@ import {addCardToBoard} from "./api/place-card.js";
 import {fetchPlayerHand,fetchPlayerInfo} from "./api/player-info.js";
 import {getGameId, getHiker} from "./storage-utils.js";
 import { renderLeaderboard as leaderboardRenderer } from "./leaderboard-renderer.js";
+import * as storageHandler from "./storage-utils.js";
 
 const arrayOfCards =
   [{id: 50, animal: "chamois", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 1, selector: "HI", filter: "Pa"}},
@@ -19,7 +20,7 @@ let selectedCard = null;
 
 function init() {
   renderBoard();
-  fetchPlayerHand().then(data => renderHand(data));
+  renderHand();
 
   addEventListeners();
 
@@ -27,8 +28,8 @@ function init() {
   tick(); // updates the progress bar every second
   updateCurrentPlayer(); //must be used after the players turn has ended
 
-  renderLeaderboard();
   gameLoop();
+  renderLoop();
 }
 
 function addEventListeners() {
@@ -49,6 +50,24 @@ function addEventListeners() {
   document.querySelector("#end-turn-button").addEventListener("click", endTurn);
 }
 
+let lastBoardState = null; // makes sure the browser knows whether the board the player sees is the same as the one saved in the server
+
+function renderLoop() {
+  const gameId = storageHandler.getGameId();
+  
+  fetchGameDetails(gameId).then(data => {  // This is currently the only reliable solution I found, if someone has a better idea then feel free to change it.
+    renderLeaderboard(data.players);
+   
+    const currentBoard = JSON.stringify(data.board); // By turning the array into a string, the values can be compared. 
+    if (currentBoard !== lastBoardState) { // If it would remain an array, this line would look at whether currentBoard and lastBoardState don't point to the same object in memory, which would always be true.
+      lastBoardState = currentBoard;
+      renderBoard();
+    }
+    
+    setTimeout(renderLoop, 1000);
+  });
+}
+
 function renderCard(card) {
   const $template = document.querySelector("#card-template");
   const $clone = $template.content.cloneNode(true);
@@ -60,15 +79,14 @@ function renderCard(card) {
   return $clone;
 }
 
-function renderHand(cardArray) {
+function renderHand() {
   let $fragment = document.createDocumentFragment();
-
-
-  cardArray.forEach(card => {
-    $fragment.appendChild(renderCard(card));
-  })
-
-  document.querySelector("#hand").appendChild($fragment);
+  fetchPlayerHand().then(cardArray => {
+    cardArray.forEach(card => {
+      $fragment.appendChild(renderCard(card));
+    });
+    document.querySelector("#hand").replaceChildren($fragment);
+  });
 }
 
 function selectCard(e){
@@ -105,7 +123,10 @@ function placeCard(move){
   console.log("Move geïnitieerd voor tile:", move.tile);
   getClosestCard(move.tile).then(closest => {
     if (closest) {
-      return addCardToBoard(selectedCard.dataset.cardId, closest.card, closest.direction);
+      return addCardToBoard(selectedCard.dataset.cardId, closest.card, closest.direction)
+      .then(() => {
+        renderHand();
+      });
     }
   });
 }
@@ -176,7 +197,7 @@ function renderTile(tile, cards, cardId, $emptyTile, index) {
 
 function renderBoard() {
   const $board = document.createDocumentFragment();
-  const gameId = Number(loadFromStorage("gameId"));
+  const gameId = Number(storageHandler.getGameId());
 
   fetchAllCards().then(res =>{
     fetchGameBoard(gameId).then((res2) => {
@@ -197,7 +218,7 @@ function renderBoard() {
           index++;
         });
       });
-      document.querySelector("#game-board").appendChild($board);
+      document.querySelector("#game-board").replaceChildren($board); // Replace children prevents flickering
     });
   });
 }
@@ -232,9 +253,9 @@ function setProgressBar() {
   document.querySelector("progress").max = 60; //temporary
 }
 
-function renderLeaderboard() {
+function renderLeaderboard(players) {
   const $target = document.querySelector("tbody");
-  fetchGameDetails(getGameId()).then(resp => leaderboardRenderer(resp.players, $target));
+  leaderboardRenderer(players, $target);
 }
 
 function selectHiker(){
@@ -321,5 +342,5 @@ init();
 
 // temp
 document.querySelector("#leave-button").addEventListener("click", function() {
-  window.location.href = "lobby-listing.html"
+  window.location.href = "lobby-listing.html";
 })

@@ -1,4 +1,5 @@
 function renderLeaderboard(players, $target, showHikers = true) {
+    const $fragment = document.createDocumentFragment();
     const sortedPlayers = getSortedPlayers(players);
     sortedPlayers.forEach((player, idx) => {
         const $template = document.querySelector("#leaderboard-template");
@@ -11,8 +12,9 @@ function renderLeaderboard(players, $target, showHikers = true) {
         }
         $clone.querySelector(".leaderboard-points").textContent = player.score;
 
-        $target.appendChild($clone);
+        $fragment.appendChild($clone);
     });
+    $target.replaceChildren($fragment);
 }
 
 function getSortedPlayers(players) {
