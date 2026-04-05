@@ -56,6 +56,8 @@ function renderLoop() {
   const gameId = storageHandler.getGameId();
   
   fetchGameDetails(gameId).then(data => {  // This is currently the only reliable solution I found, if someone has a better idea then feel free to change it.
+    if (data.finished) window.location.replace("end-screen.html");
+
     renderLeaderboard(data.players);
    
     const currentBoard = JSON.stringify(data.board); // By turning the array into a string, the values can be compared. 
