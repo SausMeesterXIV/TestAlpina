@@ -1,3 +1,24 @@
+#lobby-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.tab {
+    background: lightgrey;
+    color: black;
+    border: none;
+    border-radius: 0.75rem;
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.tab.active {
+    background: black;
+    color: white;
+}
+
 article{
     display: flex;
     margin: 1rem 0 0 1rem;
@@ -19,6 +40,7 @@ article{
 
 .expedition{
     display: flex;
+    justify-content: space-between;
 
     background: lightgrey;
     border-radius: 1rem;
