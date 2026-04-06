@@ -1,25 +1,23 @@
 import {fetchFromServer} from "../data-connector/api-communication-abstractor.js";
-import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
+import {getGameId, getHiker} from "../storage-utils.js";
 
 function addCardToBoard(card, relativeCard, direction){
-  const gameId = loadFromStorage("gameId");
+  const gameId = getGameId();
   const body = {
-    hiker: loadFromStorage("hiker"),
+    hiker: getHiker(),
     cardPlacement:{
       card: Number(card),
       relativeTo: relativeCard,
       direction: direction
     }
   };
-
-  console.log(body);
   return fetchFromServer(`/games/${gameId}/board`,"POST", body);
 }
 
 function addCardToBoardWithHikerInHand(card, relativeCard, direction){
-  const gameId = loadFromStorage("gameId");
+  const gameId = getGameId();
   const body = {
-    hiker: loadFromStorage("hiker"),
+    hiker: getHiker(),
     cardPlacement:{
       card: Number(card),
       relativeTo: relativeCard,
@@ -27,7 +25,6 @@ function addCardToBoardWithHikerInHand(card, relativeCard, direction){
     },
     hikerPlacement: Number(card)
   };
-  console.log("can place with hiker");
   return fetchFromServer(`/games/${gameId}/board`,"POST", body);
 }
 
