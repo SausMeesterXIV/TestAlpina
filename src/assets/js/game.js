@@ -17,6 +17,8 @@ const arrayOfCards =
 //for testing purposes
 
 let selectedCard = null;
+// object that will store the moves done by the player.
+let turn = null;
 let hasPlacedHiker = false;
 
 function init() {
@@ -130,18 +132,26 @@ function placeCard(move){
   getClosestCard(move.tile).then(closest => {
     if (closest) {
       if (hasHikerOnCardInHand()){
-        hasPlacedHiker = true
-        return addCardToBoardWithHikerInHand(selectedCard.dataset.cardId, closest.card, closest.direction).then(() => {
-          renderHand();
-        });
+        hasPlacedHiker = true;
+        // create move (selectedCard.dataset.cardId, closest.card, closest.direction)
+        createTurn(selectedCard.dataset.cardId, closest.card, closest.direction);
+        // TODO: check where the hiker is placed on the grid not only in the hand.
       }else{
-        return addCardToBoard(selectedCard.dataset.cardId, closest.card, closest.direction).then(() => {
-          renderHand();
-        });
+        // create Move (selectedCard.dataset.cardId, closest.card, closest.direction)
+        createTurn(selectedCard.dataset.cardId, closest.card, closest.direction);
       }
     }
   });
 }
+
+function createTurn(cardId, closestCardId, direction){
+  turn = {
+    cardId,
+    closestCardId,
+    direction
+  }
+}
+
 
 function safe(row,column,currentBoard, size){
   const inBounds = row >= 0 && column >= 0 && row < size && column < size;
@@ -325,16 +335,34 @@ function remainingHikers() {
     })
 }
 
+function endTurnButton(){
+  if (turn !== null){
+    if (hasPlacedHiker){
+      // fetch with hiker
+      addCardToBoardWithHikerInHand(selectedCard.dataset.cardId, turn.closestCardId, turn.direction)
+        .then(() =>{
+          // clear hasplacedhiker and the selectedcard.
+        });
+    }else {
+      // fetch without hiker
+      addCardToBoard(selectedCard.dataset.cardId, closest.card, closest.direction)
+        .then(() =>{
+        // clear hasplacedhiker and the selectedcard.
+      });
+    }
+  }
+}
+
 function endTurn() {
   const $endTurnButton = document.querySelector("#end-turn-button");
   const $selectHikerButton = document.querySelector("#select-hiker-button");
-  fetchGameDetails(getGameId())
-    .then(() => {
-      $endTurnButton.disabled = true; // Disable the button to prevent multiple clicks
-      $selectHikerButton.disabled = true;
-      document.querySelector("progress").value = 0; // Reset the progress bar
-      gameLoop();
-    });
+
+  $endTurnButton.disabled = true; // Disable the button to prevent multiple clicks
+  $selectHikerButton.disabled = true;
+  document.querySelector("progress").value = 0; // Reset the progress bar
+
+  endTurnButton();
+  gameLoop();
 }
 
 function gameLoop() {
