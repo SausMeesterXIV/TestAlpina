@@ -1,8 +1,8 @@
 import {fetchAllCards} from "./api/card-info.js";
-import {fetchGameDetails,fetchGameBoard,fetchSpecificGame} from "./api/game-info.js";
+import {fetchGameDetails,fetchGameBoard} from "./api/game-info.js";
 import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
-import {addCardToBoard} from "./api/place-card.js";
-import {fetchPlayerHand,fetchPlayerInfo} from "./api/player-info.js";
+import {addCardToBoard, addCardToBoardWithHikerInHand} from "./api/place-card.js";
+import {fetchPlayerHand} from "./api/player-info.js";
 import {getGameId, getHiker} from "./storage-utils.js";
 import { renderLeaderboard as leaderboardRenderer } from "./leaderboard-renderer.js";
 import * as storageHandler from "./storage-utils.js";
@@ -17,6 +17,9 @@ const arrayOfCards =
 //for testing purposes
 
 let selectedCard = null;
+// object that will store the moves done by the player.
+let turn = null;
+let hasPlacedHiker = false;
 
 function init() {
   renderBoard();
@@ -66,7 +69,6 @@ function renderLoop() {
       lastBoardState = currentBoard;
       renderBoard();
     }
-    
     setTimeout(renderLoop, 1000);
   });
 }
@@ -90,6 +92,13 @@ function renderHand() {
     });
     document.querySelector("#hand").replaceChildren($fragment);
   });
+}
+
+
+function hasHikerOnCardInHand(){
+  const card = selectedCard.querySelector(".hiker");
+  // if there is no hiker, the player sends card without hiker to server
+  return !card.classList.contains("hidden"); // CHANGE TO HIKER LATER!
 }
 
 function selectCard(e){
@@ -126,13 +135,25 @@ function placeCard(move){
   console.log("Move geïnitieerd voor tile:", move.tile);
   getClosestCard(move.tile).then(closest => {
     if (closest) {
-      return addCardToBoard(selectedCard.dataset.cardId, closest.card, closest.direction)
-      .then(() => {
-        renderHand();
-      });
+      if (hasHikerOnCardInHand()){
+        hasPlacedHiker = true;
+        createTurn(selectedCard.dataset.cardId, closest.card, closest.direction);
+        // TODO: check where the hiker is placed on the grid not only in the hand.
+      }else{
+        createTurn(selectedCard.dataset.cardId, closest.card, closest.direction);
+      }
     }
   });
 }
+
+function createTurn(cardId, closestCardId, direction){
+  turn = {
+    cardId,
+    closestCardId,
+    direction
+  }
+}
+
 
 function safe(row,column,currentBoard, size){
   const inBounds = row >= 0 && column >= 0 && row < size && column < size;
@@ -310,16 +331,34 @@ function remainingHikers() {
     })
 }
 
+function endTurnButton(){
+  if (turn !== null){
+    if (hasPlacedHiker){
+      // fetch with hiker
+      addCardToBoardWithHikerInHand(selectedCard.dataset.cardId, turn.closestCardId, turn.direction)
+        .then(() =>{
+          // clear hasplacedhiker and the selectedcard.
+        });
+    }else {
+      // fetch without hiker
+      addCardToBoard(selectedCard.dataset.cardId, closest.card, closest.direction)
+        .then(() =>{
+        // clear hasplacedhiker and the selectedcard.
+      });
+    }
+  }
+}
+
 function endTurn() {
   const $endTurnButton = document.querySelector("#end-turn-button");
   const $selectHikerButton = document.querySelector("#select-hiker-button");
-  fetchGameDetails(getGameId())
-    .then(() => {
-      $endTurnButton.disabled = true; // Disable the button to prevent multiple clicks
-      $selectHikerButton.disabled = true;
-      document.querySelector("progress").value = 0; // Reset the progress bar
-      gameLoop();
-    });
+
+  $endTurnButton.disabled = true; // Disable the button to prevent multiple clicks
+  $selectHikerButton.disabled = true;
+  document.querySelector("progress").value = 0; // Reset the progress bar
+
+  endTurnButton();
+  gameLoop();
 }
 
 function gameLoop() {
