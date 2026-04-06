@@ -1,8 +1,8 @@
 import {fetchAllCards} from "./api/card-info.js";
-import {fetchGameDetails,fetchGameBoard,fetchSpecificGame} from "./api/game-info.js";
+import {fetchGameDetails,fetchGameBoard} from "./api/game-info.js";
 import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
-import {addCardToBoard} from "./api/place-card.js";
-import {fetchPlayerHand,fetchPlayerInfo} from "./api/player-info.js";
+import {addCardToBoard, addCardToBoardWithHiker} from "./api/place-card.js";
+import {fetchPlayerHand} from "./api/player-info.js";
 import {getGameId, getHiker} from "./storage-utils.js";
 import { renderLeaderboard as leaderboardRenderer } from "./leaderboard-renderer.js";
 import * as storageHandler from "./storage-utils.js";
@@ -63,7 +63,6 @@ function renderLoop() {
       lastBoardState = currentBoard;
       renderBoard();
     }
-    
     setTimeout(renderLoop, 1000);
   });
 }
@@ -90,8 +89,10 @@ function renderHand() {
 }
 
 
-function hasHiker(){
-
+function hasHikerOnCardInHand(){
+  const card = selectedCard.querySelector(".hiker");
+  // if there is no hiker, the player sends card without hiker to server
+  return card.classList.contains("hidden");
 }
 function selectCard(e){
   //TODO:change the css + add the css.
@@ -127,10 +128,15 @@ function placeCard(move){
   console.log("Move geïnitieerd voor tile:", move.tile);
   getClosestCard(move.tile).then(closest => {
     if (closest) {
-      return addCardToBoard(selectedCard.dataset.cardId, closest.card, closest.direction)
-      .then(() => {
-        renderHand();
-      });
+      if (hasHikerOnCardInHand()){
+        return addCardToBoardWithHiker(selectedCard.dataset.cardId, closest.card, closest.direction).then(() => {
+          renderHand();
+        });
+      }else{
+        return addCardToBoard(selectedCard.dataset.cardId, closest.card, closest.direction).then(() => {
+          renderHand();
+        });
+      }
     }
   });
 }

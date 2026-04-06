@@ -6,9 +6,7 @@ function addCardToBoard(card, relativeCard, direction){
   const body = {
     hiker: loadFromStorage("hiker"),
     cardPlacement:{
-      // hard coded card should be the card that is played by the player
       card: Number(card),
-      // hard coded should be the card that is next to the card that you play in the grid.
       relativeTo: relativeCard,
       direction: direction
     }
@@ -18,4 +16,22 @@ function addCardToBoard(card, relativeCard, direction){
   return fetchFromServer(`/games/${gameId}/board`,"POST", body);
 }
 
-export {addCardToBoard}
+function addCardToBoardWithHiker(card, relativeCard, direction){
+  const gameId = loadFromStorage("gameId");
+  const body = {
+    hiker: loadFromStorage("hiker"),
+    cardPlacement:{
+      card: Number(card),
+      relativeTo: relativeCard,
+      direction: direction
+    },
+    hikerPlacement: Number(card)
+  };
+  console.log("can place with hiker");
+  return fetchFromServer(`/games/${gameId}/board`,"POST", body);
+}
+
+export {
+  addCardToBoard,
+  addCardToBoardWithHiker
+}
