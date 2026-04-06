@@ -1,7 +1,7 @@
 import {fetchAllCards} from "./api/card-info.js";
 import {fetchGameDetails,fetchGameBoard} from "./api/game-info.js";
 import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
-import {addCardToBoard, addCardToBoardWithHiker} from "./api/place-card.js";
+import {addCardToBoard, addCardToBoardWithHikerInHand} from "./api/place-card.js";
 import {fetchPlayerHand} from "./api/player-info.js";
 import {getGameId, getHiker} from "./storage-utils.js";
 import { renderLeaderboard as leaderboardRenderer } from "./leaderboard-renderer.js";
@@ -131,7 +131,7 @@ function placeCard(move){
     if (closest) {
       if (hasHikerOnCardInHand()){
         hasPlacedHiker = true
-        return addCardToBoardWithHiker(selectedCard.dataset.cardId, closest.card, closest.direction).then(() => {
+        return addCardToBoardWithHikerInHand(selectedCard.dataset.cardId, closest.card, closest.direction).then(() => {
           renderHand();
         });
       }else{

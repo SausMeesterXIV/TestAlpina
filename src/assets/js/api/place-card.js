@@ -16,7 +16,7 @@ function addCardToBoard(card, relativeCard, direction){
   return fetchFromServer(`/games/${gameId}/board`,"POST", body);
 }
 
-function addCardToBoardWithHiker(card, relativeCard, direction){
+function addCardToBoardWithHikerInHand(card, relativeCard, direction){
   const gameId = loadFromStorage("gameId");
   const body = {
     hiker: loadFromStorage("hiker"),
@@ -33,5 +33,5 @@ function addCardToBoardWithHiker(card, relativeCard, direction){
 
 export {
   addCardToBoard,
-  addCardToBoardWithHiker
+  addCardToBoardWithHikerInHand
 }
