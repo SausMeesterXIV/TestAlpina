@@ -26,7 +26,6 @@ function init() {
 
   setProgressBar(); // sets the initial and max values of the progress bar
   tick(); // updates the progress bar every second
-  updateCurrentPlayer(); //must be used after the players turn has ended
 
   gameLoop();
   renderLoop();
@@ -56,7 +55,11 @@ function renderLoop() {
   const gameId = storageHandler.getGameId();
   
   fetchGameDetails(gameId).then(data => {  // This is currently the only reliable solution I found, if someone has a better idea then feel free to change it.
+    if (data.finished) window.location.replace("end-screen.html");
+
     renderLeaderboard(data.players);
+
+    updateCurrentPlayer(data);
    
     const currentBoard = JSON.stringify(data.board); // By turning the array into a string, the values can be compared. 
     if (currentBoard !== lastBoardState) { // If it would remain an array, this line would look at whether currentBoard and lastBoardState don't point to the same object in memory, which would always be true.
@@ -223,23 +226,17 @@ function renderBoard() {
   });
 }
 
-function updateCurrentPlayer() {
+function updateCurrentPlayer(data) {
+  const currentHiker = data.currentHiker;  // gets the current hiker color.
+  const currentPlayer = data.players.find(player => player.hiker === currentHiker); // finds the hiker which has the same color as current hiker
 
-  fetchGameDetails(loadFromStorage("gameId"))
-    .then(data =>{
-      // gets the current hiker color.
-      const currentHiker = data.currentHiker;
-      data.players.forEach(player => {if(player.hiker === currentHiker) { // finds the hiker which has the same color as current hiker
-        document.querySelector("#turn-name").textContent = `${player.name}'s turn`;
-      }})
-    })
+  if (currentPlayer) document.querySelector("#turn-name").textContent = `${currentPlayer.name}'s turn`; // the if statement is to make sure it only changes if .find() found a result
 }
 
 function updateProgressBar() {
   document.querySelector("progress").value += 1;
   if (document.querySelector("progress").value >= document.querySelector("progress").max) {
     document.querySelector("progress").value = 0;
-    updateCurrentPlayer();
     /*endturn()*/ //currently there is no end turn function
   }
 }
