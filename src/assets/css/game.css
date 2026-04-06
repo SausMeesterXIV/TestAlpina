@@ -137,7 +137,9 @@ footer {
     margin: 0.2rem;
     border: 0.2rem black double;
     height: 10rem;
-    width: 8rem
+    width: 8rem;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out; /* Smoothly animates the movement */
 }
 
 .hiker-image{
@@ -162,4 +164,10 @@ footer {
 
     padding: 0.3rem;
     background-color: #888888;
+}
+
+.card:hover, 
+.card.selected {
+    transform: translateY(-1.5rem); /* Moves the card up by 1.5rem */
+    z-index: 10; /* Ensures the hovered/selected card overlaps other items */
 }

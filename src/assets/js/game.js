@@ -102,8 +102,16 @@ function hasHikerOnCardInHand(){
 }
 
 function selectCard(e){
-  //TODO:change the css + add the css.
-  selectedCard = e.target.closest('article');
+  const $clickedCard = e.target.closest('article.card');
+
+  const allCardsInHand = document.querySelectorAll('#hand .card');
+  allCardsInHand.forEach(card => {
+      card.classList.remove('selected');
+  });
+
+  $clickedCard.classList.add('selected');
+
+  selectedCard = $clickedCard;
 }
 
 function getMove(tileId, selectedTile, cardId) {
