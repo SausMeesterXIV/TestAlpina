@@ -17,6 +17,7 @@ const arrayOfCards =
 //for testing purposes
 
 let selectedCard = null;
+let hasPlacedHiker = false;
 
 function init() {
   renderBoard();
@@ -129,6 +130,7 @@ function placeCard(move){
   getClosestCard(move.tile).then(closest => {
     if (closest) {
       if (hasHikerOnCardInHand()){
+        hasPlacedHiker = true
         return addCardToBoardWithHiker(selectedCard.dataset.cardId, closest.card, closest.direction).then(() => {
           renderHand();
         });
