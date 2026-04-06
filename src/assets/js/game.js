@@ -95,8 +95,9 @@ function renderHand() {
 function hasHikerOnCardInHand(){
   const card = selectedCard.querySelector(".hiker");
   // if there is no hiker, the player sends card without hiker to server
-  return card.classList.contains("hidden");
+  return !card.classList.contains("hidden"); // CHANGE TO HIKER LATER!
 }
+
 function selectCard(e){
   //TODO:change the css + add the css.
   selectedCard = e.target.closest('article');
@@ -133,11 +134,9 @@ function placeCard(move){
     if (closest) {
       if (hasHikerOnCardInHand()){
         hasPlacedHiker = true;
-        // create move (selectedCard.dataset.cardId, closest.card, closest.direction)
         createTurn(selectedCard.dataset.cardId, closest.card, closest.direction);
         // TODO: check where the hiker is placed on the grid not only in the hand.
       }else{
-        // create Move (selectedCard.dataset.cardId, closest.card, closest.direction)
         createTurn(selectedCard.dataset.cardId, closest.card, closest.direction);
       }
     }
