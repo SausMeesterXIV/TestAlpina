@@ -71,6 +71,10 @@ function renderHand(cardArray) {
   document.querySelector("#hand").appendChild($fragment);
 }
 
+
+function hasHiker(){
+
+}
 function selectCard(e){
   //TODO:change the css + add the css.
   selectedCard = e.target.closest('article');
