@@ -1,7 +1,7 @@
 import { fetchStartedGames, fetchUnstartedGames } from "./api/game-info.js";
 import {joinGame as fetchJoinGame} from "./api/join-game.js";
 import {saveToStorage} from "./data-connector/local-storage-abstractor.js";
-import {getGameId} from "./storage-utils.js";
+import {getGameId} from "./storage/storage-utils.js";
 
 let currentTab = "unstarted"; // Keeps track which tab is currently selected.
 let renderTimer = null; // Keeps track of the current timer ID to prevent overlapping timers (see line 73 for more information)

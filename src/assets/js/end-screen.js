@@ -1,6 +1,6 @@
 import { fetchGameDetails } from "./api/game-info.js";
-import { renderLeaderboard as leaderboardRenderer } from "./leaderboard-renderer.js";
-import * as storageHandler from "./storage-utils.js";
+import { renderLeaderboard as leaderboardRenderer } from "./renderers/leaderboard-renderer.js";
+import * as storageHandler from "./storage/storage-utils.js";
 
 function init() {
     fetchGameDetails(Number(storageHandler.getGameId())).then(data => {

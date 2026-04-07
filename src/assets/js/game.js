@@ -1,29 +1,22 @@
-import {fetchAllCards} from "./api/card-info.js";
-import {fetchGameDetails,fetchGameBoard} from "./api/game-info.js";
-import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
+import {fetchGameDetails} from "./api/game-info.js";
 import {addCardToBoard, addCardToBoardWithHikerInHand} from "./api/place-card.js";
-import {fetchPlayerHand} from "./api/player-info.js";
-import {getGameId, getHiker} from "./storage-utils.js";
-import { renderLeaderboard as leaderboardRenderer } from "./leaderboard-renderer.js";
-import * as storageHandler from "./storage-utils.js";
+import * as storageHandler from "./storage/storage-utils.js";
 
-const arrayOfCards =
-  [{id: 50, animal: "chamois", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 1, selector: "HI", filter: "Pa"}},
-  {id: 49, animal: "frog", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 2, selector: "AN", filter: "Or"}},
-  {id: 48, animal: "chamois", landscape: "forest", victoryPointCondition: {basescore: 1, score: 2, selector: "AC", filter: "Ne"}},
-  {id: 1, animal: "chamois", landscape: "lake", victoryPointCondition: {basescore: 2, score: 1, selector: "AF", filter: "DN"}},
-  {id: 22, animal: "nutcracker", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 2, selector: "LM", filter: "DE"}},
-  {id: 12, animal: "frog", landscape: "mountain", victoryPointCondition: {basescore: 1, score: 2, selector: "HI", filter: "DW"}}];
-//for testing purposes
+//renderers
+import {renderLeaderboard} from "./renderers/leaderboard-renderer.js";
+import {renderBoard} from "./renderers/gameboard-renderer.js";
+import {renderHand} from "./renderers/hand-renderer.js";
+import {remainingHikers} from "./renderers/hiker-renderer.js";
 
 let selectedCard = null;
 // object that will store the moves done by the player.
 let turn = null;
 let hasPlacedHiker = false;
+let lastBoardState = null; // makes sure the browser knows whether the board the player sees is the same as the one saved in the server
+
 
 function init() {
   renderBoard();
-  renderHand();
 
   addEventListeners();
 
@@ -32,6 +25,9 @@ function init() {
 
   gameLoop();
   renderLoop();
+
+  remainingHikers();
+  placeHikerOnCard();
 }
 
 function addEventListeners() {
@@ -45,65 +41,41 @@ function addEventListeners() {
 
   //hiker
   document.querySelector("#select-hiker-button").addEventListener("click", selectHiker);
-  placeHikerOnCard();
-  remainingHikers();
+
 
   //endTurnButton
   document.querySelector("#end-turn-button").addEventListener("click", endTurn);
 }
 
-let lastBoardState = null; // makes sure the browser knows whether the board the player sees is the same as the one saved in the server
-
 function renderLoop() {
-  const gameId = storageHandler.getGameId();
+  const gameId = Number(storageHandler.getGameId());
   
   fetchGameDetails(gameId).then(data => {  // This is currently the only reliable solution I found, if someone has a better idea then feel free to change it.
     if (data.finished) window.location.replace("end-screen.html");
 
     renderLeaderboard(data.players);
-
     updateCurrentPlayer(data);
    
     const currentBoard = JSON.stringify(data.board); // By turning the array into a string, the values can be compared. 
     if (currentBoard !== lastBoardState) { // If it would remain an array, this line would look at whether currentBoard and lastBoardState don't point to the same object in memory, which would always be true.
       lastBoardState = currentBoard;
       renderBoard();
+      renderHand();
+      remainingHikers();
     }
     setTimeout(renderLoop, 1000);
   });
 }
 
-function renderCard(card) {
-  const $template = document.querySelector("#card-template");
-  const $clone = $template.content.cloneNode(true);
-
-  $clone.querySelector("article").dataset.cardId = card.id;
-  $clone.querySelector("img").src = `images/${card.animal}_${card.landscape}.png`;
-  $clone.querySelector("p").textContent = `${card.victoryPointCondition.baseScore} + ${card.victoryPointCondition.score} / ${card.victoryPointCondition.selector} - ${card.victoryPointCondition.filter}`;
-
-  return $clone;
+function selectCard(e){
+  //TODO:change the css + add the css.
+  selectedCard = e.target.closest('article');
 }
-
-function renderHand() {
-  let $fragment = document.createDocumentFragment();
-  fetchPlayerHand().then(cardArray => {
-    cardArray.forEach(card => {
-      $fragment.appendChild(renderCard(card));
-    });
-    document.querySelector("#hand").replaceChildren($fragment);
-  });
-}
-
 
 function hasHikerOnCardInHand(){
   const card = selectedCard.querySelector(".hiker");
   // if there is no hiker, the player sends card without hiker to server
   return !card.classList.contains("hidden"); // CHANGE TO HIKER LATER!
-}
-
-function selectCard(e){
-  //TODO:change the css + add the css.
-  selectedCard = e.target.closest('article');
 }
 
 function getMove(tileId, selectedTile, cardId) {
@@ -154,7 +126,6 @@ function createTurn(cardId, closestCardId, direction){
   }
 }
 
-
 function safe(row,column,currentBoard, size){
   const inBounds = row >= 0 && column >= 0 && row < size && column < size;
 
@@ -171,7 +142,6 @@ function safe(row,column,currentBoard, size){
   }
 }
 
-
 function getClosestCard(tile){
   // tile position based on 1 array value (0-24)
   const tilePos = tile.dataset.index;
@@ -179,7 +149,7 @@ function getClosestCard(tile){
   const boardSize = 5;
 
   const size = 5;
-  return fetchGameDetails(getGameId()).then(game=>{
+  return fetchGameDetails(Number(storageHandler.getGameId())).then(game=>{
     const currentBoard = game.board;
     // tile position based on 2D Array
     const tilePosRow = Math.floor(tilePos / boardSize);
@@ -198,52 +168,6 @@ function getClosestCard(tile){
     if (left) return { direction: "west", card: left };
 
     return null;
-  });
-}
-
-function renderDiv($tile, cardId, index) {
-  // store metadata
-  $tile.dataset.index = index;
-  $tile.dataset.card = cardId;
-}
-
-function renderTile(tile, cards, cardId, $emptyTile, index) {
-  if (tile.card > 0) {
-    const selectedCard = cards.find(card => card.id === cardId);
-    //store metadata in div for selecting card
-    renderDiv($emptyTile, cardId, index);
-    //render card
-    $emptyTile.appendChild(renderCard(selectedCard));
-  } else {
-    renderDiv($emptyTile, cardId, index);
-  }
-}
-
-function renderBoard() {
-  const $board = document.createDocumentFragment();
-  const gameId = Number(storageHandler.getGameId());
-
-  fetchAllCards().then(res =>{
-    fetchGameBoard(gameId).then((res2) => {
-      // indexing for tile id
-      let index = 0;
-
-      // loops trough board row.
-      res2.board.forEach((row) =>{
-        // loops true each card in the row.
-        row.forEach((tile) => {
-          const cardId = tile.card;
-          const $emptyTile = document.querySelector('#tile-template').content.cloneNode(true);
-          const $tile = $emptyTile.querySelector('.tile');
-
-          renderTile(tile, res.cards, cardId, $tile, index);
-          $board.appendChild($emptyTile);
-
-          index++;
-        });
-      });
-      document.querySelector("#game-board").replaceChildren($board); // Replace children prevents flickering
-    });
   });
 }
 
@@ -271,20 +195,13 @@ function setProgressBar() {
   document.querySelector("progress").max = 60; //temporary
 }
 
-function renderLeaderboard(players) {
-  const $target = document.querySelector("tbody");
-  leaderboardRenderer(players, $target);
-}
-
 function selectHiker(){
   document.querySelector("main").classList.toggle("hiker-image");
 }
 
-
-
 function placeHikerOnCard() {
   let canPlayHiker = true;
-  const gameId = Number(loadFromStorage("gameId"))
+  const gameId = Number(storageHandler.getGameId())
   fetchGameDetails(gameId)
     .then(data => data.players)
     .then(players => {
@@ -308,26 +225,6 @@ function placeHikerOnCard() {
           });
         });
       }
-    })
-}
-
-function remainingHikers() {
-  const $button = document.querySelector("#select-hiker-button");
-  const gameId = Number(loadFromStorage("gameId"));
-  const currentPlayer ="purple";
-  const text = document.querySelector("span");
-
-  fetchGameDetails(gameId)
-    .then(data => data.players)
-    .then(players => {
-      players.forEach(player => {
-        if (player.hiker === currentPlayer){
-          const hikers = player.hikersLeft;
-          text.textContent = hikers;
-          $button.appendChild(text);
-        }
-      })
-
     })
 }
 
@@ -364,9 +261,9 @@ function endTurn() {
 function gameLoop() {
   const $endTurnButton = document.querySelector("#end-turn-button");
   const $selectHikerButton = document.querySelector("#select-hiker-button");
-  fetchGameDetails(getGameId())
+  fetchGameDetails(Number(storageHandler.getGameId()))
     .then(data => {
-      if (data.currentHiker === getHiker()) {
+      if (data.currentHiker === storageHandler.getHiker()) {
         $endTurnButton.disabled = false; // Enable the button when it's the player's turn
         $selectHikerButton.disabled = false;
       } else setTimeout(gameLoop, 2000); // Check again after 2 second and will need to be put in different function dedicated to polling
