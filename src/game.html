@@ -45,6 +45,17 @@
                     <h2 id="turn-name">Rhune's turn</h2> <!--Must change dynamically eventually, change this later-->
                     <progress id="progress" value="0" max="60"></progress> <!--This indicates how much time a player has left. Extra info: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/progress-->
                 </aside>
+                <aside id="spectator-area" class="hidden">
+                    <h2>Spectator Mode</h2>
+                    <div class="spectator-switcher">
+                        <button id="prev-player" class="nav-arrow">&lt;</button>
+                        <div class="viewing-info">
+                            <p class="label">Watching</p>
+                            <p id="current-viewing-name">Loading...</p>
+                        </div>
+                        <button id="next-player" class="nav-arrow">&gt;</button>
+                    </div>
+                </aside>
             </section>
              <section id="game-board"> <!--divs are temporary for styling purposes, remove it later-->
              </section>
