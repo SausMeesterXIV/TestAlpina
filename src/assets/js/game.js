@@ -358,6 +358,7 @@ function endTurn() {
   document.querySelector("progress").value = 0; // Reset the progress bar
 
   endTurnButton();
+  renderHand();
   gameLoop();
 }
 
