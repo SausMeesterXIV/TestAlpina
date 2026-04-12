@@ -1,5 +1,6 @@
 import {addCardToBoard, addCardToBoardWithHikerInHand} from "../api/place-card.js";
 import {fetchGameDetails} from "../api/game-info.js";
+import {boardSize as size} from "../config.js";
 import * as storageHandler from "../storage/storage-utils.js"
 import * as variables from "../game.js";
 
@@ -42,7 +43,7 @@ function placeCard(move){
   getClosestCard(move.tile).then(closest => {
     if (closest) {
       if (hasHikerOnCardInHand()){
-        variables.hasPlacedHiker = true;
+        variables.changePlacedHikerState()
         createTurn(variables.selectedCard.dataset.cardId, closest.card, closest.direction);
         // TODO: check where the hiker is placed on the grid not only in the hand.
       }else{
@@ -80,7 +81,7 @@ function getClosestCard(tile){
   // tile position based on 1 array value (0-24)
   const tilePos = tile.dataset.index;
   // size of the grid (5x5)
-  const boardSize = 5;
+  const boardSize = size;
 
   return fetchGameDetails(Number(storageHandler.getGameId())).then(game=>{
     const currentBoard = game.board;

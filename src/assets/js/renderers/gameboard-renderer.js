@@ -4,21 +4,21 @@ import {fetchGameBoard} from "../api/game-info.js";
 import {renderCard} from "./hand-renderer.js";
 
 
-function renderDiv($tile, cardId, index) {
+function createDiv($tile, cardId, index) {
   // store metadata
   $tile.dataset.index = index;
   $tile.dataset.card = cardId;
 }
 
-function renderTile(tile, cards, cardId, $emptyTile, index) {
+function createTile(tile, cards, cardId, $emptyTile, index) {
   if (tile.card > 0) {
     const selectedCard = cards.find(card => card.id === cardId);
     //store metadata in div for selecting card
-    renderDiv($emptyTile, cardId, index);
+    createDiv($emptyTile, cardId, index);
     //render card
     $emptyTile.appendChild(renderCard(selectedCard));
   } else {
-    renderDiv($emptyTile, cardId, index);
+    createDiv($emptyTile, cardId, index);
   }
 }
 
@@ -39,7 +39,7 @@ function renderBoard() {
           const $emptyTile = document.querySelector('#tile-template').content.cloneNode(true);
           const $tile = $emptyTile.querySelector('.tile');
 
-          renderTile(tile, res.cards, cardId, $tile, index);
+          createTile(tile, res.cards, cardId, $tile, index);
           $board.appendChild($emptyTile);
 
           index++;

@@ -36,6 +36,11 @@ function init() {
   gameLogic.placeHikerOnCard();
 }
 
+function changePlacedHikerState(){
+  hasPlacedHiker = !hasPlacedHiker;
+  //true = false and false = true, to change the variable state in another file
+}
+
 function addEventListeners() {
    // for selecting a tile
   let $gameBoard = document.querySelector("#game-board");
@@ -111,7 +116,8 @@ init();
 
 export {
   selectedCard,
-  hasPlacedHiker
+  hasPlacedHiker,
+  changePlacedHikerState
 }
 
 // temp "working" leave button, needs a confirmation pop-up
