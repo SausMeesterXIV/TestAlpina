@@ -18,6 +18,7 @@ let currentPlayer = null //new fucntion to do this.
 
 function init() {
   renderBoard();
+  renderHand();
 
   addEventListeners();
 
@@ -61,22 +62,28 @@ function renderLoop() {
     if (currentBoard !== lastBoardState) { // If it would remain an array, this line would look at whether currentBoard and lastBoardState don't point to the same object in memory, which would always be true.
       lastBoardState = currentBoard;
       renderBoard();
-      renderHand(); //put into endTurn function
-      remainingHikers(); //put into endTurn function
     }
     setTimeout(renderLoop, 1000);
   });
 }
 
-function selectCard(e){
-  //TODO:change the css + add the css.
-  selectedCard = e.target.closest('article');
-} //board logic
-
 function hasHikerOnCardInHand(){
   const card = selectedCard.querySelector(".hiker");
   // if there is no hiker, the player sends card without hiker to server
   return !card.classList.contains("hidden"); // CHANGE TO HIKER LATER!
+}
+
+function selectCard(e){
+  const $clickedCard = e.target.closest('article.card');
+
+  const allCardsInHand = document.querySelectorAll('#hand .card');
+  allCardsInHand.forEach(card => {
+      card.classList.remove('selected');
+  });
+
+  $clickedCard.classList.add('selected');
+
+  selectedCard = $clickedCard;
 }
 
 function getMove(tileId, selectedTile, cardId) {
@@ -236,13 +243,13 @@ function endTurnButton(){
       // fetch with hiker
       addCardToBoardWithHikerInHand(selectedCard.dataset.cardId, turn.closestCardId, turn.direction)
         .then(() =>{
-          // clear hasplacedhiker and the selectedcard.
+          // TODO: clear hasplacedhiker and the selectedcard.
         });
     }else {
       // fetch without hiker
-      addCardToBoard(selectedCard.dataset.cardId, closest.card, closest.direction)
+      addCardToBoard(selectedCard.dataset.cardId, turn.closestCardId, turn.direction)
         .then(() =>{
-        // clear hasplacedhiker and the selectedcard.
+        // TODO: clear hasplacedhiker and the selectedcard.
       });
     }
   }
@@ -257,6 +264,7 @@ function endTurn() {
   document.querySelector("progress").value = 0; // Reset the progress bar
 
   endTurnButton();
+  renderHand();
   gameLoop();
 }
 
