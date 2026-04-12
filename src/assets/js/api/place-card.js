@@ -1,5 +1,5 @@
 import {fetchFromServer} from "../data-connector/api-communication-abstractor.js";
-import {getGameId, getHiker} from "../storage-utils.js";
+import {getGameId, getHiker} from "../storage/storage-utils.js";
 
 function addCardToBoard(card, relativeCard, direction){
   const gameId = getGameId();

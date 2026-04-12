@@ -1,7 +1,7 @@
 import {fetchSpecificGame} from "./game-info.js";
 import {fetchFromServer} from "../data-connector/api-communication-abstractor.js";
 import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
-import {getGameId, getHiker} from "../storage-utils.js";
+import {getGameId, getHiker} from "../storage/storage-utils.js";
 
 
 function fetchPlayerInfo(gameId) {

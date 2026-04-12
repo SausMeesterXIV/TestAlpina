@@ -1,4 +1,4 @@
-import {loadFromStorage, saveToStorage} from "./data-connector/local-storage-abstractor.js";
+import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
 
 function getGameId(){
   return loadFromStorage("gameId");
