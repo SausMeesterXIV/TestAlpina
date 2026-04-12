@@ -13,6 +13,7 @@ let selectedCard = null;
 let turn = null;
 let hasPlacedHiker = false;
 let lastBoardState = null; // makes sure the browser knows whether the board the player sees is the same as the one saved in the server
+let currentPlayer = null //new fucntion to do this.
 
 
 function init() {
@@ -60,8 +61,8 @@ function renderLoop() {
     if (currentBoard !== lastBoardState) { // If it would remain an array, this line would look at whether currentBoard and lastBoardState don't point to the same object in memory, which would always be true.
       lastBoardState = currentBoard;
       renderBoard();
-      renderHand();
-      remainingHikers();
+      renderHand(); //put into endTurn function
+      remainingHikers(); //put into endTurn function
     }
     setTimeout(renderLoop, 1000);
   });
@@ -70,7 +71,7 @@ function renderLoop() {
 function selectCard(e){
   //TODO:change the css + add the css.
   selectedCard = e.target.closest('article');
-}
+} //board logic
 
 function hasHikerOnCardInHand(){
   const card = selectedCard.querySelector(".hiker");
@@ -84,7 +85,7 @@ function getMove(tileId, selectedTile, cardId) {
     tile: selectedTile,
     cardId: cardId
   };
-}
+} //board logic
 
 function handleSelectedCardPlacement(cardId, tileId, selectedTile) {
   if (selectedCard !== null) {
@@ -93,7 +94,7 @@ function handleSelectedCardPlacement(cardId, tileId, selectedTile) {
       placeCard(move);
     }
   }
-}
+} //board logic
 
 function handleTileClick(e){
   const selectedTile = e.target.closest("div");
@@ -101,7 +102,7 @@ function handleTileClick(e){
   const cardId = selectedTile.dataset.cardId;
 
   handleSelectedCardPlacement(cardId, tileId, selectedTile);
-}
+} //board logic
 
 function placeCard(move){
   console.log("Move geïnitieerd voor tile:", move.tile);
@@ -116,7 +117,7 @@ function placeCard(move){
       }
     }
   });
-}
+} //board logic
 
 function createTurn(cardId, closestCardId, direction){
   turn = {
@@ -124,7 +125,7 @@ function createTurn(cardId, closestCardId, direction){
     closestCardId,
     direction
   }
-}
+} //board logic
 
 function safe(row,column,currentBoard, size){
   const inBounds = row >= 0 && column >= 0 && row < size && column < size;
@@ -140,7 +141,7 @@ function safe(row,column,currentBoard, size){
       return card !== 0 ? card : null;
     }
   }
-}
+} //board logic
 
 function getClosestCard(tile){
   // tile position based on 1 array value (0-24)
@@ -169,7 +170,7 @@ function getClosestCard(tile){
 
     return null;
   });
-}
+} //board logic
 
 function updateCurrentPlayer(data) {
   const currentHiker = data.currentHiker;  // gets the current hiker color.
@@ -215,6 +216,7 @@ function placeHikerOnCard() {
         const hiker = document.querySelector(".hiker");
         const main = document.querySelector("main");
 
+        //following code up for change
         cards.forEach(card => {
           card.addEventListener("click", () => {
             //this code moves the hiker
