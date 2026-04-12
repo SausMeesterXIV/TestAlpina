@@ -1,5 +1,4 @@
 import {fetchGameDetails} from "./api/game-info.js";
-import {addCardToBoard, addCardToBoardWithHikerInHand} from "./api/place-card.js";
 import * as storageHandler from "./storage/storage-utils.js";
 
 //renderers
@@ -8,12 +7,14 @@ import {renderBoard} from "./renderers/gameboard-renderer.js";
 import {renderHand} from "./renderers/hand-renderer.js";
 import {remainingHikers} from "./renderers/hiker-renderer.js";
 
+//board logic
+import {handleTileClick, endTurnButton} from "./logic/board-logic.js";
+
 let selectedCard = null;
 // object that will store the moves done by the player.
-let turn = null;
 let hasPlacedHiker = false;
 let lastBoardState = null; // makes sure the browser knows whether the board the player sees is the same as the one saved in the server
-let currentPlayer = null //new fucntion to do this.
+let currentPlayer = null //new function to do this.
 
 
 function init() {
@@ -44,7 +45,6 @@ function addEventListeners() {
   //hiker
   document.querySelector("#select-hiker-button").addEventListener("click", selectHiker);
 
-
   //endTurnButton
   document.querySelector("#end-turn-button").addEventListener("click", endTurn);
 }
@@ -67,12 +67,6 @@ function renderLoop() {
   });
 }
 
-function hasHikerOnCardInHand(){
-  const card = selectedCard.querySelector(".hiker");
-  // if there is no hiker, the player sends card without hiker to server
-  return !card.classList.contains("hidden"); // CHANGE TO HIKER LATER!
-}
-
 function selectCard(e){
   const $clickedCard = e.target.closest('article.card');
 
@@ -85,99 +79,6 @@ function selectCard(e){
 
   selectedCard = $clickedCard;
 }
-
-function getMove(tileId, selectedTile, cardId) {
-  return {
-    tileId: tileId,
-    tile: selectedTile,
-    cardId: cardId
-  };
-} //board logic
-
-function handleSelectedCardPlacement(cardId, tileId, selectedTile) {
-  if (selectedCard !== null) {
-    if (Number(cardId) !== 0) {
-      const move = getMove(tileId, selectedTile, cardId);
-      placeCard(move);
-    }
-  }
-} //board logic
-
-function handleTileClick(e){
-  const selectedTile = e.target.closest("div");
-  const tileId = selectedTile.dataset.id;
-  const cardId = selectedTile.dataset.cardId;
-
-  handleSelectedCardPlacement(cardId, tileId, selectedTile);
-} //board logic
-
-function placeCard(move){
-  console.log("Move geïnitieerd voor tile:", move.tile);
-  getClosestCard(move.tile).then(closest => {
-    if (closest) {
-      if (hasHikerOnCardInHand()){
-        hasPlacedHiker = true;
-        createTurn(selectedCard.dataset.cardId, closest.card, closest.direction);
-        // TODO: check where the hiker is placed on the grid not only in the hand.
-      }else{
-        createTurn(selectedCard.dataset.cardId, closest.card, closest.direction);
-      }
-    }
-  });
-} //board logic
-
-function createTurn(cardId, closestCardId, direction){
-  turn = {
-    cardId,
-    closestCardId,
-    direction
-  }
-} //board logic
-
-function safe(row,column,currentBoard, size){
-  const inBounds = row >= 0 && column >= 0 && row < size && column < size;
-
-  if (currentBoard?.[row]?.[column] === undefined) {
-    return null;
-  }else{
-    const hasCard = Number(currentBoard[row][column].card) === 0;
-
-    if(inBounds && !hasCard){
-      const card = Number(currentBoard[row][column].card);
-      // returns null when there is no card
-      return card !== 0 ? card : null;
-    }
-  }
-} //board logic
-
-function getClosestCard(tile){
-  // tile position based on 1 array value (0-24)
-  const tilePos = tile.dataset.index;
-  // size of the grid (5x5)
-  const boardSize = 5;
-
-  const size = 5;
-  return fetchGameDetails(Number(storageHandler.getGameId())).then(game=>{
-    const currentBoard = game.board;
-    // tile position based on 2D Array
-    const tilePosRow = Math.floor(tilePos / boardSize);
-    const tilePosColumn = tilePos % boardSize;
-    //SAFE: Checks whether a given (row, column) is inside the board
-    //and if it contains a non‑zero card.
-    const up = safe(tilePosRow + 1, tilePosColumn, currentBoard, boardSize);
-    const right = safe(tilePosRow, tilePosColumn - 1, currentBoard, boardSize);
-    const down = safe(tilePosRow - 1, tilePosColumn, currentBoard, boardSize);
-    const left = safe(tilePosRow, tilePosColumn + 1, currentBoard, boardSize);
-
-
-    if (up) return { direction: "north", card : up };
-    if (right) return { direction: "east", card: right };
-    if (down) return { direction: "south", card: down };
-    if (left) return { direction: "west", card: left };
-
-    return null;
-  });
-} //board logic
 
 function updateCurrentPlayer(data) {
   const currentHiker = data.currentHiker;  // gets the current hiker color.
@@ -237,24 +138,6 @@ function placeHikerOnCard() {
     })
 }
 
-function endTurnButton(){
-  if (turn !== null){
-    if (hasPlacedHiker){
-      // fetch with hiker
-      addCardToBoardWithHikerInHand(selectedCard.dataset.cardId, turn.closestCardId, turn.direction)
-        .then(() =>{
-          // TODO: clear hasplacedhiker and the selectedcard.
-        });
-    }else {
-      // fetch without hiker
-      addCardToBoard(selectedCard.dataset.cardId, turn.closestCardId, turn.direction)
-        .then(() =>{
-        // TODO: clear hasplacedhiker and the selectedcard.
-      });
-    }
-  }
-}
-
 function endTurn() {
   const $endTurnButton = document.querySelector("#end-turn-button");
   const $selectHikerButton = document.querySelector("#select-hiker-button");
@@ -282,8 +165,12 @@ function gameLoop() {
 
 init();
 
+export {
+  selectedCard,
+  hasPlacedHiker
+}
 
-// temp
+// temp "working" leave button, needs a confirmation pop-up
 document.querySelector("#leave-button").addEventListener("click", function() {
   window.location.href = "lobby-listing.html";
 })
