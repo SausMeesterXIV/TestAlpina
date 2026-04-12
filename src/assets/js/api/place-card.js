@@ -7,7 +7,7 @@ function addCardToBoard(card, relativeCard, direction){
     hiker: getHiker(),
     cardPlacement:{
       card: Number(card),
-      relativeTo: relativeCard,
+      relativeTo: Number(relativeCard),
       direction: direction
     }
   };
@@ -20,7 +20,7 @@ function addCardToBoardWithHikerInHand(card, relativeCard, direction){
     hiker: getHiker(),
     cardPlacement:{
       card: Number(card),
-      relativeTo: relativeCard,
+      relativeTo: Number(relativeCard),
       direction: direction
     },
     hikerPlacement: Number(card)

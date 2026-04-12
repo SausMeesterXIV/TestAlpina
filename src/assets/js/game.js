@@ -345,13 +345,13 @@ function endTurnButton(){
       // fetch with hiker
       addCardToBoardWithHikerInHand(selectedCard.dataset.cardId, turn.closestCardId, turn.direction)
         .then(() =>{
-          // clear hasplacedhiker and the selectedcard.
+          // TODO: clear hasplacedhiker and the selectedcard.
         });
     }else {
       // fetch without hiker
-      addCardToBoard(selectedCard.dataset.cardId, closest.card, closest.direction)
+      addCardToBoard(selectedCard.dataset.cardId, turn.closestCardId, turn.direction)
         .then(() =>{
-        // clear hasplacedhiker and the selectedcard.
+        // TODO: clear hasplacedhiker and the selectedcard.
       });
     }
   }
@@ -366,6 +366,7 @@ function endTurn() {
   document.querySelector("progress").value = 0; // Reset the progress bar
 
   endTurnButton();
+  renderHand();
   gameLoop();
 }
 
