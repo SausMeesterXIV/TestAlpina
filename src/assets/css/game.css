@@ -157,7 +157,10 @@ footer {
 }
 
 .hidden{
-    display: none;
+    display: none !important;
+    /* Due to the weight system, it ignored this class in the case of #player-controls (id = 100 "weight", class = 10, element selector = 1). Adding !important tells the browser to ignore this weight system.
+    Without !important it would apply display:flex; instead of display:none;
+    More info on !important: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/important*/
 }
 
 .hikers-left{
@@ -173,4 +176,54 @@ footer {
 #hand .card.selected {
     transform: translateY(-1.5rem); /* Moves the card up by 1.5rem */
     z-index: 10; /* Ensures the hovered/selected card overlaps other items */
+}
+
+#spectator-area {
+    background-color: var(--panel-bg);
+    border-radius: 1rem;
+    padding: 1rem;
+    text-align: center;
+}
+
+.spectator-switcher {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.nav-arrow {
+    background: white;
+    border: 0.1rem solid #ccc;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-arrow:hover {
+    background: #e0e0e0;
+}
+
+.viewing-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.viewing-info .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #888;
+}
+
+#current-viewing-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
 }
