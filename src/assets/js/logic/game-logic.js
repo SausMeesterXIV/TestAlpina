@@ -1,8 +1,6 @@
 import {fetchGameDetails} from "../api/game-info.js";
-import * as storageHandler from "../storage/storage-utils.js"
-import {changePlacingHikerState} from "../config.js";
-
-let selectedCard = null;
+import * as storageHandler from "../storage/storage-utils.js";
+import * as gameConfig from "../game-config.js";
 
 function selectCard(e){
   const $clickedCard = e.target.closest('article.card');
@@ -14,7 +12,7 @@ function selectCard(e){
 
   $clickedCard.classList.add('selected');
 
-  selectedCard = $clickedCard;
+  gameConfig.setSelectedCard($clickedCard);
 }
 
 function updateProgressBar() {
@@ -31,7 +29,7 @@ function setTimeProgressBar() {
 }
 
 function selectHiker(){
-  changePlacingHikerState();
+  gameConfig.changePlacingHikerState();
   document.querySelector("main").classList.toggle("hiker-image");
 }
 
@@ -70,6 +68,5 @@ export {
   updateProgressBar,
   setTimeProgressBar,
   selectHiker,
-  placeHikerOnCard,
-  selectedCard
+  placeHikerOnCard
 }

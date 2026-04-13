@@ -11,11 +11,6 @@ import {remainingHikers} from "./renderers/hiker-renderer.js";
 import {handleTileClick, endTurnButton} from "./logic/board-logic.js";
 import * as gameLogic from "./logic/game-logic.js";
 
-//vars
-import {selectedCard} from "./logic/game-logic.js";
-
-
-let hasPlacedHiker = false;
 let lastBoardState = null; // makes sure the browser knows whether the board the player sees is the same as the one saved in the server
 let currentPlayer = null //new function to do this.
 
@@ -36,10 +31,7 @@ function init() {
   gameLogic.placeHikerOnCard();
 }
 
-function changePlacedHikerState(){
-  hasPlacedHiker = !hasPlacedHiker;
-  //true = false and false = true, to change the variable state in another file
-}
+
 
 function addEventListeners() {
    // for selecting a tile
@@ -113,12 +105,6 @@ function gameLoop() {
 }
 
 init();
-
-export {
-  selectedCard,
-  hasPlacedHiker,
-  changePlacedHikerState
-}
 
 // temp "working" leave button, needs a confirmation pop-up
 document.querySelector("#leave-button").addEventListener("click", function() {
