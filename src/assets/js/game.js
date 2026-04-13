@@ -26,7 +26,7 @@ function init() {
 
   if (!specLogic.isSpectator()) renderHand();
 
-  if (specLogic.isSpectator()) specLogic.initSpectatorMode([]);
+  if (specLogic.isSpectator()) specLogic.initSpectatorMode();
 
   addEventListeners();
 

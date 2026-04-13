@@ -11,9 +11,7 @@ function isSpectator() {
     return !storageHandler.getHiker(); // If a player doesn't have a colour saved in storage, that means they're spectator.
 }
 
-function initSpectatorMode(initialPlayers) {
-    playersList = initialPlayers;
-
+function initSpectatorMode() {
     document.querySelector("#spectator-area").classList.remove("hidden");
     document.querySelector("#player-controls").classList.add("hidden");
 
