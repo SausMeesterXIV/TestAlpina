@@ -50,14 +50,11 @@ function handleHikerPlacePlacement(cardId){
   if (!hasPlacedHiker){
     config.setHikerPlacement(cardId);
     changePlacedHikerState();
-    console.log(hasPlacedHiker);
-    console.log("placed hiker on card:" + cardId);
     // TODO: make it so visualy there is placed a card.
   }
 }
 
 function placeCard(move){
-  console.log("Move geïnitieerd voor tile:", move.tile);
   getClosestCard(move.tile).then(closest => {
     if (closest) {
       if (hasHikerOnCardInHand()){
@@ -138,7 +135,6 @@ function getClosestCard(tile){
 
 function endTurnButton(){
   if (turn !== null){
-    console.log(variables.hasPlacedHiker);
     if (variables.hasPlacedHiker){
       if(turn.hiker !== undefined){
         addCardToBoardWithHiker(variables.selectedCard.dataset.cardId, turn.closestCardId, turn.direction, turn.hiker).then(() =>{
