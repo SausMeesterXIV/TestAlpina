@@ -1,5 +1,6 @@
 import {fetchGameDetails} from "../api/game-info.js";
 import * as storageHandler from "../storage/storage-utils.js"
+import {changePlacingHikerState} from "../config.js";
 
 let selectedCard = null;
 
@@ -30,6 +31,7 @@ function setTimeProgressBar() {
 }
 
 function selectHiker(){
+  changePlacingHikerState();
   document.querySelector("main").classList.toggle("hiker-image");
 }
 

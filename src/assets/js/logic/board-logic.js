@@ -1,8 +1,10 @@
-import {addCardToBoard, addCardToBoardWithHikerInHand} from "../api/place-card.js";
+import {addCardToBoard, addCardToBoardWithHiker} from "../api/place-card.js";
 import {fetchGameDetails} from "../api/game-info.js";
-import {boardSize as size} from "../config.js";
-import * as storageHandler from "../storage/storage-utils.js"
+import * as config from "../config.js";
 import * as variables from "../game.js";
+import * as storageHandler from "../storage/storage-utils.js";
+import {selectHiker} from "./game-logic.js";
+import {changePlacedHikerState, hasPlacedHiker, selectedCard} from "../game.js";
 
 
 let turn = null;
@@ -22,8 +24,8 @@ function getMove(tileId, selectedTile, cardId) {
 }
 
 function handleSelectedCardPlacement(cardId, tileId, selectedTile) {
-  if (variables.selectedCard !== null) {
-    if (Number(cardId) !== 0) {
+  if (variables.selectedCard !== null) { // card that player wants to place
+    if (Number(cardId) === 0) { // if tile is empty place card.
       const move = getMove(tileId, selectedTile, cardId);
       placeCard(move);
     }
@@ -32,10 +34,25 @@ function handleSelectedCardPlacement(cardId, tileId, selectedTile) {
 
 function handleTileClick(e){
   const selectedTile = e.target.closest("div");
-  const tileId = selectedTile.dataset.id;
-  const cardId = selectedTile.dataset.cardId;
+  const tileId = selectedTile.dataset.index;
+  const cardId = selectedTile.dataset.card;
 
-  handleSelectedCardPlacement(cardId, tileId, selectedTile);
+  if (config.placingHiker){ // if player wants to place a hiker on a card
+    // place hiker on board.
+    handleHikerPlacePlacement(cardId);
+  }else{ // place card.
+    handleSelectedCardPlacement(cardId, tileId, selectedTile);
+  }
+}
+
+function handleHikerPlacePlacement(cardId){
+  if (!hasPlacedHiker){
+    config.setHikerPlacement(cardId);
+    changePlacedHikerState();
+    console.log(hasPlacedHiker);
+    console.log("placed hiker on card:" + cardId);
+    // TODO: make it so visualy there is placed a card.
+  }
 }
 
 function placeCard(move){
@@ -43,10 +60,14 @@ function placeCard(move){
   getClosestCard(move.tile).then(closest => {
     if (closest) {
       if (hasHikerOnCardInHand()){
+        // hiker is placed on card in hand.
         variables.changePlacedHikerState()
         createTurn(variables.selectedCard.dataset.cardId, closest.card, closest.direction);
-        // TODO: check where the hiker is placed on the grid not only in the hand.
+      } else if(selectedCard !== null){
+        // hiker is placed on card on board so needs card id of other card.
+        createTurnWithHiker(variables.selectedCard.dataset.cardId, closest.card, closest.direction, config.hikerPlacement);
       }else{
+        // no hiker selected so only card needed.
         createTurn(variables.selectedCard.dataset.cardId, closest.card, closest.direction);
       }
     }
@@ -58,6 +79,15 @@ function createTurn(cardId, closestCardId, direction){
     cardId,
     closestCardId,
     direction
+  }
+}
+
+function createTurnWithHiker(cardId, closestCardId, direction, hiker){
+  turn = {
+    cardId,
+    closestCardId,
+    direction,
+    hiker
   }
 }
 
@@ -81,7 +111,7 @@ function getClosestCard(tile){
   // tile position based on 1 array value (0-24)
   const tilePos = tile.dataset.index;
   // size of the grid (5x5)
-  const boardSize = size;
+  const boardSize = config.boardSize;
 
   return fetchGameDetails(Number(storageHandler.getGameId())).then(game=>{
     const currentBoard = game.board;
@@ -107,9 +137,16 @@ function getClosestCard(tile){
 
 function endTurnButton(){
   if (turn !== null){
+    console.log(variables.hasPlacedHiker);
     if (variables.hasPlacedHiker){
+      if(turn.hiker !== undefined){
+        console.log("turnWithHiker");
+        addCardToBoardWithHiker(variables.selectedCard.dataset.cardId, turn.closestCardId, turn.direction, turn.hiker).then(() =>{
+          // TODO: clear hasplacedhiker and the selectedcard/ turn ... .
+        })
+      }
       // fetch with hiker
-      addCardToBoardWithHikerInHand(variables.selectedCard.dataset.cardId, turn.closestCardId, turn.direction)
+      addCardToBoardWithHiker(variables.selectedCard.dataset.cardId, turn.closestCardId, turn.direction)
         .then(() =>{
           // TODO: clear hasplacedhiker and the selectedcard.
         });

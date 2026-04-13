@@ -14,7 +14,7 @@ function addCardToBoard(card, relativeCard, direction){
   return fetchFromServer(`/games/${gameId}/board`,"POST", body);
 }
 
-function addCardToBoardWithHikerInHand(card, relativeCard, direction){
+function addCardToBoardWithHiker(card, relativeCard, direction, hiker = card){
   const gameId = getGameId();
   const body = {
     hiker: getHiker(),
@@ -23,12 +23,12 @@ function addCardToBoardWithHikerInHand(card, relativeCard, direction){
       relativeTo: Number(relativeCard),
       direction: direction
     },
-    hikerPlacement: Number(card)
+    hikerPlacement: Number(hiker)
   };
   return fetchFromServer(`/games/${gameId}/board`,"POST", body);
 }
 
 export {
   addCardToBoard,
-  addCardToBoardWithHikerInHand
+  addCardToBoardWithHiker
 }
