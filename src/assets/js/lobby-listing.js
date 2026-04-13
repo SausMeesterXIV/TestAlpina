@@ -50,6 +50,7 @@ function createGameElement(game, hasStarted) {
 
     const $specBtn = $clone.querySelector('input[value="spectate"]');
     $specBtn.dataset.id = `${game.gameId}`;
+    $specBtn.dataset.firstPlayer = game.players[0].name; // needed to be able to make the initial playerToken
 
     hasStarted ? $joinBtn.remove() : $specBtn.remove(); // Prevents players from joining games that are already going on.
 
@@ -84,7 +85,8 @@ function joinOrSpectateGame(e){
 
   if (isJoinOrSpectate(e.target)){
     if (e.target.value === "spectate"){
-      return null;
+      const firstPlayer = e.target.dataset.firstPlayer;
+      spectateGame(gameId, firstPlayer);
     }else if (e.target.value === "join"){
       joinGame(gameId);
     }
@@ -107,6 +109,16 @@ function joinGame(gameId) {
     window.location.replace("lobby.html");
   });
 
+}
+
+function spectateGame(gameId, playerName) {
+  localStorage.clear(); // Removes previous hiker and playerToken to avoid potential issues. This needs to be removed and placed elsewhere at some point.
+  saveToStorage("gameId", gameId);
+
+  const initToken = `${gameId}_${playerName}`;
+  saveToStorage("playerToken", initToken);
+
+  window.location.replace("game.html");
 }
 
 function redirectToCreationPage() {
