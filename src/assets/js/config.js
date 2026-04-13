@@ -21,8 +21,15 @@ function changePlacingHikerState(){
   placingHiker = !placingHiker
 }
 
+function resetPlayerConfig(){
+  placingHiker = false;
+  setHikerPlacement(null);
+}
+
 function getAPIUrl() {
   return DEPLOYEDSERVER;
 }
-
-export { getAPIUrl, GROUPTOKEN, ERRORHANDLERSELECTOR, boardSize, placingHiker, hikerPlacement, setHikerPlacement, changePlacingHikerState};
+// export of vars
+export { GROUPTOKEN, ERRORHANDLERSELECTOR, boardSize, placingHiker, hikerPlacement}
+// export of functions
+export { getAPIUrl, setHikerPlacement, changePlacingHikerState, resetPlayerConfig};

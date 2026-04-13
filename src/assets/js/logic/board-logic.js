@@ -1,10 +1,11 @@
-import {addCardToBoard, addCardToBoardWithHiker} from "../api/place-card.js";
-import {fetchGameDetails} from "../api/game-info.js";
 import * as config from "../config.js";
 import * as variables from "../game.js";
 import * as storageHandler from "../storage/storage-utils.js";
-import {selectHiker} from "./game-logic.js";
+
+import {addCardToBoard, addCardToBoardWithHiker} from "../api/place-card.js";
+import {fetchGameDetails} from "../api/game-info.js";
 import {changePlacedHikerState, hasPlacedHiker, selectedCard} from "../game.js";
+import {resetPlayerConfig} from "../config.js";
 
 
 let turn = null;
@@ -140,24 +141,31 @@ function endTurnButton(){
     console.log(variables.hasPlacedHiker);
     if (variables.hasPlacedHiker){
       if(turn.hiker !== undefined){
-        console.log("turnWithHiker");
         addCardToBoardWithHiker(variables.selectedCard.dataset.cardId, turn.closestCardId, turn.direction, turn.hiker).then(() =>{
-          // TODO: clear hasplacedhiker and the selectedcard/ turn ... .
+          clearTurnInfo();
         })
+      }else {
+        // fetch with hiker
+        addCardToBoardWithHiker(variables.selectedCard.dataset.cardId, turn.closestCardId, turn.direction)
+          .then(() =>{
+            clearTurnInfo();
+          });
       }
-      // fetch with hiker
-      addCardToBoardWithHiker(variables.selectedCard.dataset.cardId, turn.closestCardId, turn.direction)
-        .then(() =>{
-          // TODO: clear hasplacedhiker and the selectedcard.
-        });
     }else {
       // fetch without hiker
       addCardToBoard(variables.selectedCard.dataset.cardId, turn.closestCardId, turn.direction)
         .then(() =>{
-          // TODO: clear hasplacedhiker and the selectedcard.
+          clearTurnInfo();
         });
     }
   }
+}
+
+function clearTurnInfo(){
+  resetPlayerConfig(); // reset all values in the config.
+  turn = null; // TODO: MAYBE SET THIS IN CONFIG TO ??
+  variables.selectedCard = null; // TODO IDEM TURN ??
+  variables.hasPlacedHiker = false; // ALSO IN CONFIG ? or make a new file game config ?
 }
 
 export {
