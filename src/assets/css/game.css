@@ -172,10 +172,14 @@ footer {
     background-color: #888888;
 }
 
-#hand .card:hover, 
-#hand .card.selected {
+#hand:not(.spectator-view) .card:hover, 
+#hand:not(.spectator-view) .card.selected { /* #hand:not(.spectator-view) = "If the id 'hand' doesn't have the class 'spectator-view' assigned to it" */
     transform: translateY(-1.5rem); /* Moves the card up by 1.5rem */
     z-index: 10; /* Ensures the hovered/selected card overlaps other items */
+}
+
+#hand.spectator-view .card {
+    cursor: default;
 }
 
 #spectator-area {

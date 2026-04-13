@@ -15,6 +15,8 @@ function initSpectatorMode() {
     document.querySelector("#spectator-area").classList.remove("hidden");
     document.querySelector("#player-controls").classList.add("hidden");
 
+    document.querySelector("#hand").classList.add("spectator-view");
+
     updateSpectatorUI();
 }
 
