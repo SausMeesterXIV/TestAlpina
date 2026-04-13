@@ -10,6 +10,7 @@ import {remainingHikers} from "./renderers/hiker-renderer.js";
 //logic
 import {handleTileClick, endTurnButton} from "./logic/board-logic.js";
 import * as gameLogic from "./logic/game-logic.js";
+import * as specLogic from "./logic/spectator-logic.js";
 
 let lastBoardState = null; // makes sure the browser knows whether the board the player sees is the same as the one saved in the server
 let currentPlayer = null //new function to do this.
@@ -17,7 +18,10 @@ let currentPlayer = null //new function to do this.
 
 function init() {
   renderBoard();
-  renderHand();
+
+  if (!specLogic.isSpectator()) renderHand();
+
+  if (specLogic.isSpectator()) specLogic.initSpectatorMode();
 
   addEventListeners();
 
@@ -47,6 +51,11 @@ function addEventListeners() {
 
   //endTurnButton
   document.querySelector("#end-turn-button").addEventListener("click", endTurn);
+
+  if (specLogic.isSpectator()) {
+    document.querySelector("#prev-player").addEventListener("click", () => specLogic.switchPlayer(-1)); // -1 goes back
+    document.querySelector("#next-player").addEventListener("click", () => specLogic.switchPlayer(1)); // +1 goes forward
+  }
 }
 
 function renderLoop() {
@@ -57,6 +66,10 @@ function renderLoop() {
 
     renderLeaderboard(data.players);
     updateCurrentPlayer(data);
+
+    if (specLogic.isSpectator()) {
+      specLogic.updatePlayers(data.players);
+    }
    
     const currentBoard = JSON.stringify(data.board); // By turning the array into a string, the values can be compared. 
     if (currentBoard !== lastBoardState) { // If it would remain an array, this line would look at whether currentBoard and lastBoardState don't point to the same object in memory, which would always be true.
@@ -93,6 +106,7 @@ function endTurn() {
 } //game-logic up for discussion
 
 function gameLoop() {
+  if (specLogic.isSpectator()) return; // stops the function from being executed in case the user is a spectator
   const $endTurnButton = document.querySelector("#end-turn-button");
   const $selectHikerButton = document.querySelector("#select-hiker-button");
   fetchGameDetails(Number(storageHandler.getGameId()))
