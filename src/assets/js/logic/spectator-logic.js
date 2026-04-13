@@ -17,12 +17,6 @@ function initSpectatorMode(initialPlayers) {
     document.querySelector("#spectator-area").classList.remove("hidden");
     document.querySelector("#player-controls").classList.add("hidden");
 
-    const currToken = storageHandler.getPlayerToken();
-    const currPlayerName = currToken.split("_")[1]; // extracts playerName from the playerToken
-
-    spectatorIndex = playersList.findIndex(p => p.name === currPlayerName);
-    if (spectatorIndex === -1) spectatorIndex = 0;
-
     updateSpectatorUI();
 }
 
@@ -36,7 +30,19 @@ function switchPlayer(direction) {
 }
 
 function updatePlayers(newPlayersList) {
+    const isFirstLoad = playersList.length === 0;
     playersList = newPlayersList;
+
+    if (isFirstLoad) {
+        const currToken = storageHandler.getPlayerToken();
+        const currPlayerName = currToken.split("_")[1]; // extracts playerName from the playerToken
+
+        spectatorIndex = playersList.findIndex(p => p.name === currPlayerName);
+        if (spectatorIndex === -1) spectatorIndex = 0;
+
+        updateSpectatorToken();
+    }
+
     updateSpectatorUI();
 }
 

@@ -23,7 +23,8 @@ let currentPlayer = null //new function to do this.
 
 function init() {
   renderBoard();
-  renderHand();
+
+  if (!specLogic.isSpectator()) renderHand();
 
   if (specLogic.isSpectator()) specLogic.initSpectatorMode([]);
 
