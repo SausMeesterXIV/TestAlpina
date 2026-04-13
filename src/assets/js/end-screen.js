@@ -1,11 +1,11 @@
 import { fetchGameDetails } from "./api/game-info.js";
-import { renderLeaderboard as leaderboardRenderer } from "./renderers/leaderboard-renderer.js";
+import { renderLeaderboard } from "./renderers/leaderboard-renderer.js";
 import * as storageHandler from "./storage/storage-utils.js";
 
 function init() {
     fetchGameDetails(Number(storageHandler.getGameId())).then(data => {
         setBackground(data.players);
-        renderLeaderboard(data.players);
+        renderLeaderboard(data.players, false);
     })
 }
 
@@ -25,11 +25,6 @@ function hasMostPoints(players) {
 function setBackground(players) {
     const $body = document.querySelector("body");
     hasMostPoints(players) ? $body.classList.add("victory") : $body.classList.add("defeat"); // typical if-else structure, but simplified notation
-}
-
-function renderLeaderboard(players) {
-    const $target = document.querySelector("tbody");
-    leaderboardRenderer(players, $target, false); // false prevents the function from trying to load the amount of hikers
 }
 
 init();
