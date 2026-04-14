@@ -231,3 +231,25 @@ footer {
     font-weight: bold;
     color: #333;
 }
+
+#error-popup {
+  position: absolute;
+  pointer-events: none; /* Let clicks pass through it */
+  z-index: 1000;
+  
+  background-color: red;
+  color: #fff;
+  font-weight: bold;
+  
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  font-size: 0.85rem;
+}
+
+.error-hidden {
+  visibility: hidden;
+}
+
+.error-visible {
+  visibility: visible;
+}
