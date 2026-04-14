@@ -18,6 +18,14 @@ function initSpectatorMode() {
     document.querySelector("#hand").classList.add("spectator-view");
 
     updateSpectatorUI();
+
+    refreshSpecatorView();
+}
+
+function refreshSpecatorView() {
+    if (playersList.length > 0) renderHand(); // the list length check prevents a bad GET request
+
+    setTimeout(refreshSpecatorView, 2000);
 }
 
 function switchPlayer(direction) {
