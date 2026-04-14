@@ -16,7 +16,11 @@ function createTile(tile, cards, cardId, $emptyTile, index) {
     //store metadata in div for selecting card
     createDiv($emptyTile, cardId, index);
     //render card
-    $emptyTile.appendChild(renderCard(selectedCard));
+    if (tile.hiker === undefined){
+      $emptyTile.appendChild(renderCard(selectedCard));
+    }else {
+      $emptyTile.appendChild(renderCard(selectedCard, true));
+    }
   } else {
     createDiv($emptyTile, cardId, index);
   }
