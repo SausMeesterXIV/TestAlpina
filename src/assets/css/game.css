@@ -247,7 +247,8 @@ footer {
 }
 
 .error-hidden {
-  visibility: hidden; /* Why visibility instead of display:none;? --> https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/visibility#try_it (text underneath the "try it" block) */ 
+  visibility: hidden; /* Why visibility instead of display:none;? --> https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/visibility#try_it (text underneath the "try it" block)
+  Since it isn't removed from the document layout, we can add animations in the future. */ 
 }
 
 .error-visible {
