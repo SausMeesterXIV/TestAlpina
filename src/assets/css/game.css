@@ -247,7 +247,7 @@ footer {
 }
 
 .error-hidden {
-  visibility: hidden;
+  visibility: hidden; /* Why visibility instead of display:none;? --> https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/visibility#try_it (text underneath the "try it" block) */ 
 }
 
 .error-visible {
