@@ -6,6 +6,8 @@ import * as gameConfig from "../game-config.js"
 import {addCardToBoard, addCardToBoardWithHiker} from "../api/place-card.js";
 import {fetchGameDetails} from "../api/game-info.js";
 
+import {flashError} from "../renderers/error-renderer.js";
+
 function hasHikerOnCardInHand(){
   const card = gameConfig.selectedCard.querySelector(".hiker");
   // if there is no hiker, the player sends card without hiker to server
@@ -20,11 +22,11 @@ function getMove(tileId, selectedTile, cardId) {
   };
 }
 
-function handleSelectedCardPlacement(cardId, tileId, selectedTile) {
+function handleSelectedCardPlacement(cardId, tileId, selectedTile, e) {
   if (gameConfig.selectedCard !== null) { // card that player wants to place
     if (Number(cardId) === 0) { // if tile is empty place card.
       const move = getMove(tileId, selectedTile, cardId);
-      placeCard(move);
+      placeCard(move, e);
     }
   }
 }
@@ -37,8 +39,8 @@ function handleTileClick(e){
   if (gameConfig.placingHiker){ // if player wants to place a hiker on a card
     // place hiker on board.
     handleHikerPlacePlacement(cardId);
-  }else{ // place card.
-    handleSelectedCardPlacement(cardId, tileId, selectedTile);
+  } else { // place card.
+    handleSelectedCardPlacement(cardId, tileId, selectedTile, e);
   }
 }
 
@@ -50,7 +52,7 @@ function handleHikerPlacePlacement(cardId){
   }
 }
 
-function placeCard(move){
+function placeCard(move, e){
   getClosestCard(move.tile).then(closest => {
     if (closest) {
       if (hasHikerOnCardInHand()){
@@ -60,10 +62,12 @@ function placeCard(move){
       } else if(gameConfig.selectedCard !== null){
         // hiker is placed on card on board so needs card id of other card.
         createTurnWithHiker(gameConfig.selectedCard.dataset.cardId, closest.card, closest.direction, config.hikerPlacement);
-      }else{
+      }else {
         // no hiker selected so only card needed.
         createTurn(gameConfig.selectedCard.dataset.cardId, closest.card, closest.direction);
       }
+    } else {
+      flashError(e, "Cards must be placed next to existing ones.")
     }
   });
 }

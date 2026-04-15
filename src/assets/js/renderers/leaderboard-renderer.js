@@ -19,7 +19,7 @@ function renderLeaderboard(players, showHikers = true) {
 }
 
 function getSortedPlayers(players) {
-    return players.sort((a, b) => b.points - a.points); // If the result is positive, it will move b in front of a. Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+    return players.sort((a, b) => b.score - a.score); // If the result is positive, it will move b in front of a. Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 }
 
 export {
