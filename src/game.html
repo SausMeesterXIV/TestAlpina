@@ -41,12 +41,12 @@
                         </tbody>
                     </table>
                 </div>
-                <aside id="turn-info">
-                    <h2 id="turn-name">Rhune's turn</h2> <!--Must change dynamically eventually, change this later-->
+                <aside id="turn-info" aria-label="turn-heading">
+                    <h2 id="turn-name" aria-label="turn-heading">Rhune's turn</h2> <!--Must change dynamically eventually, change this later-->
                     <progress id="progress" value="0" max="60"></progress> <!--This indicates how much time a player has left. Extra info: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/progress-->
                 </aside>
-                <aside id="spectator-area" class="hidden">
-                    <h2>Spectator Mode</h2>
+                <aside id="spectator-area" class="hidden" aria-label="spectator-title">
+                    <h2 aria-label="spectator-title">Spectator Mode</h2>
                     <div class="spectator-switcher">
                         <button id="prev-player" class="nav-arrow">&lt;</button> <!--&lt; and &gt; are < and > respectively-->
                         <div class="viewing-info">

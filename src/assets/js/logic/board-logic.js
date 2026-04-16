@@ -1,7 +1,6 @@
 import * as config from "../config.js";
-import * as variables from "../game.js";
 import * as storageHandler from "../storage/storage-utils.js";
-import * as gameConfig from "../game-config.js"
+import * as gameConfig from "../game-config.js";
 
 import {addCardToBoard, addCardToBoardWithHiker} from "../api/place-card.js";
 import {fetchGameDetails} from "../api/game-info.js";
@@ -67,7 +66,7 @@ function placeCard(move, e){
         createTurn(gameConfig.selectedCard.dataset.cardId, closest.card, closest.direction);
       }
     } else {
-      flashError(e, "Cards must be placed next to existing ones.")
+      flashError(e, "Cards must be placed next to existing ones.");
     }
   });
 }
@@ -139,7 +138,7 @@ function endTurnButton(){
       if(gameConfig.turn.hiker !== undefined){
         addCardToBoardWithHiker(gameConfig.selectedCard.dataset.cardId, gameConfig.turn.closestCardId, gameConfig.turn.direction, gameConfig.turn.hiker).then(() =>{
           gameConfig.resetPlayerConfig();
-        })
+        });
       }else {
         // fetch with hiker
         addCardToBoardWithHiker(gameConfig.selectedCard.dataset.cardId, gameConfig.turn.closestCardId, gameConfig.turn.direction)
@@ -160,4 +159,4 @@ function endTurnButton(){
 export {
   handleTileClick,
   endTurnButton
-}
+};
