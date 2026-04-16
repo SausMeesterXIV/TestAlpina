@@ -14,7 +14,7 @@ function fetchPlayerInfo(gameId) {
 function fetchPlayerHand() {
   const hikerColor = isSpectator() ? getSpectatedHiker() : getHiker();
 
-  return fetchFromServer(`/games/${getGameId()}/hikers/${hikerColor}/hand`).then(data => {return data.hand});
+  return fetchFromServer(`/games/${getGameId()}/hikers/${hikerColor}/hand`).then(data => {return data.hand;});
 }
 
 export {fetchPlayerInfo, fetchPlayerHand};

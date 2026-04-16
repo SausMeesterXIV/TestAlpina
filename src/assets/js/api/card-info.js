@@ -4,4 +4,4 @@ function fetchAllCards() {
   return fetchFromServer("/cards");
 }
 
-export{fetchAllCards}
+export{fetchAllCards};
