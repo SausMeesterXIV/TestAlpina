@@ -4,7 +4,7 @@
     --primary-nav-bg-color: rgb(28, 21, 20);
     --primary-nav-text-color: rgb(255, 215, 0);
 
-    --primary-button-bg-color: linear-gradient(to bottom, rgb(139, 48, 0) 0%, rgb(58, 14, 0) 100%);;
+    --primary-button-bg-color: linear-gradient(to bottom, rgb(139, 48, 0) 0%, rgb(58, 14, 0) 100%);
     --primary-button-text-color: rgb(255, 215, 0);
 
     --comment-text-color: rgb(169, 169, 169);
@@ -14,7 +14,7 @@ body{
     background: url("../../images/background/old_paper.jpg") no-repeat center;
     background-size: cover;
 
-    font-family:"DejaVu San", "serif";
+    font-family:"DejaVu San", sans-serif;
 }
 
 input[type=button]{
@@ -23,7 +23,7 @@ input[type=button]{
 
     border-radius: 1rem;
     font-size: 2rem;
-    font-family: "DejaVu San", "serif";
+    font-family: "DejaVu San", sans-serif;
 
     /* inset: How far inside the container should this element sit from each edge?*/
     box-shadow:
@@ -91,19 +91,12 @@ li a{
     padding: 0.5rem;
 }
 
-li a{
-    display: block;
-    text-decoration: none;
-    color: var(--primary-nav-text-color);
-}
-
 #alpina {
     position: absolute;
     left: 50%;
     transform: translateX(-50%); /*Move the element left by half of its own width*/
     font-size: 3rem;
 }
-
 
 #right-side{
     margin-left: auto;
