@@ -15,16 +15,17 @@ body {
     background-image: url(../../images/alpina_defeat_page_background.png);
 }
 
-article {
+section {
     padding: 2rem;
     border-radius: 2rem;
     margin: auto;
     backdrop-filter: blur(1.5rem);
 }
 
-h1 {
-    visibility: hidden;
-    padding-top:8rem;
+h2 {
+    font-size: 5rem;
+    padding-bottom: 3rem;
+    text-align: center;
 }
 
 table {
