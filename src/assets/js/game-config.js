@@ -1,7 +1,5 @@
 // game configurations
-import {selectCard} from "./logic/game-logic.js";
-
-const boardSize = 5 //HARDCODED
+const boardSize = 5; //HARDCODED
 
 let hasPlacedHiker = false; // check to know if the player already has placed a hiker or not.
 let placingHiker = false; // checks if player wants/ is placing a hiker.
@@ -19,7 +17,7 @@ function setSelectedCard(card){
 
 function changePlacingHikerState(){
   // switches the states (true = false) / (false = true).
-  placingHiker = !placingHiker
+  placingHiker = !placingHiker;
 }
 
 
@@ -30,7 +28,7 @@ function resetPlayerConfig(){
   setHikerPlacement(null);
   setSelectedCard(null);
   setTurn(null);
-}
+};
 
 function changePlacedHikerState(){
   hasPlacedHiker = !hasPlacedHiker;

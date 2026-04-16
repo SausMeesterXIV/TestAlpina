@@ -13,8 +13,6 @@ import * as gameLogic from "./logic/game-logic.js";
 import * as specLogic from "./logic/spectator-logic.js";
 
 let lastBoardState = null; // makes sure the browser knows whether the board the player sees is the same as the one saved in the server
-let currentPlayer = null //new function to do this.
-
 
 function init() {
   renderBoard();
@@ -39,7 +37,7 @@ function init() {
 
 function addEventListeners() {
    // for selecting a tile
-  let $gameBoard = document.querySelector("#game-board");
+  const $gameBoard = document.querySelector("#game-board");
   $gameBoard.addEventListener('click', handleTileClick, true);
 
   // for selecting a card
@@ -115,7 +113,7 @@ function gameLoop() {
         $endTurnButton.disabled = false; // Enable the button when it's the player's turn
         $selectHikerButton.disabled = false;
       } else setTimeout(gameLoop, 2000); // Check again after 2 second and will need to be put in different function dedicated to polling
-    })
+    });
 }
 
 init();
@@ -123,4 +121,4 @@ init();
 // temp "working" leave button, needs a confirmation pop-up
 document.querySelector("#leave-button").addEventListener("click", function() {
   window.location.href = "lobby-listing.html";
-})
+});

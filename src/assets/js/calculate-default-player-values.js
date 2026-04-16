@@ -1,7 +1,7 @@
 import {fetchPlayerInfo} from "./api/player-info.js";
 
 function defaultPlayerName(gameId){
-  let playerName = `player`;
+  const playerName = `player`;
 
   return fetchPlayerInfo(gameId).then(players => {
     const number = players.length + 1;
@@ -26,4 +26,4 @@ function defaultPlayerColor(gameId) {
 export{
   defaultPlayerName,
   defaultPlayerColor
-}
+};
