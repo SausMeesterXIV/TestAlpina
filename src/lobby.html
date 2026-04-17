@@ -26,32 +26,36 @@
         </ul>
     </nav>
 
-    <article>
+    <main>
         <section id="players-list">
-            <h1>players</h1>
+            <h2>players</h2>
+            <!-- may change this to list ?-->
             <div id="player-names">
                 <!--Player names come here-->
             </div>
         </section>
 
         <section id="game-setup">
-            <h1>Game setup</h1>
-            <div>
-                <p class="comment">Configure your identity for the upcoming game.</p>
-                <label for="nickname-input">Hiker nickname:</label>
-                <input type="text" name="nickname" id="nickname-input" placeholder="e.g. Dayvid">
-            </div>
-            <div>
-                <input type="radio" id="purple-radio" name="color" value="Purple">
-                <label for="purple-radio" class="color-label">Purple</label>
-                <input type="radio" id="yellow-radio" name="color" value="Yellow">
-                <label for="yellow-radio" class="color-label">Yellow</label>
-                <input type="radio" id="red-radio" name="color" value="Red">
-                <label for="red-radio" class="color-label">Red</label>
-                <input type="radio" id="lightblue-radio" name="color" value="Lightblue">
-                <label for="lightblue-radio" class="color-label">Lightblue</label>
-            </div>
+            <h2>Game setup</h2>
+            <form>
+                <div>
+                    <p class="comment">Configure your identity for the upcoming game.</p>
+                    <label for="nickname-input">Hiker nickname:</label>
+                    <input type="text" name="nickname" id="nickname-input" placeholder="e.g. Dayvid">
+                </div>
+                <div>
+                    <input type="radio" id="purple-radio" name="color" value="Purple">
+                    <label for="purple-radio" class="color-label">Purple</label>
+                    <input type="radio" id="yellow-radio" name="color" value="Yellow">
+                    <label for="yellow-radio" class="color-label">Yellow</label>
+                    <input type="radio" id="red-radio" name="color" value="Red">
+                    <label for="red-radio" class="color-label">Red</label>
+                    <input type="radio" id="lightblue-radio" name="color" value="Lightblue">
+                    <label for="lightblue-radio" class="color-label">Lightblue</label>
+                </div>
+            </form>
+            <!-- add button for later with server ?-->
         </section>
-    </article>
+    </main>
 </body>
 </html>

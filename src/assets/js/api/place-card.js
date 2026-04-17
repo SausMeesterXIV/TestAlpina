@@ -31,4 +31,4 @@ function addCardToBoardWithHiker(card, relativeCard, direction, hiker = card){
 export {
   addCardToBoard,
   addCardToBoardWithHiker
-}
+};

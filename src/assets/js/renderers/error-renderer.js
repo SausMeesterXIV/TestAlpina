@@ -19,4 +19,4 @@ function flashError(e, message) {
     }, 2000);
 }
 
-export {flashError}
+export {flashError};

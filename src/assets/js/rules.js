@@ -12,7 +12,7 @@ function initUI() {
     openBtn = document.querySelector('#open-settings-btn');
     closeBtn = document.querySelector('#close-settings-btn');
     scoringBtn = document.querySelector('#open-scoring-btn');
-    closeBtnRedirect = document.querySelector('#close-settings-btn');
+  let closeBtnRedirect = document.querySelector('#close-settings-btn');
 
     checkUrlParams();
     setupEventListeners();

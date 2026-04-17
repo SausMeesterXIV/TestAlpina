@@ -1,5 +1,5 @@
 import {fetchGameDetails} from "../api/game-info.js";
-import * as storageHandler from "../storage/storage-utils.js"
+import * as storageHandler from "../storage/storage-utils.js";
 
 function remainingHikers() {
   const $button = document.querySelector("#select-hiker-button");
@@ -17,9 +17,8 @@ function remainingHikers() {
         const hikers = player.hikersLeft;
         text.textContent = hikers;
         $button.appendChild(text);
-      })
-
-    })
+      });
+    });
 }
 
 export {

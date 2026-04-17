@@ -17,7 +17,7 @@ function renderCard(card, placeHiker = false) {
 }
 
 function renderHand() {
-  let $fragment = document.createDocumentFragment();
+  const $fragment = document.createDocumentFragment();
   fetchPlayerHand().then(cardArray => {
     cardArray.forEach(card => {
       $fragment.appendChild(renderCard(card));

@@ -14,34 +14,32 @@
   <script src="./assets/js/end-screen.js" type="module"></script>
 </head>
 <body>
-<h1>Victory</h1>
-<article>
-<section class="scoreboard">
-    <table>
-        <thead>
+<section>
+    <h2>Victory</h2>
+    <div class="scoreboard">
+        <table>
+            <thead>
+            <tr>
+                <th>Pos.</th>
+                <th>Name</th>
+                <th>Points</th>
+            </tr>
+            </thead>
+            <tbody>
+                <!--The leaderboard data comes here-->
+            </tbody>
+        </table>
+    </div>
+    <div class="endscreen-buttons">
+        <a id="return-to-main-page" href="lobby-listing.html">Return to main page</a> <a href="lobby.html" id="rematch">Rematch</a>
+    </div>
+    </section>
+    <template id="leaderboard-template">
         <tr>
-            <th>Pos.</th>
-            <th>Name</th>
-            <th>Points</th>
+            <td class="leaderboard-pos">#</td> <!--Pos.-->
+            <td class="leaderboard-name">Name</td>
+            <td class="leaderboard-points">Points</td>
         </tr>
-        </thead>
-        <tbody>
-            <!--The leaderboard data comes here-->
-        </tbody>
-    </table>
-</section>
-
-<section class="endscreen-buttons">
-<a href="lobby-listing.html"><div id="return-to-main-page">Return to main page</div></a> <a href="lobby.html"><div id="rematch">Rematch</div></a>
-</section>
-
-</article>
-<template id="leaderboard-template">
-    <tr>
-        <td class="leaderboard-pos">#</td> <!--Pos.-->
-        <td class="leaderboard-name">Name</td>
-        <td class="leaderboard-points">Points</td>
-    </tr>
-</template>
+    </template>
 </body>
 </html>

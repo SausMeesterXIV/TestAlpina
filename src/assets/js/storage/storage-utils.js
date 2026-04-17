@@ -1,4 +1,4 @@
-import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
+import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
 
 function getGameId(){
   return loadFromStorage("gameId");
@@ -12,4 +12,4 @@ function getHiker() {
   return loadFromStorage("hiker");
 }
 
-export {getHiker, getGameId, getPlayerToken}
+export {getHiker, getGameId, getPlayerToken};

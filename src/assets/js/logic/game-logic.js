@@ -35,7 +35,7 @@ function selectHiker(){
 
 function placeHikerOnCard() {
   let canPlayHiker = true;
-  const gameId = Number(storageHandler.getGameId())
+  const gameId = Number(storageHandler.getGameId());
   fetchGameDetails(gameId)
     .then(data => data.players)
     .then(players => {
@@ -43,7 +43,7 @@ function placeHikerOnCard() {
         if (player.hikersLeft <= 0) {
           canPlayHiker = false;
         }
-      })
+      });
       if (canPlayHiker){
         const cards = document.querySelectorAll(".card"); // class/selector needs to be changed so only the cards in a grid are selected
         const hiker = document.querySelector(".hiker");
@@ -60,7 +60,7 @@ function placeHikerOnCard() {
           });
         });
       }
-    })
+    });
 }
 
 export {
@@ -69,4 +69,4 @@ export {
   setTimeProgressBar,
   selectHiker,
   placeHikerOnCard
-}
+};

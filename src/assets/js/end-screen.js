@@ -6,7 +6,7 @@ function init() {
     fetchGameDetails(Number(storageHandler.getGameId())).then(data => {
         setBackground(data.players);
         renderLeaderboard(data.players, false);
-    })
+    });
 }
 
 function calcBestPlayer(players) {
@@ -15,7 +15,7 @@ function calcBestPlayer(players) {
             return player;
         }
         return currentBest;
-    })
+    });
 }
 
 function hasMostPoints(players) {
