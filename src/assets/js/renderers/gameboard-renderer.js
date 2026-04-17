@@ -2,6 +2,7 @@ import * as storageHandler from "../storage/storage-utils.js";
 import {fetchAllCards} from "../api/card-info.js";
 import {fetchGameBoard} from "../api/game-info.js";
 import {renderCard} from "./hand-renderer.js";
+import {highlightValidTiles} from "./legal-move-renderer.js";
 
 
 function createDiv($tile, cardId, index) {
@@ -49,7 +50,8 @@ function renderBoard() {
           index++;
         });
       });
-      document.querySelector("#game-board").replaceChildren($board); // Replace children prevents flickering
+      document.querySelector("#game-board").replaceChildren($board);// Replace children prevents flickering
+      highlightValidTiles(res2.board); // highlights all the tiles where you can place cards.
     });
   });
 } //the playing field
