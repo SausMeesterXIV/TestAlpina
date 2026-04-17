@@ -10,10 +10,13 @@
     --comment-text-color: rgb(169, 169, 169);
 }
 
-body{
+html {
+    height: 100%; /* ensures the background image always covers the entire page */
     background: url("../../images/background/old_paper.jpg") no-repeat center;
     background-size: cover;
+}
 
+body{
     font-family:"DejaVu San", sans-serif;
 }
 
