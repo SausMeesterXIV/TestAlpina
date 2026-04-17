@@ -6,6 +6,7 @@ import {renderLeaderboard} from "./renderers/leaderboard-renderer.js";
 import {renderBoard} from "./renderers/gameboard-renderer.js";
 import {renderHand} from "./renderers/hand-renderer.js";
 import {remainingHikers} from "./renderers/hiker-renderer.js";
+import {highlightValidTiles} from "./renderers/legal-move-renderer.js";
 
 //logic
 import {handleTileClick, endTurnButton} from "./logic/board-logic.js";

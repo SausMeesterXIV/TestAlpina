@@ -253,3 +253,7 @@ footer {
 .error-visible {
   visibility: visible;
 }
+
+.glow{
+    background-color: green;
+}

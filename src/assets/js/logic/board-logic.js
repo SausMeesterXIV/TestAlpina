@@ -158,5 +158,6 @@ function endTurnButton(){
 
 export {
   handleTileClick,
-  endTurnButton
+  endTurnButton,
+  safe
 };
