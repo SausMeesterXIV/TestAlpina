@@ -1,5 +1,4 @@
 import * as config from "../config.js";
-import * as variables from "../game.js";
 import * as storageHandler from "../storage/storage-utils.js";
 import * as gameConfig from "../game-config.js"
 
@@ -159,5 +158,6 @@ function endTurnButton(){
 
 export {
   handleTileClick,
-  endTurnButton
+  endTurnButton,
+  safe
 }
