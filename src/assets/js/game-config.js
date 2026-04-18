@@ -5,8 +5,29 @@ let hasPlacedHiker = false; // check to know if the player already has placed a 
 let placingHiker = false; // checks if player wants/ is placing a hiker.
 
 let selectedCard = null; // card selected in hand by player.
-let hikerPlacement = null; // the id of the card in the board where hiker neds to be placed.
+// hikerPlacement gets initialized as undefined by default, i removed the "= undefined;" as Sonar complained about it 
+let hikerPlacement; // the id of the card in the board where hiker neds to be placed.
 let turn = null;
+
+function getHasPlacedHiker() {
+  return hasPlacedHiker;
+}
+
+function getPlacingHiker() {
+  return placingHiker;
+}
+
+function getSelectedCard() {
+  return selectedCard;
+}
+
+function getHikerPlacement() {
+  return hikerPlacement;
+}
+
+function getTurn() {
+  return turn;
+}
 
 function setHikerPlacement(cardId){
   hikerPlacement = cardId;
@@ -38,5 +59,5 @@ function changePlacedHikerState(){
 function setTurn(move){
   turn = move;
 }
-export {boardSize, selectedCard, placingHiker, hikerPlacement,hasPlacedHiker,turn,
-  setHikerPlacement, setSelectedCard, changePlacingHikerState,resetPlayerConfig,changePlacedHikerState, setTurn}
+export {boardSize, getSelectedCard, getPlacingHiker, getHikerPlacement, getHasPlacedHiker, getTurn,
+  setHikerPlacement, setSelectedCard, changePlacingHikerState,resetPlayerConfig,changePlacedHikerState, setTurn};
