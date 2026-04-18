@@ -8,7 +8,6 @@ let renderTimer = null; // Keeps track of the current timer ID to prevent overla
 function init () {
     renderGameList();
     addEventListeners();
-    //$expeditions.addEventListener('click', spectate);
 }
 
 function addEventListeners() {
@@ -73,8 +72,10 @@ function renderGameList() {
   // Checks if there currently is a timer going on, if there is it will remove said timer. This prevents a bug where both init() and switchTab() try to fetch both the started and unstarted games, causing the page to flicker between the two tabs.
 
   if (currentTab === "unstarted") fetchUnstartedGames().then(games => renderGames(games, false));
-  else if (currentTab === "started") fetchStartedGames().then(games => renderGames(games, true));
-    renderTimer = setTimeout(renderGameList, 2000); // creates a new document fragment, appends each game to it, and then replaces the old games once the fragment is ready to overwrite them: this avoids flickering
+  else fetchStartedGames().then(games => renderGames(games, true));
+  
+  const time = 2000;
+  renderTimer = setTimeout(renderGameList, time); // creates a new document fragment, appends each game to it, and then replaces the old games once the fragment is ready to overwrite them: this avoids flickering
 }
 
 function joinOrSpectateGame(e){
@@ -86,7 +87,8 @@ function joinOrSpectateGame(e){
     if (e.target.value === "spectate"){
       const firstPlayer = e.target.dataset.firstPlayer;
       spectateGame(gameId, firstPlayer);
-    }else if (e.target.value === "join"){
+    }
+    if (e.target.value === "join"){
       joinGame(gameId);
     }
   }
@@ -105,7 +107,7 @@ function joinGame(gameId) {
     saveToStorage("hiker", data.hiker);
     saveToStorage("playerToken", data.playerToken);
     // redirect page to lobby.
-    window.location.replace("lobby.html");
+    globalThis.location.replace("lobby.html");
   });
 
 }
@@ -117,11 +119,11 @@ function spectateGame(gameId, playerName) {
   const initToken = `${gameId}_${playerName}`;
   saveToStorage("playerToken", initToken);
 
-  window.location.replace("game.html");
+  globalThis.location.replace("game.html");
 }
 
 function redirectToCreationPage() {
-  window.location.replace("lobby-creation.html");
+  globalThis.location.replace("lobby-creation.html");
 }
 
 init();
