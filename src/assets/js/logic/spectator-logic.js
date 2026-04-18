@@ -25,7 +25,8 @@ function initSpectatorMode() {
 function refreshSpecatorView() {
     if (playersList.length > 0) renderHand(); // the list length check prevents a bad GET request
 
-    setTimeout(refreshSpecatorView, 2000);
+    const time = 2000;
+    setTimeout(refreshSpecatorView, time);
 }
 
 function switchPlayer(direction) {
