@@ -8,7 +8,7 @@ function highlightValidTiles(board) {
       const tile = board[row][col];
       const isEmpty = Number(tile.card) === 0;
 
-      if (isEmpty && hasNeighborCard(row, col, board, boardSize)) {
+      if (isEmpty && hasNeighborCard(row, col, board)) {
         glowTile(row, col);
       }
     }
