@@ -11,7 +11,8 @@ function toggleScorebook() {
 
 function closeSettings() {
     // document.referrer = page that referred to rules.html
-    document.referrer ? window.location.href = document.referrer : window.location.href = "index.html"; // === "If a page referred to this page, send the user back to that page. If not, send them to index.html"
+    const target = document.referrer || "index.html"; // === "If a page referred to this page, send the user back to that page. If not, send them to index.html"
+    globalThis.location.href = target; // globalThis is similar to window, but sonar prefers it
 }
 
 init();
