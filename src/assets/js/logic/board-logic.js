@@ -8,7 +8,7 @@ import {fetchGameDetails} from "../api/game-info.js";
 import {flashError} from "../renderers/error-renderer.js";
 
 function hasHikerOnCardInHand(){
-  const card = gameConfig.selectedCard.querySelector(".hiker");
+  const card = gameConfig.getSelectedCard().querySelector(".hiker");
   // if there is no hiker, the player sends card without hiker to server
   return !card.classList.contains("hidden"); // CHANGE TO HIKER LATER!
 }
@@ -22,7 +22,7 @@ function getMove(tileId, selectedTile, cardId) {
 }
 
 function handleSelectedCardPlacement(cardId, tileId, selectedTile, e) {
-  if (gameConfig.selectedCard !== null) { // card that player wants to place
+  if (gameConfig.getSelectedCard() !== null) { // card that player wants to place
     if (Number(cardId) === 0) { // if tile is empty place card.
       const move = getMove(tileId, selectedTile, cardId);
       placeCard(move, e);
@@ -35,7 +35,7 @@ function handleTileClick(e){
   const tileId = selectedTile.dataset.index;
   const cardId = selectedTile.dataset.card;
 
-  if (gameConfig.placingHiker){ // if player wants to place a hiker on a card
+  if (gameConfig.getPlacingHiker()){ // if player wants to place a hiker on a card
     // place hiker on board.
     handleHikerPlacePlacement(cardId);
   } else { // place card.
@@ -44,7 +44,7 @@ function handleTileClick(e){
 }
 
 function handleHikerPlacePlacement(cardId){
-  if (!gameConfig.hasPlacedHiker){
+  if (!gameConfig.getHasPlacedHiker()){
     gameConfig.setHikerPlacement(cardId);
     gameConfig.changePlacedHikerState();
     // TODO: make it so visualy there is placed a card.
@@ -57,13 +57,13 @@ function placeCard(move, e){
       if (hasHikerOnCardInHand()){
         // hiker is placed on card in hand.
         gameConfig.changePlacedHikerState();
-        createTurn(gameConfig.selectedCard.dataset.cardId, closest.card, closest.direction);
-      } else if(gameConfig.selectedCard !== null){
+        createTurn(gameConfig.getSelectedCard().dataset.cardId, closest.card, closest.direction);
+      } else if(gameConfig.getSelectedCard() !== null){
         // hiker is placed on card on board so needs card id of other card.
-        createTurnWithHiker(gameConfig.selectedCard.dataset.cardId, closest.card, closest.direction, config.hikerPlacement);
+        createTurnWithHiker(gameConfig.getSelectedCard().dataset.cardId, closest.card, closest.direction, config.hikerPlacement); // gameConfig.getHikerPlacement() causes a bug, config.hikerPlacement (which doesn't exist) works completely as intended
       }else {
         // no hiker selected so only card needed.
-        createTurn(gameConfig.selectedCard.dataset.cardId, closest.card, closest.direction);
+        createTurn(gameConfig.getSelectedCard().dataset.cardId, closest.card, closest.direction);
       }
     } else {
       flashError(e, "Cards must be placed next to existing ones.");
@@ -133,22 +133,22 @@ function getClosestCard(tile){
 }
 
 function endTurnButton(){
-  if (gameConfig.turn !== null){
-    if (gameConfig.hasPlacedHiker){
-      if(gameConfig.turn.hiker !== undefined){
-        addCardToBoardWithHiker(gameConfig.selectedCard.dataset.cardId, gameConfig.turn.closestCardId, gameConfig.turn.direction, gameConfig.turn.hiker).then(() =>{
+  if (gameConfig.getTurn() !== null){
+    if (gameConfig.getHasPlacedHiker()){
+      if(gameConfig.getTurn().hiker !== undefined){
+        addCardToBoardWithHiker(gameConfig.getSelectedCard().dataset.cardId, gameConfig.getTurn().closestCardId, gameConfig.getTurn().direction, gameConfig.getTurn().hiker).then(() =>{
           gameConfig.resetPlayerConfig();
         });
       }else {
         // fetch with hiker
-        addCardToBoardWithHiker(gameConfig.selectedCard.dataset.cardId, gameConfig.turn.closestCardId, gameConfig.turn.direction)
+        addCardToBoardWithHiker(gameConfig.getSelectedCard().dataset.cardId, gameConfig.getTurn().closestCardId, gameConfig.getTurn().direction)
           .then(() =>{
             gameConfig.resetPlayerConfig();
           });
       }
     }else {
       // fetch without hiker
-      addCardToBoard(gameConfig.selectedCard.dataset.cardId, gameConfig.turn.closestCardId, gameConfig.turn.direction)
+      addCardToBoard(gameConfig.getSelectedCard().dataset.cardId, gameConfig.getTurn().closestCardId, gameConfig.getTurn().direction)
         .then(() =>{
           gameConfig.resetPlayerConfig();
         });

@@ -6,7 +6,6 @@ import {renderLeaderboard} from "./renderers/leaderboard-renderer.js";
 import {renderBoard} from "./renderers/gameboard-renderer.js";
 import {renderHand} from "./renderers/hand-renderer.js";
 import {remainingHikers} from "./renderers/hiker-renderer.js";
-import {highlightValidTiles} from "./renderers/legal-move-renderer.js";
 
 //logic
 import {handleTileClick, endTurnButton} from "./logic/board-logic.js";
@@ -61,7 +60,7 @@ function renderLoop() {
   const gameId = Number(storageHandler.getGameId());
   
   fetchGameDetails(gameId).then(data => {  // This is currently the only reliable solution I found, if someone has a better idea then feel free to change it.
-    if (data.finished) window.location.replace("end-screen.html");
+    if (data.finished) globalThis.location.replace("end-screen.html");
 
     renderLeaderboard(data.players);
     updateCurrentPlayer(data);
@@ -113,7 +112,10 @@ function gameLoop() {
       if (data.currentHiker === storageHandler.getHiker()) {
         $endTurnButton.disabled = false; // Enable the button when it's the player's turn
         $selectHikerButton.disabled = false;
-      } else setTimeout(gameLoop, 2000); // Check again after 2 second and will need to be put in different function dedicated to polling
+      } else {
+        const time = 2000;
+        setTimeout(gameLoop, time); // Check again after 2 second and will need to be put in different function dedicated to polling
+      }
     });
 }
 
@@ -121,5 +123,5 @@ init();
 
 // temp "working" leave button, needs a confirmation pop-up
 document.querySelector("#leave-button").addEventListener("click", function() {
-  window.location.href = "lobby-listing.html";
+  globalThis.location.href = "lobby-listing.html";
 });

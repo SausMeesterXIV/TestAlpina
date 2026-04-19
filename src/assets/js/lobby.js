@@ -16,9 +16,10 @@ function checkGameStatus() {
     renderPlayers(game.players);
 
     if (game.players.length === game.numberOfPlayers) {
-      window.location.replace("game.html");
+      globalThis.location.replace("game.html");
     } else {
-      setTimeout(checkGameStatus, 2000);
+      const time = 2000;
+      setTimeout(checkGameStatus, time);
     }
   });
 }

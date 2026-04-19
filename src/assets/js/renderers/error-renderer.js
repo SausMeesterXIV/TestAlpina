@@ -13,10 +13,11 @@ function flashError(e, message) {
     $popup.classList.add("error-visible");
     
     clearTimeout(errorTimeout); // this ensures the error remains on screen as long as the user keeps making mistakes
+    const time = 2000; 
     errorTimeout = setTimeout(() => {
         $popup.classList.add("error-hidden");
         $popup.classList.remove("error-visible");
-    }, 2000);
+    }, time);
 }
 
 export {flashError};
