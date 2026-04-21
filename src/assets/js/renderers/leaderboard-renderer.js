@@ -1,4 +1,6 @@
-function renderLeaderboard(players, $target, showHikers = true) {
+function renderLeaderboard(players, showHikers = true) {
+    const $target = document.querySelector("tbody");
+    const $fragment = document.createDocumentFragment();
     const sortedPlayers = getSortedPlayers(players);
     sortedPlayers.forEach((player, idx) => {
         const $template = document.querySelector("#leaderboard-template");
@@ -11,12 +13,15 @@ function renderLeaderboard(players, $target, showHikers = true) {
         }
         $clone.querySelector(".leaderboard-points").textContent = player.score;
 
-        $target.appendChild($clone);
+        $fragment.appendChild($clone);
     });
+    $target.replaceChildren($fragment);
 }
 
 function getSortedPlayers(players) {
-    return players.sort((a, b) => b.points - a.points); // If the result is positive, it will move b in front of a. Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+    return players.sort((a, b) => b.score - a.score); // If the result is positive, it will move b in front of a. Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
 }
 
-export { renderLeaderboard };
+export {
+  renderLeaderboard
+};

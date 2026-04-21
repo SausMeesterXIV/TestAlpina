@@ -27,8 +27,8 @@
         </nav>
         <main>
             <section id="status-panel">
-                <article id="leaderboard">
-                    <h2>Leaderboard</h2>
+                <h2>Leaderboard</h2>
+                <div id="leaderboard">
                     <table>
                         <thead>
                             <tr>
@@ -42,20 +42,31 @@
                             <!--The leaderboard data comes here-->
                         </tbody>
                     </table>
-                </article>
-                <aside id="turn-info">
-                    <h2 id="turn-name">Rhune's turn</h2> <!--Must change dynamically eventually, change this later-->
+                </div>
+                <aside id="turn-info" aria-label="turn-heading">
+                    <h2 id="turn-name" aria-label="turn-heading">Rhune's turn</h2> <!--Must change dynamically eventually, change this later-->
                     <progress id="progress" value="0" max="60"></progress> <!--This indicates how much time a player has left. Extra info: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/progress-->
                 </aside>
+                <aside id="spectator-area" class="hidden" aria-label="spectator-title">
+                    <h2 aria-label="spectator-title">Spectator Mode</h2>
+                    <div class="spectator-switcher">
+                        <button id="prev-player" class="nav-arrow">&lt;</button> <!--&lt; and &gt; are < and > respectively-->
+                        <div class="viewing-info">
+                            <p class="label">Watching</p>
+                            <p id="current-viewing-name">Loading...</p>
+                        </div>
+                        <button id="next-player" class="nav-arrow">&gt;</button>
+                    </div>
+                </aside>
             </section>
-             <section id="game-board"> <!--divs are temporary for styling purposes, remove it later-->
-             </section>
-            <section id="player-controls">
+             <div id="game-board"> <!--divs are temporary for styling purposes, remove it later-->
+             </div>
+            <div id="player-controls">
                 <button id="select-hiker-button" disabled>Select hiker <span class="hikers-left"></span></button>
                 <button id="end-turn-button" disabled>End Turn</button>
-            </section>
+            </div>
 
-            <section id="bottom-area">
+            <div id="bottom-area">
                 <div id="hand">
                     <!--here the cards which the user possesses will be added-->
                 </div>
@@ -67,7 +78,7 @@
                         <!--voorlopig gwn als image, deze wel nog veranderen naar een BG-image -->
                     </article>
                 </template>
-            </section>
+            </div>
             <template id="leaderboard-template">
                 <tr>
                     <td class="leaderboard-pos">#</td> <!--Pos.-->
@@ -80,10 +91,13 @@
         <footer>
             <button id="leave-button">Leave game</button>
         </footer>
-    </body>
+        <div id="error-popup" class="error-hidden">
+            <p id="error-message"></p>
+        </div>
 
-    <template id="tile-template">
-        <div class="tile" data-index="0" data-card="1"></div>
-    </template>
+        <template id="tile-template">
+            <div class="tile" data-index="0" data-card="1"></div>
+        </template>
+    </body>
 </html>
 

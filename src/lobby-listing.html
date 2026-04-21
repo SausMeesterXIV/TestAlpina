@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/screen.css">
     <link rel="stylesheet" href="assets/css/lobby-listing.css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
     <script src="./assets/js/lobby-listing.js" type="module"></script>
 </head>
 <body>
@@ -25,26 +25,35 @@
         </ul>
     </nav>
 
-    <article>
-        <section id="active-expeditions">
-            <h1>active expeditions</h1>
-            <p  class="comment">join an existing party or scout a new trail</p>
+    <main>
+        <h1>Join Expedition</h1>
+        <div>
+            <section id="active-expeditions">
+                <h2>active expeditions</h2>
+                <p  class="comment">join an existing party or scout a new trail</p>
 
-            <div id="expeditions">
-                <!--Game list comes here-->
-            </div>
-            <input type="button" value="new expedition" id="new-expedition-button">
-        </section>
+                <div id="lobby-tabs">
+                    <button id="tab-unstarted" class="tab active" data-tab="unstarted">Waiting Lobby</button>
+                    <button id="tab-started" class="tab" data-tab="started">Live Expeditions</button>
+                </div>
 
-        <section id="private-expedition">
-            <h1>join private game</h1>
-            <label for="secret-code-input">secret code:</label>
-            <input type="text" name="secret-code" id="secret-code-input" placeholder="984327429">
+                <div id="expeditions">
+                    <!--Game list comes here-->
+                </div>
+                <button type="button" id="new-expedition-button">new expedition</button>
+            </section>
 
-            <input type="button" value="join game" id="join-game">
-        </section>
+            <section id="private-expedition">
+                <h2>join private game</h2>
+                <form>
+                    <label for="secret-code-input">secret code:</label>
+                    <input type="text" name="secret-code" id="secret-code-input" placeholder="984327429">
 
-    </article>
+                    <button type="submit" id="join-game">join game</button>
+                </form>
+            </section>
+        </div>
+    </main>
     <template id="expedition-template">
         <div class="expedition">
             <div class="expedition-info">
@@ -52,7 +61,7 @@
                 <h2>Expedition name</h2>
                 <p>x/x players</p>
             </div>
-            
+
             <input type="button" value="spectate" data-id="1">
             <input type="button" value="join" data-id="1">
         </div>

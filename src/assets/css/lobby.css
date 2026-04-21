@@ -6,7 +6,7 @@ body {
     margin: 0;
 }
 
-article {
+main {
     display: flex;
     justify-content: center;
 }
@@ -27,11 +27,11 @@ section {
     border-left: 0.25rem solid #000;
 }
 
-#players-list h1 {
+#players-list h2 {
     margin-bottom: 1rem;
 }
 
-#game-setup h1 {
+#game-setup h2 {
     display: inline-block;
     border-bottom: 0.15rem solid #000;
     margin-bottom: 0.5rem;

@@ -11,4 +11,4 @@ function getAPIUrl() {
   return DEPLOYEDSERVER;
 }
 
-export { getAPIUrl, GROUPTOKEN, ERRORHANDLERSELECTOR };
+export { GROUPTOKEN, ERRORHANDLERSELECTOR,getAPIUrl};

@@ -66,7 +66,6 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-top: 1rem;
     width: 90%;
     margin: auto;
 }
@@ -137,7 +136,12 @@ footer {
     margin: 0.2rem;
     border: 0.2rem black double;
     height: 10rem;
-    width: 8rem
+    width: 8rem;
+    transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out; /* Smoothly animates the movement */
+}
+
+#hand .card {
+    cursor: pointer;
 }
 
 .hiker-image{
@@ -152,7 +156,10 @@ footer {
 }
 
 .hidden{
-    display: none;
+    display: none !important;
+    /* Due to the weight system, it ignored this class in the case of #player-controls (id = 100 "weight", class = 10, element selector = 1). Adding !important tells the browser to ignore this weight system.
+    Without !important it would apply display:flex; instead of display:none;
+    More info on !important: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/important*/
 }
 
 .hikers-left{
@@ -162,4 +169,91 @@ footer {
 
     padding: 0.3rem;
     background-color: #888888;
+}
+
+#hand:not(.spectator-view) .card:hover, 
+#hand:not(.spectator-view) .card.selected { /* #hand:not(.spectator-view) = "If the id 'hand' doesn't have the class 'spectator-view' assigned to it" */
+    transform: translateY(-1.5rem); /* Moves the card up by 1.5rem */
+    z-index: 10; /* Ensures the hovered/selected card overlaps other items */
+}
+
+#hand.spectator-view .card {
+    cursor: default;
+}
+
+#spectator-area {
+    background-color: var(--panel-bg);
+    border-radius: 1rem;
+    padding: 1rem;
+    text-align: center;
+}
+
+.spectator-switcher {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.nav-arrow {
+    background: white;
+    border: 0.1rem solid #ccc;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-arrow:hover {
+    background: #e0e0e0;
+}
+
+.viewing-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.viewing-info .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #888;
+}
+
+#current-viewing-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+#error-popup {
+  position: absolute;
+  pointer-events: none; /* Let clicks pass through it */
+  z-index: 1000;
+  
+  background-color: red;
+  color: #ffffff;
+  font-weight: bold;
+  
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  font-size: 0.85rem;
+}
+
+.error-hidden {
+  visibility: hidden; /* Why visibility instead of display:none;? --> https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/visibility#try_it (text underneath the "try it" block)
+  Since it isn't removed from the document layout, we can add animations in the future. */ 
+}
+
+.error-visible {
+  visibility: visible;
+}
+
+.glow{
+    background-color: green;
 }
