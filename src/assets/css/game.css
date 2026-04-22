@@ -231,7 +231,7 @@ progress {
   pointer-events: none; /* Let clicks pass through it */
   z-index: 1000;
   
-  background-color: red;
+  background-color: #b00020;
   color: #ffffff;
   font-weight: bold;
   
