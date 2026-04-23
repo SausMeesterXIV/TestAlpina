@@ -1,0 +1,13 @@
+ul {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  align-content: center;
+}
+
+h1 {
+  font-size: 4rem;
+  justify-self: center;
+  margin-bottom: 4rem;
+  padding-top: 2rem;
+}

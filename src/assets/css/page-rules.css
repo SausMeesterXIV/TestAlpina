@@ -1,0 +1,23 @@
+h1 { font-size: 2rem; margin-bottom: 0.75rem; }
+h2 { font-size: 1.5rem; margin-bottom: 0.75rem; margin-top: 1rem; }
+p { font-size: 1rem; margin-bottom: 0.4rem; }
+ul { font-size: 1.25rem; margin-bottom: 0.75rem; list-style: none; padding: 0; }
+
+.intro-spel-start { font-size: 1rem; margin-bottom: 0.25rem; }
+.intro-spel-start::before { content: "• "; }
+.voorwaarden { font-size: 1rem; margin-bottom: 0; margin-left: 1.5rem; }
+.voorwaarden::before { content: "○ "; }
+
+body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  width: 100%;
+  max-width: 45rem;
+  padding: 2rem;
+  box-sizing: border-box;
+}

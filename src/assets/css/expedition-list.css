@@ -1,0 +1,24 @@
+#active-expeditions{
+  width: 60%;
+  margin-right: 2rem;
+}
+
+#expeditions {
+  height: 30rem;
+  overflow-y: scroll;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding-right: 1rem;
+}
+
+.expedition{
+  display: flex;
+  background: lightgrey;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.expedition div{
+  width: 70%;
+}

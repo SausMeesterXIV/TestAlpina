@@ -1,0 +1,10 @@
+:root {
+  --panel-bg: #f3f3f3;
+  --bg-color: #f3f3f3;
+  --primary-bg-color: white;
+  --primary-nav-bg-color: black;
+  --primary-nav-text-color: white;
+  --primary-button-bg-color: black;
+  --primary-button-text-color: white;
+  --comment-text-color: grey;
+}

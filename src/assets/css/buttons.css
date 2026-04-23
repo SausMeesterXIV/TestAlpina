@@ -1,0 +1,131 @@
+input[type=button]{
+  background-color: var(--primary-button-bg-color);
+  color: var(--primary-button-text-color);
+  border-radius: 1rem;
+  font-size: 2rem;
+}
+
+#new-expedition-button, #join-game{
+  background: black;
+  color: white;
+  display: block;
+  margin: auto;
+}
+
+#join-game{
+  margin-top: 1rem;
+  width: 100%;
+  height: 4rem;
+}
+
+#new-expedition-button{
+  width: 50%;
+  height: 4rem;
+}
+
+input[type="submit"]{
+  font-size: 4rem;
+  background-color: black;
+  color: white;
+  padding: 2rem 2rem;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+input[type="submit"]:hover{
+  cursor: pointer;
+  background-color: #333;
+}
+
+input[type="submit"]:active{
+  background-color: #111;
+  transform: scale(0.97);
+}
+
+#leave-button {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+#select-hiker-button,
+#end-turn-button {
+  width: 5rem;
+  height: 5rem;
+  border: none;
+  border-radius: 1rem;
+  background: #f2f2f2;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.error-return-button {
+  background-color: black;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  text-decoration: none;
+  margin-top: 2rem;
+}
+
+.exit-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: #000;
+}
+
+.back-to-rules,
+#open-scoring-btn {
+  padding: 0.5rem 1rem;
+  background-color: #eee;
+  text-decoration: none;
+  color: #000;
+  border-radius: 0.25rem;
+  border: 0.0625rem solid #ccc;
+  font-size: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+#return-to-main-page, #rematch {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 24rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  font-weight: bolder;
+  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+  align-items: center;
+  margin: auto;;
+}
+
+#return-to-main-page:hover, #rematch:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+.exitButton {
+  position: absolute;
+  top: 3rem;
+  right: 5rem;
+  background-image: url(../media/exitButton.svg);
+  background-repeat: no-repeat;
+  background-size: 3rem;
+  width: 3rem;
+  height: 3rem;
+}

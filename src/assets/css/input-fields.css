@@ -1,0 +1,130 @@
+.expedition input{
+  height: 2.5rem;
+  width: 7rem;
+  font-size: 1.5rem;
+  border-radius: 0.75rem;
+  align-self: center;
+  margin-left: 1rem;
+}
+
+#private-expedition label{
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+#private-expedition input[type="text"]{
+  color: black;
+  background-color: lightgrey;
+  border: 0.1rem grey solid;
+  border-radius: 0.75rem;
+  width: 100%;
+  height: 2rem;
+  padding-left: 0.5rem;
+}
+
+label[for="nickname-input"] {
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+#nickname-input {
+  width: 100%;
+  max-width: 22rem;
+  padding: 1rem;
+  border: none;
+  background-color: var(--bg-color);
+  border-radius: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+.color-label {
+  background-color: var(--bg-color);
+  padding: 2rem 0.5rem;
+  text-align: center;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+input[type="radio"]:checked + .color-label {
+  background-color: #000;
+  color: #fff;
+}
+
+div label{
+  font-size: 3rem;
+}
+
+#name input{
+  font-size: 2rem;
+  padding-left: 1rem;
+  padding-right: 2rem;
+  width: 30%;
+}
+
+#name input::placeholder{
+  font-size: 2rem;
+}
+
+#players p {
+  margin-right: 10rem;
+  padding-right: 10rem;
+}
+
+#players label{
+  display: inline-block;
+  padding: 1.15rem 1.15rem;
+  margin-right: 1rem;
+  border: 0.1rem solid #ccc;
+  border-radius: 0.8rem;
+  cursor: pointer;
+}
+
+div input[type="radio"]{
+  display: none;
+}
+
+#players label:hover{
+  background-color: black;
+  color: white;
+}
+
+#time label:hover{
+  background-color: black;
+  color: white;
+}
+
+#players input[type="radio"]:checked + label {
+  background-color: black;
+  color: white;
+}
+
+#time label{
+  display: inline-block;
+  padding: 1.15rem 1.15rem;
+  margin-right: 1rem;
+  border: 0.1rem solid #ccc;
+  border-radius: 0.8rem;
+  cursor: pointer;
+}
+
+#time input[type="radio"]:checked + label {
+  background-color: black;
+  color: white;
+}
+
+div label:hover{
+  background-color: white;
+  color: black;
+}
+
+input[type="checkbox"]{
+  margin-left: 10rem;
+  width:5rem ;
+  height:5rem;
+  cursor: pointer;
+}

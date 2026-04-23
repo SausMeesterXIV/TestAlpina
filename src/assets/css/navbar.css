@@ -1,0 +1,46 @@
+nav{
+  background: var(--primary-nav-bg-color);
+  color: var(--primary-nav-text-color);
+  margin-bottom: 1rem;
+}
+
+#navbar{
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0;
+  margin: 0;
+}
+
+ul li{
+  font-size: 1.25rem;
+  padding: 0.5rem;
+}
+
+li a{
+  display: block;
+  text-decoration: none;
+  color: white;
+  padding: 0.5rem;
+}
+
+#alpina {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3rem;
+}
+
+#right-side{
+  margin-left: auto;
+  display: flex;
+}
+
+#rules{
+  margin-right: auto;
+}
+
+li a:hover{
+  background-color: white;
+  color: black;
+}

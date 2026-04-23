@@ -1,0 +1,12 @@
+.comment {
+  color: var(--comment-text-color);
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 0.25rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
