@@ -47,26 +47,26 @@ function handleHikerPlacePlacement(cardId){
   if (!gameConfig.getHasPlacedHiker()){
     gameConfig.setHikerPlacement(cardId);
     gameConfig.changePlacedHikerState();
-    // TODO: make it so visualy there is placed a card.
+    // future note: show that the player placed a card there
   }
 }
 
 function placeCard(move, e){
   getClosestCard(move.tile).then(closest => {
-    if (closest) {
-      if (hasHikerOnCardInHand()){
-        // hiker is placed on card in hand.
-        gameConfig.changePlacedHikerState();
-        createTurn(gameConfig.getSelectedCard().dataset.cardId, closest.card, closest.direction);
-      } else if(gameConfig.getSelectedCard() !== null){
-        // hiker is placed on card on board so needs card id of other card.
-        createTurnWithHiker(gameConfig.getSelectedCard().dataset.cardId, closest.card, closest.direction, config.hikerPlacement); // gameConfig.getHikerPlacement() causes a bug, config.hikerPlacement (which doesn't exist) works completely as intended
-      }else {
-        // no hiker selected so only card needed.
-        createTurn(gameConfig.getSelectedCard().dataset.cardId, closest.card, closest.direction);
-      }
+    if (!closest) {
+       flashError(e, "Cards must be placed next to existing ones."); 
+       return;
+    }
+    if (hasHikerOnCardInHand()){
+      // hiker is placed on card in hand.
+      gameConfig.changePlacedHikerState();
+      createTurn(gameConfig.getSelectedCard().dataset.cardId, closest.card, closest.direction);
+    } else if(gameConfig.getSelectedCard()){
+      // hiker is placed on card on board so needs card id of other card.
+      createTurnWithHiker(gameConfig.getSelectedCard().dataset.cardId, closest.card, closest.direction, config.hikerPlacement); // gameConfig.getHikerPlacement() causes a bug, config.hikerPlacement (which doesn't exist) works completely as intended
     } else {
-      flashError(e, "Cards must be placed next to existing ones.");
+      // no hiker selected so only card needed.
+      createTurn(gameConfig.getSelectedCard().dataset.cardId, closest.card, closest.direction);
     }
   });
 }
@@ -90,18 +90,15 @@ function createTurnWithHiker(cardId, closestCardId, direction, hiker){
 
 function safe(row,column,currentBoard, size){
   const inBounds = row >= 0 && column >= 0 && row < size && column < size;
+  if (!inBounds) return null;
 
-  if (currentBoard?.[row]?.[column] === undefined) {
-    return null;
-  }else{
-    const hasCard = Number(currentBoard[row][column].card) === 0;
+  const cell = currentBoard?.[row]?.[column]; // ?.[row]?.[column] checks first if [row] isn't null or undefined, else it returns undefined immediately. Idem for [column]
+  if (!cell) return null;
+  
+  const card = Number(cell.card);
+  if (card === 0) return null;
 
-    if(inBounds && !hasCard){
-      const card = Number(currentBoard[row][column].card);
-      // returns null when there is no card
-      return card !== 0 ? card : null;
-    }
-  }
+  return card;
 }
 
 function getClosestCard(tile){
@@ -135,13 +132,13 @@ function getClosestCard(tile){
 function endTurnButton(){
   if (gameConfig.getTurn() !== null){
     if (gameConfig.getHasPlacedHiker()){
-      if(gameConfig.getTurn().hiker !== undefined){
-        addCardToBoardWithHiker(gameConfig.getSelectedCard().dataset.cardId, gameConfig.getTurn().closestCardId, gameConfig.getTurn().direction, gameConfig.getTurn().hiker).then(() =>{
+      if(gameConfig.getTurn().hiker === undefined){
+        addCardToBoardWithHiker(gameConfig.getSelectedCard().dataset.cardId, gameConfig.getTurn().closestCardId, gameConfig.getTurn().direction).then(() =>{
           gameConfig.resetPlayerConfig();
         });
       }else {
         // fetch with hiker
-        addCardToBoardWithHiker(gameConfig.getSelectedCard().dataset.cardId, gameConfig.getTurn().closestCardId, gameConfig.getTurn().direction)
+        addCardToBoardWithHiker(gameConfig.getSelectedCard().dataset.cardId, gameConfig.getTurn().closestCardId, gameConfig.getTurn().direction, gameConfig.getTurn().hiker)
           .then(() =>{
             gameConfig.resetPlayerConfig();
           });

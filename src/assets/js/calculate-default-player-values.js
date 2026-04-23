@@ -14,8 +14,8 @@ function defaultPlayerColor(gameId) {
 
   return fetchPlayerInfo(gameId)
     .then(players => {
-      const usedHikers = players.map(player => player.hiker);
-      return hikerColors.filter(color => !usedHikers.includes(color));
+      const usedHikers = new Set(players.map(p => p.hiker));
+      return hikerColors.filter(color => !usedHikers.has(color)); // .has (Set) is more efficient than a .includes (Array) for bigger arrays
     })
     .then(hikers => {
       // selects the first hiker that is available.

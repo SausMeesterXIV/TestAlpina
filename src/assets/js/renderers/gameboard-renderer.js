@@ -31,30 +31,42 @@ function renderBoard() {
   const $board = document.createDocumentFragment();
   const gameId = Number(storageHandler.getGameId());
 
-  fetchAllCards().then(res =>{
-    fetchGameBoard(gameId).then((res2) => {
-      // indexing for tile id
-      let index = 0;
+  fetchAllCards().then(res => {
+      return fetchGameBoard(gameId).then(boardObject => ({ res, boardObject }));
+    })
+    .then(({ res, boardObject }) => {
+      populateBoard(boardObject.board, res.cards, $board);
 
-      // loops trough board row.
-      res2.board.forEach((row) =>{
-        // loops true each card in the row.
-        row.forEach((tile) => {
-          const cardId = tile.card;
-          const $emptyTile = document.querySelector('#tile-template').content.cloneNode(true);
-          const $tile = $emptyTile.querySelector('.tile');
+      document.querySelector("#game-board").replaceChildren($board);
 
-          createTile(tile, res.cards, cardId, $tile, index);
-          $board.appendChild($emptyTile);
+      highlightValidTiles(boardObject.board);
+    });
+}
 
-          index++;
-        });
-      });
-      document.querySelector("#game-board").replaceChildren($board);// Replace children prevents flickering
-      highlightValidTiles(res2.board); // highlights all the tiles where you can place cards.
+function populateBoard(board, cards, $board) {
+  let index = 0;
+
+  board.forEach(row => {
+    row.forEach(tile => {
+      const $emptyTile = createTileElement(tile, cards, index);
+      $board.appendChild($emptyTile);
+      index++;
     });
   });
-} //the playing field
+}
+
+function createTileElement(tile, cards, index) {
+  const cardId = tile.card;
+  const $emptyTile = document
+    .querySelector('#tile-template')
+    .content.cloneNode(true);
+
+  const $tile = $emptyTile.querySelector('.tile');
+
+  createTile(tile, cards, cardId, $tile, index);
+
+  return $emptyTile;
+}
 
 
 export {
