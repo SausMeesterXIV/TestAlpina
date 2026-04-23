@@ -1,0 +1,17 @@
+div{
+  display: flex;
+  gap: 0.2rem;
+  width: 75%;
+  margin: 1rem 4rem 3rem 6rem;
+}
+
+h1{
+  font-size: 4rem;
+  margin-left: 4rem;
+  margin-top: 2rem;
+}
+
+h2{
+  font-size: 3rem;
+  width: 25%;
+}

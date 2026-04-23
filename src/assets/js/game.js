@@ -1,72 +1,127 @@
-import {fetchAllCards} from "./api/card-info.js";
-import {fetchFromServer} from "./data-connector/api-communication-abstractor.js";
+import {fetchGameDetails} from "./api/game-info.js";
+import * as storageHandler from "./storage/storage-utils.js";
 
-const arrayOfCards =
-  [{id: 50, animal: "chamois", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 1, selector: "HI", filter: "Pa"}},
-  {id: 49, animal: "frog", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 2, selector: "AN", filter: "Or"}},
-  {id: 48, animal: "chamois", landscape: "forest", victoryPointCondition: {basescore: 1, score: 2, selector: "AC", filter: "Ne"}},
-  {id: 1, animal: "chamois", landscape: "lake", victoryPointCondition: {basescore: 2, score: 1, selector: "AF", filter: "DN"}},
-  {id: 22, animal: "nutcracker", landscape: "mountain", victoryPointCondition: {basescore: 0, score: 2, selector: "LM", filter: "DE"}},
-  {id: 12, animal: "frog", landscape: "mountain", victoryPointCondition: {basescore: 1, score: 2, selector: "HI", filter: "DW"}}]
-//for testing purposes
+//renderers
+import {renderLeaderboard} from "./renderers/leaderboard-renderer.js";
+import {renderBoard} from "./renderers/gameboard-renderer.js";
+import {renderHand} from "./renderers/hand-renderer.js";
+import {remainingHikers} from "./renderers/hiker-renderer.js";
 
-let selectedCard = null;
+//logic
+import {handleTileClick, endTurnButton} from "./logic/board-logic.js";
+import * as gameLogic from "./logic/game-logic.js";
+import * as specLogic from "./logic/spectator-logic.js";
+
+let lastBoardState = null; // makes sure the browser knows whether the board the player sees is the same as the one saved in the server
 
 function init() {
+  renderBoard();
+
+  if (!specLogic.isSpectator()) renderHand();
+
+  if (specLogic.isSpectator()) specLogic.initSpectatorMode();
+
+  addEventListeners();
+
+  gameLogic.setTimeProgressBar(); // sets the initial and max values of the progress bar
+  tick(); // updates the progress bar every second
+
+  gameLoop();
+  renderLoop();
+
+  remainingHikers();
+  gameLogic.placeHikerOnCard();
+}
+
+
+
+function addEventListeners() {
+   // for selecting a tile
+  const $gameBoard = document.querySelector("#game-board");
+  $gameBoard.addEventListener('click', handleTileClick, true);
+
   // for selecting a card
-  const $hand = document.querySelector("#hand")
-  $hand.addEventListener('click', selectCard, true);
+  const $hand = document.querySelector("#hand");
+  $hand.addEventListener('click', gameLogic.selectCard, true);
 
-  // for selecting a tile
-  renderHand(arrayOfCards);
+  //hiker
+  document.querySelector("#select-hiker-button").addEventListener("click", gameLogic.selectHiker);
 
-  let $gameBoard = document.querySelector("#game-board");
-  $gameBoard.addEventListener('click', foo, true)
-}
+  //endTurnButton
+  document.querySelector("#end-turn-button").addEventListener("click", endTurn);
 
-function renderHand(cardArray) {
-  let $fragment = document.createDocumentFragment();
-  const $template = document.querySelector("#card-template");
-
-  cardArray.forEach(card => {
-    const $clone = $template.content.cloneNode(true);
-    $clone.querySelector("article").dataset.cardId = card.id;
-    $clone.querySelector("img").src = `images/${card.animal}_${card.landscape}.png`;
-    $clone.querySelector("p").textContent = `${card.victoryPointCondition.basescore} + ${card.victoryPointCondition.score} / ${card.victoryPointCondition.selector} - ${card.victoryPointCondition.filter}`;
-    $fragment.appendChild($clone);
-  })
-
-  document.querySelector("#hand").appendChild($fragment);
-}
-
-function selectCard(e){
-  //TODO:change the css + add the css.
-  selectedCard = e.target.closest('article');
-}
-
-function foo(e){
-  const selectedTile = e.target.closest("div");
-  const tileId = selectedTile.dataset.id;
-  const cardId = selectedTile.dataset.cardId;
-
-  if (selectedCard !== null){
-    if (Number(cardId) !== 0) {
-      const move = {
-        tileId: tileId,
-        tile: selectedTile,
-        cardId: cardId
-      };
-      placeCard(move);
-    }
+  if (specLogic.isSpectator()) {
+    document.querySelector("#prev-player").addEventListener("click", () => specLogic.switchPlayer(-1)); // -1 goes back
+    document.querySelector("#next-player").addEventListener("click", () => specLogic.switchPlayer(1)); // +1 goes forward
   }
 }
 
-function placeCard(move){
-  console.log("move");
+function renderLoop() {
+  const gameId = Number(storageHandler.getGameId());
+  
+  fetchGameDetails(gameId).then(data => {  // This is currently the only reliable solution I found, if someone has a better idea then feel free to change it.
+    if (data.finished) globalThis.location.replace("end-screen.html");
+
+    renderLeaderboard(data.players);
+    updateCurrentPlayer(data);
+
+    if (specLogic.isSpectator()) {
+      specLogic.updatePlayers(data.players);
+    }
+   
+    const currentBoard = JSON.stringify(data.board); // By turning the array into a string, the values can be compared. 
+    if (currentBoard !== lastBoardState) { // If it would remain an array, this line would look at whether currentBoard and lastBoardState don't point to the same object in memory, which would always be true.
+      lastBoardState = currentBoard;
+      renderBoard();
+    }
+    setTimeout(renderLoop, 1000);
+  });
 }
 
+function updateCurrentPlayer(data) {
+  const currentHiker = data.currentHiker;  // gets the current hiker color.
+  const currentPlayer = data.players.find(player => player.hiker === currentHiker); // finds the hiker which has the same color as current hiker
 
+  if (currentPlayer) document.querySelector("#turn-name").textContent = `${currentPlayer.name}'s turn`; // the if statement is to make sure it only changes if .find() found a result
+}
 
+function tick() {
+  setInterval(gameLogic.updateProgressBar, 1000);
+  //more can be added
+}
 
+function endTurn() {
+  const $endTurnButton = document.querySelector("#end-turn-button");
+  const $selectHikerButton = document.querySelector("#select-hiker-button");
+
+  $endTurnButton.disabled = true; // Disable the button to prevent multiple clicks
+  $selectHikerButton.disabled = true;
+  document.querySelector("progress").value = 0; // Reset the progress bar
+
+  endTurnButton();
+  renderHand();
+  gameLoop();
+} //game-logic up for discussion
+
+function gameLoop() {
+  if (specLogic.isSpectator()) return; // stops the function from being executed in case the user is a spectator
+  const $endTurnButton = document.querySelector("#end-turn-button");
+  const $selectHikerButton = document.querySelector("#select-hiker-button");
+  fetchGameDetails(Number(storageHandler.getGameId()))
+    .then(data => {
+      if (data.currentHiker === storageHandler.getHiker()) {
+        $endTurnButton.disabled = false; // Enable the button when it's the player's turn
+        $selectHikerButton.disabled = false;
+      } else {
+        const time = 2000;
+        setTimeout(gameLoop, time); // Check again after 2 second and will need to be put in different function dedicated to polling
+      }
+    });
+}
 
 init();
+
+// temp "working" leave button, needs a confirmation pop-up
+document.querySelector("#leave-button").addEventListener("click", function() {
+  globalThis.location.href = "lobby-listing.html";
+});

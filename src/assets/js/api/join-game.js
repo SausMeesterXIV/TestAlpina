@@ -8,12 +8,12 @@ function joinGame(gameId){
     })
     .then(name => defaultPlayerColor(gameId)
       .then(color => {
-        const url = `/games/${gameId}/hikers/${color}`
+        const url = `/games/${gameId}/hikers/${color}`;
         return {name, url};
     }))
     .then(data =>{
       const url = data.url;
-      return fetchFromServer(url,"POST", { playerName: data.name })
+      return fetchFromServer(url,"POST", { playerName: data.name });
     });
 }
 

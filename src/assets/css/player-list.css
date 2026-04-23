@@ -1,0 +1,11 @@
+#player-names h2 {
+  background-color: var(--bg-color);
+  margin-bottom: 1rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 1rem;
+  border-left: 0.25rem solid #000;
+}
+
+#players-list h1 {
+  margin-bottom: 1rem;
+}

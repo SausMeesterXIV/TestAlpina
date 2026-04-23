@@ -1,0 +1,18 @@
+.card-image {
+  height: 7rem;
+  width: 7rem;
+  padding-left: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.win-conditions {
+  justify-self: center;
+  padding-top: 0.3rem;
+}
+
+.card {
+  margin: 0.2rem;
+  border: 0.2rem black double;
+  height: 10rem;
+  width: 8rem
+}

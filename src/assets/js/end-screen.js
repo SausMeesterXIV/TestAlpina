@@ -1,36 +1,30 @@
 import { fetchGameDetails } from "./api/game-info.js";
-import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
+import { renderLeaderboard } from "./renderers/leaderboard-renderer.js";
+import * as storageHandler from "./storage/storage-utils.js";
 
 function init() {
-    setBackground();
-}
-
-function getPlayerName() {
-    return loadFromStorage("playerName");
-}
-
-function getGameId() {
-    return Number(loadFromStorage("gameId")); //Makes sure the gameId is returned as an int and not a String.
+    fetchGameDetails(Number(storageHandler.getGameId())).then(data => {
+        setBackground(data.players);
+        renderLeaderboard(data.players, false);
+    });
 }
 
 function calcBestPlayer(players) {
     return players.reduce((currentBest, player) => { // iterates over the array until only the player with the best score remains
-        if (player.score > currentBest.score) {
+        if (player.score >= currentBest.score) {
             return player;
         }
         return currentBest;
-    })
-    // TODO: Edge-case: if 2 players have the same amount of points, the last one in turn-order wins.
+    });
 }
 
 function hasMostPoints(players) {
-    return getPlayerName() === calcBestPlayer(players).name;
+    return storageHandler.getHiker() === calcBestPlayer(players).hiker;
 }
 
-function setBackground() {
+function setBackground(players) {
     const $body = document.querySelector("body");
-    fetchGameDetails(getGameId())
-        .then(data => hasMostPoints(data.players) ? $body.classList.add("victory") : $body.classList.add("defeat")); // typical if-else structure, but simplified notation
+    hasMostPoints(players) ? $body.classList.add("victory") : $body.classList.add("defeat"); // typical if-else structure, but simplified notation
 }
 
 init();

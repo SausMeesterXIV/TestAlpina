@@ -5,9 +5,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Alpina | Game Session</title>
 
-        <link rel="stylesheet" href="assets/css/reset.css">
-        <link rel="stylesheet" href="assets/css/screen.css">
-        <link rel="stylesheet" href="assets/css/game.css">
+      <link rel="stylesheet" href="assets/css/reset.css">
+      <link rel="stylesheet" href="assets/css/variables.css">
+      <link rel="stylesheet" href="assets/css/typography.css">
+      <link rel="stylesheet" href="assets/css/navbar.css">
+      <link rel="stylesheet" href="assets/css/buttons.css">
+      <link rel="stylesheet" href="assets/css/cards.css">
+      <link rel="stylesheet" href="assets/css/tables.css">
+      <link rel="stylesheet" href="assets/css/player-list.css">
+      <link rel="stylesheet" href="assets/css/pop-up.css">
+      <link rel="stylesheet" href="assets/css/page-game.css">
+
 
         <script src="assets/js/game.js" type="module"></script>
 
@@ -18,16 +26,17 @@
     <body>
         <nav>
             <ul id="navbar">
-                <li><a href="#">back</a></li>
                 <li id="alpina">ALPINA</li>
-                <li><a href="#">rules</a></li>
-                <li><a href="#" id="settings">settings</a></li>
+                <li id="right-side">
+                    <a href="rules.html" target="_blank">Rules</a>
+                    <a href="#">Sound</a>
+                </li> 
             </ul>
         </nav>
         <main>
             <section id="status-panel">
-                <article id="leaderboard">
-                    <h2>Leaderboard</h2>
+                <h2>Leaderboard</h2>
+                <div id="leaderboard">
                     <table>
                         <thead>
                             <tr>
@@ -38,35 +47,35 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr> <!--Example data, remove later-->
-                                <td>#1</td>
-                                <td>Tibo</td>
-                                <td>0</td>
-                                <td>50</td>
-                            </tr>
-                            <tr> <!--Example data, remove later-->
-                                <td>#2</td>
-                                <td>Dayvid</td>
-                                <td>0</td>
-                                <td>50</td>
-                            </tr>
+                            <!--The leaderboard data comes here-->
                         </tbody>
                     </table>
-                </article>
-                <aside id="turn-info">
-                    <h2><em>Rhune's turn</em></h2>
-                    <progress value="" max=""></progress> <!--This indicates how much time a player has left. Extra info: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/progress-->
+                </div>
+                <aside id="turn-info" aria-label="turn-heading">
+                    <h2 id="turn-name" aria-label="turn-heading">Rhune's turn</h2> <!--Must change dynamically eventually, change this later-->
+                    <progress id="progress" value="0" max="60"></progress> <!--This indicates how much time a player has left. Extra info: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/progress-->
                 </aside>
+                <aside id="spectator-area" class="hidden" aria-label="spectator-title">
+                    <h2 aria-label="spectator-title">Spectator Mode</h2>
+                    <div class="spectator-switcher">
+                        <button id="prev-player" class="nav-arrow">&lt;</button> <!--&lt; and &gt; are < and > respectively-->
+                        <div class="viewing-info">
+                            <p class="label">Watching</p>
+                            <p id="current-viewing-name">Loading...</p>
+                        </div>
+                        <button id="next-player" class="nav-arrow">&gt;</button>
+                    </div>
+                </aside>
+                <button id="leave-button">Leave game</button>
             </section>
-             <section id="game-board"> <!--divs are temporary for styling purposes, remove it later-->
-                <div data-id="0" data-card-id="0"></div><div data-id="1" data-card-id="1"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
-             </section>
-            <section id="player-controls">
-                <button id="select-hiker-button">Select hiker</button>
-                <button id="end-turn-button">End Turn</button>
-            </section>
+             <div id="game-board"> <!--divs are temporary for styling purposes, remove it later-->
+             </div>
+            <div id="player-controls">
+                <button id="select-hiker-button" disabled>Select hiker <span class="hikers-left"></span></button>
+                <button id="end-turn-button" disabled>End Turn</button>
+            </div>
 
-            <section id="bottom-area">
+            <div id="bottom-area">
                 <div id="hand">
                     <!--here the cards which the user possesses will be added-->
                 </div>
@@ -74,12 +83,27 @@
                     <article class="card" data-card-id="#">
                         <img class="card-image" src="#" alt="tmp">
                         <p class="win-conditions">#</p>
+                        <img class = "hiker hidden" src="assets/media/Alpina_Hiker.png" alt="tmp">
+                        <!--voorlopig gwn als image, deze wel nog veranderen naar een BG-image -->
                     </article>
                 </template>
-            </section>
+            </div>
+            <template id="leaderboard-template">
+                <tr>
+                    <td class="leaderboard-pos">#</td> <!--Pos.-->
+                    <td class="leaderboard-name">Name</td>
+                    <td class="leaderboard-hikers">Amount of hikers</td>
+                    <td class="leaderboard-points">Points</td>
+                </tr>
+            </template>
         </main>
-        <footer>
-            <button id="leave-button">Leave game</button>
-        </footer>
+        <div id="error-popup" class="error-hidden">
+            <p id="error-message"></p>
+        </div>
+
+        <template id="tile-template">
+            <div class="tile" data-index="0" data-card="1"></div>
+        </template>
     </body>
 </html>
+

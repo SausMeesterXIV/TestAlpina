@@ -30,7 +30,7 @@ function createNewGame(e) {
         saveToStorage("playerToken", data.playerToken);
         saveToStorage("hiker", data.hiker);
 
-        window.location.replace("lobby.html");
+        globalThis.location.replace("lobby.html");
     });
 }
 

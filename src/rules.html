@@ -4,8 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alpina - Rules</title>
-    <link rel="stylesheet" href="assets/css/rules.css">
-    <script src="assets/js/rules.js" defer></script>
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/typography.css">
+  <link rel="stylesheet" href="assets/css/navbar.css">
+  <link rel="stylesheet" href="assets/css/buttons.css">
+  <link rel="stylesheet" href="assets/css/pop-up.css">
+  <link rel="stylesheet" href="assets/css/scoring-items.css">
+  <link rel="stylesheet" href="assets/css/page-rules.css">
+    <script src="assets/js/rules.js" type="module"></script>
 </head>
 <body>
    <main>
@@ -23,9 +30,9 @@
             <section>
                 <h2>Game setup</h2>
                 <ul>
-                    <li class="intro-spel-start">Each player receives 6 cards.</li>
-                    <li class="intro-spel-start">Number of Hikers: 2 players (8), 3 players (5), 4 players (4).</li>
-                    <li class="intro-spel-start">Grid: 5x5 with a 'Chamois' card in the center.</li>
+                    <li class="intro-game-start">Each player receives 6 cards.</li>
+                    <li class="intro-game-start">Number of Hikers: 2 players (8), 3 players (5), 4 players (4).</li>
+                    <li class="intro-game-start">Grid: 5x5 with a 'Chamois' card in the center.</li>
                 </ul>
             </section>
 
@@ -33,13 +40,13 @@
                 <h2>Turn overview</h2>
                 <p>Play a card (MANDATORY):</p>
                 <ul>
-                    <li class="voorwaarden">Place horizontally or vertically adjacent to an existing card.</li>
-                    <li class="voorwaarden">Must not form a 6th row or column.</li>
+                    <li class="conditions">Place horizontally or vertically adjacent to an existing card.</li>
+                    <li class="conditions">Must not form a 6th row or column.</li>
                 </ul>
                 <p>Place a Hiker (OPTIONAL):</p>
                 <ul>
-                    <li class="voorwaarden">Card must be empty.</li>
-                    <li class="voorwaarden">Adjacent to the card you just placed.</li>
+                    <li class="conditions">Card must be empty.</li>
+                    <li class="conditions">Adjacent to the card you just placed.</li>
                 </ul>
                 <p>Draw a card</p>
             </section>
@@ -48,6 +55,49 @@
                 <button id="open-scoring-btn">View Scoring Details</button>
             </div>
         </article>
+        <div id="scorebook" class="hidden">
+            <div class="scorebook-content">
+                <div class="scorebook-header">
+                    <h1>Scorebook</h1>
+                    <button id="close-scoring-btn" class="exit-button">✖</button>
+                </div>
+
+                <ul class="score-list">
+                    <li class="scoring">
+                        <img src="images/rules placeholder.png" alt="scoring1">
+                        <p>scoring1</p>
+                    </li>
+                    <li class="scoring">
+                        <img src="images/rules placeholder.png" alt="scoring2">
+                        <p>scoring2</p>
+                    </li>
+                    <li class="scoring">
+                        <img src="images/rules placeholder.png" alt="scoring3">
+                        <p>scoring3</p>
+                    </li>
+                    <li class="scoring">
+                        <img src="images/rules placeholder.png" alt="scoring4">
+                        <p>scoring4</p>
+                    </li>
+                    <li class="scoring">
+                        <img src="images/rules placeholder.png" alt="scoring5">
+                        <p>scoring5</p>
+                    </li>
+                    <li class="scoring">
+                        <img src="images/rules placeholder.png" alt="scoring6">
+                        <p>scoring6</p>
+                    </li>
+                    <li class="scoring">
+                        <img src="images/rules placeholder.png" alt="scoring7">
+                        <p>scoring7</p>
+                    </li>
+                    <li class="scoring">
+                        <img src="images/rules placeholder.png" alt="scoring8">
+                        <p>scoring8</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </main>
 </body>
 </html>

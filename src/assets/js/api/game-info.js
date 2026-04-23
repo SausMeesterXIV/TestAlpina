@@ -22,12 +22,23 @@ function fetchUnstartedGames() {
         .then(resp => resp.games);
 }
 
+function fetchStartedGames() {
+  return fetchFromServer("/games?started=true")
+    .then(resp => resp.games);
+}
+
 function fetchGameDetails(gameId) {
   return fetchFromServer(`/games/${gameId}`);
-} 
+}
+
+function fetchGameBoard(gameId){
+  return fetchFromServer(`/games/${gameId}/board`);
+}
 
 export{
   fetchSpecificGame,
   fetchUnstartedGames,
-  fetchGameDetails
+  fetchStartedGames,
+  fetchGameDetails,
+  fetchGameBoard
 };

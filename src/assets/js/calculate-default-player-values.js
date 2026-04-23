@@ -1,10 +1,11 @@
 import {fetchPlayerInfo} from "./api/player-info.js";
 
 function defaultPlayerName(gameId){
-  let playerName = `player`;
+  const playerName = `player`;
 
   return fetchPlayerInfo(gameId).then(players => {
-    return playerName + players.length;
+    const number = players.length + 1;
+    return playerName + number;
   });
 }
 
@@ -13,8 +14,8 @@ function defaultPlayerColor(gameId) {
 
   return fetchPlayerInfo(gameId)
     .then(players => {
-      const usedHikers = players.map(player => player.hiker);
-      return hikerColors.filter(color => !usedHikers.includes(color));
+      const usedHikers = new Set(players.map(p => p.hiker));
+      return hikerColors.filter(color => !usedHikers.has(color)); // .has (Set) is more efficient than a .includes (Array) for bigger arrays
     })
     .then(hikers => {
       // selects the first hiker that is available.
@@ -25,4 +26,4 @@ function defaultPlayerColor(gameId) {
 export{
   defaultPlayerName,
   defaultPlayerColor
-}
+};

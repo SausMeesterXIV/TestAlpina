@@ -9,48 +9,40 @@
   <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
 
   <link rel="stylesheet" href="assets/css/reset.css">
-  <link rel="stylesheet" href="assets/css/endscreen.css">
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/typography.css">
+  <link rel="stylesheet" href="assets/css/buttons.css">
+  <link rel="stylesheet" href="assets/css/tables.css">
+  <link rel="stylesheet" href="assets/css/page-endscreen.css">
 
   <script src="./assets/js/end-screen.js" type="module"></script>
 </head>
 <body>
-<h1>Victory</h1>
-<article>
-<section class="scoreboard">
-    <table>
+<div id="leaderboard-container">
+    <div class="scoreboard">
+        <table>
+            <thead>
+            <tr>
+                <th>Pos.</th>
+                <th>Name</th>
+                <th>Points</th>
+            </tr>
+            </thead>
+            <tbody>
+                <!--The leaderboard data comes here-->
+            </tbody>
+        </table>
+    </div>
+    <div class="endscreen-buttons">
+        <a id="return-to-main-page" href="lobby-listing.html">Return to main page</a> <a href="lobby.html" id="rematch">Rematch</a>
+    </div>
+</div>
+    <template id="leaderboard-template">
         <tr>
-            <th>Pos.</th>
-            <th>Name</th>
-            <th>Points</th>
+            <td class="leaderboard-pos">#</td> <!--Pos.-->
+            <td class="leaderboard-name">Name</td>
+            <td class="leaderboard-points">Points</td>
         </tr>
-        <tr>
-            <td>1</td>
-            <td>Player 1</td>
-            <td>100</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Player 2</td>
-            <td>80</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Player 3</td>
-            <td>60</td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td>Player 4</td>
-            <td>40</td>
-        </tr>
-    </table>
-</section>
-
-<section class="endscreen-buttons">
-<a href="#"><div id="return-to-main-page">Return to main page</div></a> <a href="#"><div id="rematch">Rematch</div></a>
-</section>
-
-</article>
-
+    </template>
 </body>
 </html>
